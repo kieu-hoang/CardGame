@@ -98,11 +98,6 @@ public class DeckCreator : MonoBehaviour
         if (mouseOverDeck == true && coll.GetComponent<Collection>().HowManyCards[dragged] > 0)
         {
             cardsWithThisId[dragged]++;
-            // if (cardsWithThisId[dragged] > 4)
-            // {
-            //     cardsWithThisId[dragged] = 4;
-            // }
-
             if (cardsWithThisId[dragged] < 0)
             {
                 cardsWithThisId[dragged] = 0;

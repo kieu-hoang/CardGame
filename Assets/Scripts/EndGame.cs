@@ -30,7 +30,7 @@ public class EndGame : MonoBehaviour
             victoryText.text = "!!!BẠN THUA RỒI!!!";
             if (protect == false)
             {
-                StartCoroutine(ReturnToMene());
+                StartCoroutine(ReturnToMenu());
                 protect = true;
             }
         }
@@ -45,13 +45,13 @@ public class EndGame : MonoBehaviour
             }
             if (protect == false)
             {
-                StartCoroutine(ReturnToMene());
+                StartCoroutine(ReturnToMenu());
                 protect = true;
             }    
         }
     }
 
-    IEnumerator ReturnToMene()
+    IEnumerator ReturnToMenu()
     {
         yield return new WaitForSeconds(3f);
         SceneManager.LoadScene(menu);

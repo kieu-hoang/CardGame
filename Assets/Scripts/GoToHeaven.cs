@@ -16,7 +16,7 @@ public class GoToHeaven : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name != "CardDeck")
         {
-            x = 250;
+            x = 425;
             background = GameObject.Find("Background");
             this.transform.SetParent(background.transform);
             this.transform.localScale = new Vector3(1.5f, 1.5f, 1);

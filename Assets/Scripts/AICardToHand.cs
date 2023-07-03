@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -131,7 +132,7 @@ public class AICardToHand : MonoBehaviour
         }
         if (thisCard.color == "Yellow")
         {
-            frame.GetComponent<Image>().color = new Color32(255, 255, 0, 255);
+            frame.GetComponent<Image>().color = new Color32(164, 152, 28, 255);
         }
         if (thisCard.color == "Green")
         {
@@ -191,6 +192,8 @@ public class AICardToHand : MonoBehaviour
             if (healXpower > 0)
             {
                 EnemyHp.staticHp += healXpower;
+                if (EnemyHp.staticHp > EnemyHp.maxHp)
+                    EnemyHp.staticHp = EnemyHp.maxHp;
                 isSummoned = true;
             }
 
@@ -199,8 +202,21 @@ public class AICardToHand : MonoBehaviour
     }
     public void BeingTarget()
     {
-        isTarget = true;
-
+        
+        if (id == 1 || id == 13 || id == 19)
+            isTarget = true;
+        else
+        {
+            foreach (Transform child in battleZone.transform)
+            {
+                if (child.GetComponent<AICardToHand>().id == 1 || child.GetComponent<AICardToHand>().id == 13 || child.GetComponent<AICardToHand>().id == 19)
+                {
+                    isTarget = false;
+                    return;
+                }
+            }
+            isTarget = true;
+        }
     }
     public void DontBeingTarget()
     {

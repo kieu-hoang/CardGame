@@ -23,16 +23,17 @@ public class Card
     public int returnXcards;
     
     public int healXpower;
-    //new
+    
     public bool spell;
     public int damageDealtBySpell;
+    public int increaseXdame;
 
     public Card()
     {
         
     }
 
-    public Card(int Id, string CardName, int Dame, int Blood, int Mana, string CardDescription, Sprite ThisImage, string Color, int DrawXcards, int AddXmaxMana, int ReturnXcards, int HealXpower, bool Spell, int DamageBySpell)
+    public Card(int Id, string CardName, int Dame, int Blood, int Mana, string CardDescription, Sprite ThisImage, string Color, int DrawXcards, int AddXmaxMana, int ReturnXcards, int HealXpower, bool Spell, int DamageBySpell, int IncreaseXdame)
     {
         id = Id;
         cardName = CardName;
@@ -51,5 +52,6 @@ public class Card
         healXpower = HealXpower;
         spell = Spell;
         damageDealtBySpell = DamageBySpell;
+        increaseXdame = IncreaseXdame;
     }
 }

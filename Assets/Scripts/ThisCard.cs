@@ -70,6 +70,7 @@ public class ThisCard : MonoBehaviour
    
     public int healXpower;
     public bool canHeal;
+    public bool canIncreaseDame;
     
     public GameObject EnemyZone;
     public AICardToHand aiCardToHand;
@@ -80,7 +81,9 @@ public class ThisCard : MonoBehaviour
     public bool dealDamage;
 
     public bool stopDealDamage;
-
+    public int increaseXdame;
+    public int actualDame;
+    public int dameIncrease;
 
     void Start()
     {
@@ -93,6 +96,7 @@ public class ThisCard : MonoBehaviour
 
         drawX = 0;
         hurted = 0;
+        dameIncrease = 0;
         
         canAttack = false;
         summoningSickness = true;
@@ -103,9 +107,11 @@ public class ThisCard : MonoBehaviour
         targetingEnemy = false;
 
         canHeal = true;
+        canIncreaseDame = true;
 
         EnemyZone = GameObject.Find("EnemyZone");
         Graveyard = GameObject.Find("Graveyard");
+        battleZone = GameObject.Find("Zone");
     }
 
     void Update()
@@ -118,6 +124,7 @@ public class ThisCard : MonoBehaviour
         id = thisCard.id;
         cardName = thisCard.cardName;
         dame = thisCard.dame;
+        
         blood = thisCard.blood;
         mana = thisCard.mana;
         cardDescription = thisCard.cardDescription;
@@ -128,11 +135,14 @@ public class ThisCard : MonoBehaviour
 
         returnXcards = thisCard.returnXcards;
         healXpower = thisCard.healXpower;
+        
+        increaseXdame = thisCard.increaseXdame;
 
         spell = thisCard.spell;
         damageDealtBySpell = thisCard.damageDealtBySpell;
 
         actualblood = blood - hurted;
+        actualDame = dame + dameIncrease;
 
         nameText.text = "" + cardName;
         descriptionText.text = " " + cardDescription;
@@ -149,7 +159,7 @@ public class ThisCard : MonoBehaviour
         }
         if (thisCard.color == "Yellow")
         {
-            frame.GetComponent<Image>().color = new Color32(255, 255, 0, 255);
+            frame.GetComponent<Image>().color = new Color32(164, 152, 28, 255);
         }
         if (thisCard.color == "Green")
         {
@@ -164,7 +174,7 @@ public class ThisCard : MonoBehaviour
             frame.GetComponent<Image>().color = new Color32(0, 0, 0, 255);
         }
 
-        dameText.text = "" + dame;
+        dameText.text = "" + actualDame;
         bloodText.text = "" + actualblood;
         manaText.text = "" + mana;
         
@@ -179,7 +189,8 @@ public class ThisCard : MonoBehaviour
             this.tag = "Untagged";
         }
 
-        if (TurnSystem.currentMana >= mana && summoned == false && beInGraveyard == false && TurnSystem.isYourTurn == true && TurnSystem.protectStart == false)
+        if (TurnSystem.currentMana >= mana && summoned == false && beInGraveyard == false && TurnSystem.isYourTurn == true && TurnSystem.protectStart == false
+            )
         {
             canBeSummon = true;
         }
@@ -190,8 +201,6 @@ public class ThisCard : MonoBehaviour
             gameObject.GetComponent<Draggable>().enabled = true;
         }
         else gameObject.GetComponent<Draggable>().enabled = false;
-
-        battleZone = GameObject.Find("Zone");
 
         if (summoned == false && this.transform.parent == battleZone.transform)
         {
@@ -224,7 +233,19 @@ public class ThisCard : MonoBehaviour
 
         if (targetingEnemy == true)
         {
-            Target = Enemy;
+            bool flag = true;
+            foreach (Transform child in EnemyZone.transform)
+            {
+                if (child.GetComponent<AICardToHand>().id == 1 || child.GetComponent<AICardToHand>().id == 13 ||
+                    child.GetComponent<AICardToHand>().id == 19)
+                {
+                    Target = null;
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag == true)
+                Target = Enemy;
         }
         else
         {
@@ -261,11 +282,17 @@ public class ThisCard : MonoBehaviour
             Heal();
             canHeal = false;
         }
+
+        if (canIncreaseDame == true && summoned == true)
+        {
+            increaseDame();
+            canIncreaseDame = false;
+        }
         if (damageDealtBySpell > 0)
         {
             dealDamage = true;
         }
-        if (dealDamage == true && this.transform.parent == battleZone.transform)
+        if (dealDamage == true && this.transform.parent == battleZone.transform && stopDealDamage == false)
         {
             dealXDamage(damageDealtBySpell);
         }
@@ -305,7 +332,7 @@ public class ThisCard : MonoBehaviour
             {
                 if (Target == Enemy)
                 {
-                    EnemyHp.staticHp -= dame;
+                    EnemyHp.staticHp -= (dame + dameIncrease);
                     targeting = false;
                     cantAttack = true;
                     Arrow._Hide = true;
@@ -317,7 +344,7 @@ public class ThisCard : MonoBehaviour
                 {
                     if (child.GetComponent<AICardToHand>().isTarget == true)
                     {
-                        child.GetComponent<AICardToHand>().hurted += dame;
+                        child.GetComponent<AICardToHand>().hurted += (dame + dameIncrease);
                         hurted += child.GetComponent<AICardToHand>().dame;
                         cantAttack = true;
                         Arrow._Hide = true;
@@ -362,11 +389,6 @@ public class ThisCard : MonoBehaviour
         canBeDestroyed = true;
         if (canBeDestroyed == true)
         {
-            // this.transform.SetParent(Graveyard.transform);
-            // canBeDestroyed = false;
-            // summoned = false;
-            // beInGraveyard = true;
-            // hurted = 0;
             for (int i = 0; i < 40; i++)
             {
                 if (Graveyard.GetComponent<GraveyardScript>().graveyard[i].id == 0)
@@ -390,21 +412,49 @@ public class ThisCard : MonoBehaviour
     {
         Graveyard.GetComponent<GraveyardScript>().returnCard = x;
     }
-    // public void ReturnCard()
-    // {
-    //     UcanReturn = true;
-    // }
-    // public void ReturnThis()
-    // {
-    //     if (beInGraveyard == true && UcanReturn == true)
-    //     {
-    //         this.transform.SetParent(Hand.transform);
-    //         UcanReturn = false;
-    //         beInGraveyard = false;
-    //         summoningSickness = true;
-    //     }
-    // }
+    
     public void Heal()
+    {
+        if (healXpower > 0)
+        {
+            if (transform.GetComponent<ThisCard>().id == 2 || transform.GetComponent<ThisCard>().id == 3)
+                HealOne();
+            else if (transform.GetComponent<ThisCard>().id == 20 || transform.GetComponent<ThisCard>().id == 24)
+                HealAll();
+            else if (transform.GetComponent<ThisCard>().id == 10)
+            {
+                HealAll();
+                HealHero();
+            }
+        }
+    }
+
+    public void HealOne()
+    {
+        if (CardsInZone.howMany <= 2)
+            return;
+        foreach (Transform child in battleZone.transform)
+        {
+            if (child != transform && child.GetComponent<ThisCard>() != null)
+            {
+                child.GetComponent<ThisCard>().hurted -= healXpower;
+                break;
+            }
+        }
+    }
+
+    public void HealAll()
+    {
+        if (CardsInZone.howMany <= 2)
+            return;
+        foreach (Transform child in battleZone.transform)
+        {
+            if (child != transform && child.GetComponent<ThisCard>() != null)
+                child.GetComponent<ThisCard>().hurted -= healXpower;
+        }
+    }
+
+    public void HealHero()
     {
         PlayerHp.staticHp += healXpower;
         if (PlayerHp.staticHp > PlayerHp.maxHp)
@@ -412,30 +462,63 @@ public class ThisCard : MonoBehaviour
     }
     public void dealXDamage(int x)
     {
-        if (Target != null)
+        if (transform.GetComponent<ThisCard>().id == 5 || transform.GetComponent<ThisCard>().id == 14)
+            dealHero();
+        else if (transform.GetComponent<ThisCard>().id == 7)
+            dealOne();
+        else
+            dealAll();
+    }
+
+    public void dealHero()
+    {
+        EnemyHp.staticHp -= damageDealtBySpell;
+        stopDealDamage = true;
+    }
+
+    public void dealAll()
+    {
+        foreach (Transform child in EnemyZone.transform)
         {
-            if (Target == Enemy && stopDealDamage == false && Input.GetMouseButton(0)){
-                EnemyHp.staticHp -= damageDealtBySpell;
-                stopDealDamage = true;
+            child.GetComponent<AICardToHand>().isTarget = true;
+            if (child.GetComponent<AICardToHand>().isTarget == true)
+            {
+                child.GetComponent<AICardToHand>().hurted += damageDealtBySpell;
+                child.GetComponent<AICardToHand>().isTarget = false;
             }
         }
-        else
+        stopDealDamage = true;
+    }
+
+    public void dealOne()
+    {
+        int x = Random.Range(0, EnemyZone.GetComponent<CardsInZone>().howManyCards);
+        int i = 0;
+        foreach (Transform child in EnemyZone.transform)
         {
-            foreach (Transform child in EnemyZone.transform)
-            {
-                //if (child.GetComponent<AICardToHand>().isTarget == true && Input.GetMouseButton(0))
-                //{
-                //child.GetComponent<AICardToHand>().hurted += damageDealtBySpell;
-                //stopDealDamage = true;
-                //}
-                child.GetComponent<AICardToHand>().isTarget = true;
+            if (i==x)
+            {child.GetComponent<AICardToHand>().isTarget = true;
                 if (child.GetComponent<AICardToHand>().isTarget == true)
                 {
                     child.GetComponent<AICardToHand>().hurted += damageDealtBySpell;
                     child.GetComponent<AICardToHand>().isTarget = false;
+                    break;
                 }
+                
             }
-            stopDealDamage = true;
+            i++;
+        }
+        stopDealDamage = true;
+    }
+
+    public void increaseDame()
+    {
+        if (CardsInZone.howMany <= 2)
+            return;
+        foreach (Transform child in battleZone.transform)
+        {
+            if (child != transform && child.GetComponent<ThisCard>() != null)
+                child.GetComponent<ThisCard>().dameIncrease += increaseXdame;
         }
     }
 }

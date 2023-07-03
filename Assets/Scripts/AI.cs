@@ -42,8 +42,7 @@ public class AI : MonoBehaviour
     public bool endPhase;
 
     public int[] cardsID;
-
-    public int summonThisId;
+    
     public AICardToHand aiCardToHand;
 
     public int summonID;
@@ -80,7 +79,7 @@ public class AI : MonoBehaviour
         {
             for (int i = 0;i < deckSize; i++)
             {
-                x = Random.Range(1, 10);
+                x = Random.Range(1, 26);
                 deck.Add(CardDataBase.cardList[x]);
             }
             // for (int i = 0; i < deckSize; i++)
@@ -208,7 +207,6 @@ public class AI : MonoBehaviour
         if (summonPhase == true)
         {
             summonID = 0;
-            summonThisId = 0;
 
             int index = 0;
             for (int i=0; i < 40; i++)
@@ -223,23 +221,21 @@ public class AI : MonoBehaviour
             {
                 if (cardsID[i] != 0)
                 {
-                    if (cardsID[i] > summonID)
+                    summonID = cardsID[i];
+                    foreach(Transform child in Hand.transform)
                     {
-                        summonID = cardsID[i];
+                
+                        if (child.GetComponent<AICardToHand>().id == summonID && CardDataBase.cardList[summonID].mana <= currentMana)
+                        {
+                            child.transform.SetParent(Zone.transform);
+                            TurnSystem.currentEnemyMana -= CardDataBase.cardList[summonID].mana;
+                            currentMana = TurnSystem.currentEnemyMana;
+                        }
+                
                     }
                 }
             }
-            summonThisId = summonID;
 
-            foreach(Transform child in Hand.transform)
-            {
-                if (child.GetComponent<AICardToHand>().id == summonThisId && CardDataBase.cardList[summonThisId].mana <= currentMana)
-                {
-                    child.transform.SetParent(Zone.transform);
-                    TurnSystem.currentEnemyMana -= CardDataBase.cardList[summonThisId].mana;
-                    break;
-                }
-            }
             summonPhase = false;
             attackPhase = true;
         }
@@ -313,8 +309,7 @@ public class AI : MonoBehaviour
             deck[i] = deck[randomIndex];
             deck[randomIndex] = container;
         }
-        //Instantiate(CardBack, transform.position, transform.rotation);
-        //StartCoroutine(ShuffleNow());
+        
     }
     IEnumerator StartGame()
     {

@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardsInHand : MonoBehaviour
+public class CardsInZone : MonoBehaviour
 {
-    public GameObject Hand;
+    public GameObject Zone;
 
     public static int howMany;
  
@@ -19,16 +19,17 @@ public class CardsInHand : MonoBehaviour
     void Update()
     {
         int x = 0;
-        foreach (Transform child in Hand.transform)
+        foreach (Transform child in Zone.transform)
         {
             x++;
         }
 
-        if (x != howMany)
+        if (x != howManyCards)
         {
-            howMany = x;
+            howManyCards = x;
         }
 
-        howManyCards = howMany;
+        howMany = howManyCards;
+
     }
 }

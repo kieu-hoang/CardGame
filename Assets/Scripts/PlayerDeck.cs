@@ -58,7 +58,7 @@ public class PlayerDeck : MonoBehaviour
         // Random instead for checking
         for (int i = 0;i < deckSize; i++)
         {
-            x = Random.Range(1, 10);
+            x = Random.Range(1, 26);
             deck[i] = CardDataBase.cardList[x];
         }
         Shuffle();
