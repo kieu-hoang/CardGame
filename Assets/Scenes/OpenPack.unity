@@ -302,7 +302,7 @@ MonoBehaviour:
   CardThree: {fileID: 2082346065}
   CardFour: {fileID: 1055468904}
   notBeCollection: 0
-  HowManyCards: 000000000000000000000000000000000000000000000000000000000000000000000000
+  HowManyCards: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   CardOneText: {fileID: 0}
   CardTwoText: {fileID: 0}
   CardThreeText: {fileID: 0}
@@ -313,6 +313,8 @@ MonoBehaviour:
   oo: 0
   rand: 0
   card: 
+  cardsInCollection: 0
+  numberOfCardsOnPage: 0
 --- !u!114 &241144407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -457,6 +459,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   thisId: 5
   id: 0
   cardName: 
@@ -1293,6 +1296,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   thisId: 4
   id: 0
   cardName: 
@@ -2147,6 +2151,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   thisId: 1
   id: 0
   cardName: 
@@ -2439,6 +2444,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   thisId: 3
   id: 0
   cardName: 
@@ -2569,6 +2575,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   thisId: 2
   id: 0
   cardName: 

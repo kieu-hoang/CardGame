@@ -45,7 +45,7 @@ public class Collection : MonoBehaviour
     void Start()
     {
         x = 1;
-        for (int i = 1; i <= 8; i++)
+        for (int i = 1; i <= 24; i++)
         {
             HowManyCards[i] = PlayerPrefs.GetInt("x" + i, 0);
         }
@@ -58,7 +58,7 @@ public class Collection : MonoBehaviour
             }
         }
 
-        cardsInCollection = 8;
+        cardsInCollection = 24;
         numberOfCardsOnPage = 4;
     }
 
@@ -111,7 +111,7 @@ public class Collection : MonoBehaviour
             }
         }
         
-        for (int i = 1; i <= 8; i++)
+        for (int i = 1; i <= 24; i++)
         {
             if (notBeCollection)
                 PlayerPrefs.SetInt("x"+i , HowManyCards[i]);
@@ -183,10 +183,10 @@ public class Collection : MonoBehaviour
 
     public void getRandomCard()
     {
-        rand = Random.Range(1, 9);
+        rand = Random.Range(1, 25);
         PlayerPrefs.SetInt("x" + rand, (int)HowManyCards[rand]++);
         card = CardDataBase.cardList[rand].cardName;
-        for (int i = 0; i <= 8; i++)
+        for (int i = 0; i <= 24; i++)
         {
             PlayerPrefs.SetInt("x"+i,(int)HowManyCards[i]);
         }

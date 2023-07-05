@@ -2052,6 +2052,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   thisId: 0
   id: 0
   cardName: 
@@ -2637,6 +2638,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   thisId: 0
   id: 0
   cardName: 
@@ -3065,6 +3067,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3079,6 +3082,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3093,6 +3097,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3107,6 +3112,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3121,6 +3127,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3135,6 +3142,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3149,6 +3157,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3163,6 +3172,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3177,6 +3187,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3191,6 +3202,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3205,6 +3217,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3219,6 +3232,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3233,6 +3247,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3247,6 +3262,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3261,6 +3277,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3275,6 +3292,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3289,6 +3307,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3303,6 +3322,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3317,6 +3337,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3331,6 +3352,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3345,6 +3367,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3359,6 +3382,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3373,6 +3397,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3387,6 +3412,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3401,6 +3427,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3415,6 +3442,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3429,6 +3457,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3443,6 +3472,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3457,6 +3487,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -3471,146 +3502,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
-  - id: 0
-    cardName: 
-    dame: 0
-    blood: 0
-    mana: 0
-    cardDescription: 
-    drawXcards: 0
-    addXmaxMana: 0
-    thisImage: {fileID: 0}
-    color: 
-    returnXcards: 0
-    healXpower: 0
-    spell: 0
-    damageDealtBySpell: 0
-  - id: 0
-    cardName: 
-    dame: 0
-    blood: 0
-    mana: 0
-    cardDescription: 
-    drawXcards: 0
-    addXmaxMana: 0
-    thisImage: {fileID: 0}
-    color: 
-    returnXcards: 0
-    healXpower: 0
-    spell: 0
-    damageDealtBySpell: 0
-  - id: 0
-    cardName: 
-    dame: 0
-    blood: 0
-    mana: 0
-    cardDescription: 
-    drawXcards: 0
-    addXmaxMana: 0
-    thisImage: {fileID: 0}
-    color: 
-    returnXcards: 0
-    healXpower: 0
-    spell: 0
-    damageDealtBySpell: 0
-  - id: 0
-    cardName: 
-    dame: 0
-    blood: 0
-    mana: 0
-    cardDescription: 
-    drawXcards: 0
-    addXmaxMana: 0
-    thisImage: {fileID: 0}
-    color: 
-    returnXcards: 0
-    healXpower: 0
-    spell: 0
-    damageDealtBySpell: 0
-  - id: 0
-    cardName: 
-    dame: 0
-    blood: 0
-    mana: 0
-    cardDescription: 
-    drawXcards: 0
-    addXmaxMana: 0
-    thisImage: {fileID: 0}
-    color: 
-    returnXcards: 0
-    healXpower: 0
-    spell: 0
-    damageDealtBySpell: 0
-  - id: 0
-    cardName: 
-    dame: 0
-    blood: 0
-    mana: 0
-    cardDescription: 
-    drawXcards: 0
-    addXmaxMana: 0
-    thisImage: {fileID: 0}
-    color: 
-    returnXcards: 0
-    healXpower: 0
-    spell: 0
-    damageDealtBySpell: 0
-  - id: 0
-    cardName: 
-    dame: 0
-    blood: 0
-    mana: 0
-    cardDescription: 
-    drawXcards: 0
-    addXmaxMana: 0
-    thisImage: {fileID: 0}
-    color: 
-    returnXcards: 0
-    healXpower: 0
-    spell: 0
-    damageDealtBySpell: 0
-  - id: 0
-    cardName: 
-    dame: 0
-    blood: 0
-    mana: 0
-    cardDescription: 
-    drawXcards: 0
-    addXmaxMana: 0
-    thisImage: {fileID: 0}
-    color: 
-    returnXcards: 0
-    healXpower: 0
-    spell: 0
-    damageDealtBySpell: 0
-  - id: 0
-    cardName: 
-    dame: 0
-    blood: 0
-    mana: 0
-    cardDescription: 
-    drawXcards: 0
-    addXmaxMana: 0
-    thisImage: {fileID: 0}
-    color: 
-    returnXcards: 0
-    healXpower: 0
-    spell: 0
-    damageDealtBySpell: 0
-  - id: 0
-    cardName: 
-    dame: 0
-    blood: 0
-    mana: 0
-    cardDescription: 
-    drawXcards: 0
-    addXmaxMana: 0
-    thisImage: {fileID: 0}
-    color: 
-    returnXcards: 0
-    healXpower: 0
-    spell: 0
-    damageDealtBySpell: 0
+    increaseXdame: 0
   container:
     id: 0
     cardName: None
@@ -3626,6 +3518,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   x: 0
   cardInDeck1: {fileID: 1544024608}
   cardInDeck2: {fileID: 30295268}
@@ -4384,6 +4277,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   thisId: 0
   id: 0
   cardName: 
@@ -4920,6 +4814,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   cardsInHand:
   - id: 0
     cardName: 
@@ -4935,6 +4830,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -4949,6 +4845,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -4963,6 +4860,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -4977,6 +4875,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -4991,6 +4890,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5005,6 +4905,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5019,6 +4920,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5033,6 +4935,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5047,6 +4950,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5061,6 +4965,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5075,6 +4980,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5089,6 +4995,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5103,6 +5010,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5117,6 +5025,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5131,6 +5040,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5145,6 +5055,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5159,6 +5070,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5173,6 +5085,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5187,6 +5100,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5201,6 +5115,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5215,6 +5130,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5229,6 +5145,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5243,6 +5160,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5257,6 +5175,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5271,6 +5190,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5285,6 +5205,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5299,6 +5220,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5313,6 +5235,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5327,6 +5250,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5341,6 +5265,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5355,6 +5280,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5369,6 +5295,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5383,6 +5310,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5397,6 +5325,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5411,6 +5340,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5425,6 +5355,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5439,6 +5370,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5453,6 +5385,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5467,6 +5400,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5481,6 +5415,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   cardsInZone:
   - id: 0
     cardName: 
@@ -5496,6 +5431,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5510,6 +5446,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5524,6 +5461,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5538,6 +5476,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5552,6 +5491,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5566,6 +5506,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5580,6 +5521,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5594,6 +5536,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5608,6 +5551,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5622,6 +5566,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5636,6 +5581,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5650,6 +5596,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5664,6 +5611,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5678,6 +5626,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5692,6 +5641,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5706,6 +5656,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5720,6 +5671,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5734,6 +5686,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5748,6 +5701,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5762,6 +5716,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5776,6 +5731,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5790,6 +5746,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5804,6 +5761,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5818,6 +5776,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5832,6 +5791,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5846,6 +5806,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5860,6 +5821,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5874,6 +5836,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5888,6 +5851,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5902,6 +5866,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5916,6 +5881,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5930,6 +5896,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5944,6 +5911,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5958,6 +5926,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5972,6 +5941,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -5986,6 +5956,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -6000,6 +5971,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -6014,6 +5986,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -6028,6 +6001,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -6042,6 +6016,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   Hand: {fileID: 0}
   Zone: {fileID: 0}
   Graveyard: {fileID: 0}
@@ -6308,6 +6283,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   thisId: 0
   id: 0
   cardName: 
@@ -9302,6 +9278,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9316,6 +9293,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9330,6 +9308,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9344,6 +9323,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9358,6 +9338,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9372,6 +9353,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9386,6 +9368,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9400,6 +9383,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9414,6 +9398,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9428,6 +9413,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9442,6 +9428,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9456,6 +9443,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9470,6 +9458,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9484,6 +9473,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9498,6 +9488,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9512,6 +9503,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9526,6 +9518,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9540,6 +9533,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9554,6 +9548,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9568,6 +9563,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9582,6 +9578,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9596,6 +9593,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9610,6 +9608,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9624,6 +9623,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9638,6 +9638,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9652,6 +9653,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9666,6 +9668,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9680,6 +9683,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9694,6 +9698,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9708,6 +9713,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9722,6 +9728,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9736,6 +9743,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9750,6 +9758,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9764,6 +9773,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9778,6 +9788,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9792,6 +9803,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9806,6 +9818,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9820,6 +9833,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9834,6 +9848,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   - id: 0
     cardName: 
     dame: 0
@@ -9848,6 +9863,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   howManyCards: 0
   cardBack: {fileID: 1506781323}
   graveWindow: {fileID: 1748783757}

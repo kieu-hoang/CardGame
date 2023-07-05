@@ -38,7 +38,7 @@ public class Shop : MonoBehaviour
     {
         if (playDuel == false)
         {
-            goldText.text = "TÀI KHOẢN CỦA BẠN: " + gold + "$";
+            goldText.text = "TÀI KHOẢN CỦA BẠN: " + gold + " THÔNG BẢO";
             if (shouldOpen > 0)
             {
                 StartCoroutine(Wait());

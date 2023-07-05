@@ -68,7 +68,7 @@ public class AI : MonoBehaviour
         Graveyard = GameObject.Find("EGraveyard");
 
         x = 0;
-        deckSize = 40;
+        deckSize = 30;
         draw = true;
         // for (int i = 0;i < deckSize; i++)
         // {
@@ -159,7 +159,7 @@ public class AI : MonoBehaviour
                 cardsInHand[j] = child.GetComponent<AICardToHand>().thisCard;
                 j++;
             }
-            for (int i = 0; i < 40; i++)
+            for (int i = 0; i < deckSize; i++)
             {
                 if (i >= howManyCards)
                 {
@@ -170,7 +170,7 @@ public class AI : MonoBehaviour
         }
         if (TurnSystem.isYourTurn == false)
         {
-            for (int i=0; i<40; i++)
+            for (int i=0; i<deckSize; i++)
             {
                 if (cardsInHand[i].id != 0)
                 {
@@ -183,7 +183,7 @@ public class AI : MonoBehaviour
         }
         else
         {
-            for (int i=0; i < 40; i++)
+            for (int i=0; i < deckSize; i++)
             {
                 AiCanSummon[i] = false;
             }
@@ -209,7 +209,7 @@ public class AI : MonoBehaviour
             summonID = 0;
 
             int index = 0;
-            for (int i=0; i < 40; i++)
+            for (int i=0; i < deckSize; i++)
             {
                 if (AiCanSummon[i] == true)
                 {
@@ -217,7 +217,7 @@ public class AI : MonoBehaviour
                     index++;
                 }
             }
-            for (int i = 0; i < 40; i++)
+            for (int i = 0; i < deckSize; i++)
             {
                 if (cardsID[i] != 0)
                 {
@@ -252,7 +252,7 @@ public class AI : MonoBehaviour
                 canAttack[k] = child.GetComponent<AICardToHand>().canAttack;
                 k++;
             }
-            for (int i = 0; i < 40; i++)
+            for (int i = 0; i < deckSize; i++)
             {
                 if (i >= howManyCards2)
                 {
@@ -274,7 +274,7 @@ public class AI : MonoBehaviour
                 cardsInZone[l] = child.GetComponent<AICardToHand>().thisCard;
                 l++;
             }
-            for (int i = 0; i < 40; i++)
+            for (int i = 0; i < deckSize; i++)
             {
                 if (i >= howManyCards3)
                 {
@@ -285,7 +285,7 @@ public class AI : MonoBehaviour
         }
         if (attackPhase == true && endPhase == false)
         {
-            for (int i = 0; i<40; i++)
+            for (int i = 0; i<deckSize; i++)
             {
                 if (canAttack[i] == true) 
                 {

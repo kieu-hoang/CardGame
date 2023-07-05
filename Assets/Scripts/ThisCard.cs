@@ -205,16 +205,7 @@ public class ThisCard : MonoBehaviour
         if (summoned == false && this.transform.parent == battleZone.transform)
         {
             Summon();
-        }
-        
-        if (canAttack == true && beInGraveyard == false)
-        {
-            attackBorder.SetActive(true);
-        }
-        else
-        {
-            attackBorder.SetActive (false);
-        }
+        } 
         if (TurnSystem.isYourTurn == false && summoned == true)
         {
             summoningSickness = false;
@@ -227,6 +218,14 @@ public class ThisCard : MonoBehaviour
         else
         {
             canAttack = false;
+        }
+        if (canAttack == true && beInGraveyard == false)
+        {
+            attackBorder.SetActive(true);
+        }
+        else
+        {
+            attackBorder.SetActive (false);
         }
         targeting = staticTargeting;
         targetingEnemy = staticTargetingEnemy;
@@ -298,7 +297,6 @@ public class ThisCard : MonoBehaviour
         }
         if (stopDealDamage == true)
         {
-            attackBorder.SetActive(false);
             dealDamage = false;
         }
         if (this.transform.parent == battleZone.transform && spell == true && dealDamage == false)

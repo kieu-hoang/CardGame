@@ -1680,6 +1680,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   thisId: 0
   id: 0
   cardName: 
@@ -3101,17 +3102,19 @@ MonoBehaviour:
   CardThree: {fileID: 1552182284}
   CardFour: {fileID: 1958507932}
   notBeCollection: 0
-  HowManyCards: 000000000000000000000000000000000000000000000000000000000000000000000000
+  HowManyCards: 0000000001000000010000000b000000010000000100000001000000010000000100000001000000010000000200000003000000040000000500000006000000070000000800000009000000010000000100000001000000010000000100000001000000
   CardOneText: {fileID: 96007330}
   CardTwoText: {fileID: 1438804720}
   CardThreeText: {fileID: 2121724107}
   CardFourText: {fileID: 233295414}
   CardFive: {fileID: 0}
   openPack: 0
-  o: 
+  o: 0000000000000000000000000000000000000000
   oo: 0
   rand: 0
   card: 
+  cardsInCollection: 0
+  numberOfCardsOnPage: 0
 --- !u!1001 &1552182275
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3353,6 +3356,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   thisId: 0
   id: 0
   cardName: 
@@ -4168,6 +4172,7 @@ MonoBehaviour:
   collection: Collection
   settings: 
   menu: Menu
+  shop: 
 --- !u!114 &1946893109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4503,6 +4508,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   thisId: 0
   id: 0
   cardName: 
@@ -5031,6 +5037,7 @@ MonoBehaviour:
     healXpower: 0
     spell: 0
     damageDealtBySpell: 0
+    increaseXdame: 0
   thisId: 0
   id: 0
   cardName: 

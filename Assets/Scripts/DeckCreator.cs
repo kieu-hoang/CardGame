@@ -34,7 +34,7 @@ public class DeckCreator : MonoBehaviour
     void Start()
     {
         sum = 0;
-        numberOfCardsInDatabase = 8;
+        numberOfCardsInDatabase = 24;
     }
 
     // Update is called once per frame
@@ -50,7 +50,7 @@ public class DeckCreator : MonoBehaviour
             sum += cardsWithThisId[i];
         }
 
-        if (sum == 40)
+        if (sum == 30)
         {
             for (int i = 0; i <= numberOfCardsInDatabase; i++)
             {
