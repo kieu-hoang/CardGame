@@ -805,17 +805,11 @@ GameObject:
   - component: {fileID: 1803001968955466600}
   - component: {fileID: 2277180688624195376}
   - component: {fileID: 4505595130101994685}
-  - component: {fileID: 3642432636046880474}
   - component: {fileID: 5860441232228321355}
-  - component: {fileID: 6712636274606094730}
-  - component: {fileID: 3105696653205840730}
-  - component: {fileID: -1351515446937792744}
-  - component: {fileID: 1944869697115683538}
-  - component: {fileID: 7097576072768942059}
-  - component: {fileID: 7462909808444233967}
+  - component: {fileID: 5883391292510378499}
   m_Layer: 5
-  m_Name: CardToHand
-  m_TagString: Hand Clone
+  m_Name: CardZoomed
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -888,7 +882,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3642432636046880474
+--- !u!114 &5860441232228321355
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -897,16 +891,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 3955361584424567646}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 102c65d85ffb9844f9a4ba00d2872a0c, type: 3}
+  m_Script: {fileID: 11500000, guid: d72924bf72a675540be94e8b11d02d0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardBack: {fileID: 5773604855132412415}
+--- !u!114 &5883391292510378499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3955361584424567646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fa92781aa93f094b888e1cacca2266a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   thisCard:
     id: 0
-    cardName: None
+    cardName: 
     dame: 0
     blood: 0
     mana: 0
-    cardDescription: None
+    cardDescription: 
     drawXcards: 0
     addXmaxMana: 0
     thisImage: {fileID: 0}
@@ -931,244 +938,6 @@ MonoBehaviour:
   thisSprite: {fileID: 0}
   thatImage: {fileID: 663111951475567906}
   frame: {fileID: 2123713973860058044}
-  cardBack: 1
-  Hand: {fileID: 0}
-  numberOfCardsInDeck: 0
-  canBeSummon: 0
-  summoned: 0
-  battleZone: {fileID: 0}
-  drawXcards: 0
-  addXmaxMana: 0
-  attackBorder: {fileID: 8802900448025939381}
-  Target: {fileID: 0}
-  Enemy: {fileID: 0}
-  summoningSickness: 0
-  canAttack: 0
-  cantAttack: 0
-  targeting: 0
-  targetingEnemy: 0
-  onlyThisCardAttack: 0
-  summonBorder: {fileID: 1641019425181638550}
-  canBeDestroyed: 0
-  Graveyard: {fileID: 0}
-  beInGraveyard: 0
-  hurted: 0
-  actualblood: 0
-  returnXcards: 0
-  useReturn: 0
-  healXpower: 0
-  canHeal: 0
-  canIncreaseDame: 0
-  EnemyZone: {fileID: 0}
-  aiCardToHand: {fileID: 0}
-  spell: 0
-  damageDealtBySpell: 0
-  dealDamage: 0
-  stopDealDamage: 0
-  increaseXdame: 0
-  actualDame: 0
-  dameIncrease: 0
---- !u!114 &5860441232228321355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3955361584424567646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d72924bf72a675540be94e8b11d02d0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardBack: {fileID: 5773604855132412415}
---- !u!114 &6712636274606094730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3955361584424567646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: 200
-  m_PreferredHeight: 300
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
---- !u!114 &3105696653205840730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3955361584424567646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b2386ce3ebe33844b5478a381a194e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Hand: {fileID: 0}
-  HandCard: {fileID: 3955361584424567646}
---- !u!114 &-1351515446937792744
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3955361584424567646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b84695e990b228e40b1c140750a8610c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentToReturnTo: {fileID: 0}
-  placeholderParent: {fileID: 0}
---- !u!225 &1944869697115683538
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3955361584424567646}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
---- !u!114 &7097576072768942059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3955361584424567646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 14
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 3642432636046880474}
-          m_TargetAssemblyTypeName: ThisCard, Assembly-CSharp
-          m_MethodName: StopAttack
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 3642432636046880474}
-          m_TargetAssemblyTypeName: ThisCard, Assembly-CSharp
-          m_MethodName: OneCardAttackStop
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 13
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 3642432636046880474}
-          m_TargetAssemblyTypeName: ThisCard, Assembly-CSharp
-          m_MethodName: StartAttack
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 3642432636046880474}
-          m_TargetAssemblyTypeName: ThisCard, Assembly-CSharp
-          m_MethodName: OneCardAttack
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 7462909808444233967}
-          m_TargetAssemblyTypeName: CardZoom, Assembly-CSharp
-          m_MethodName: OnHoverExit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 0
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7462909808444233967}
-          m_TargetAssemblyTypeName: CardZoom, Assembly-CSharp
-          m_MethodName: OnHoverEnter
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 1
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7462909808444233967}
-          m_TargetAssemblyTypeName: CardZoom, Assembly-CSharp
-          m_MethodName: OnHoverExit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
---- !u!114 &7462909808444233967
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3955361584424567646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 198f1884a4552804391a0d9cc731023d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Canvas: {fileID: 0}
-  Hand: {fileID: 0}
-  ZoomCard: {fileID: 3955361584424567646, guid: c7d5fb413ce9f1f4dbdfacd0879580ad, type: 3}
 --- !u!1 &4040944915226844924
 GameObject:
   m_ObjectHideFlags: 0
@@ -2071,7 +1840,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4599072043522989729
 RectTransform:
   m_ObjectHideFlags: 0
