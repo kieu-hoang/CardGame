@@ -37,7 +37,9 @@ public class Player : Entity
     // We store all our enemy's info in a PlayerInfo struct so we can pass it through the network when needed.
     [HideInInspector] public static GameManager gameManager;
     [SyncVar, HideInInspector] public bool firstPlayer = false; // Is it player 1, player 2, etc.
+    [SyncVar] public int drawCardCount = 0;
 
+    public int cardCount;
     public override void OnStartLocalPlayer()
     {
         localPlayer = this;
@@ -117,6 +119,7 @@ public class Player : Entity
         {
             gameManager.StartGame();
         }
+
     }
 
     public void UpdateEnemyInfo()
@@ -145,4 +148,10 @@ public class Player : Entity
     }
 
     public bool IsOurTurn() => gameManager.isOurTurn;
+    
+    [Command(ignoreAuthority = true)]
+    public void CmdAddDrawCard(int x)
+    {
+        drawCardCount += x;
+    }
 }

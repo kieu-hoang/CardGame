@@ -10,18 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 796a01ad10bd5e24eb5fe2330ffc66b1, type: 3}
-  m_Name: "Thu\u1ED1c c\u1EA7m m\xE1u 1"
+  m_Name: "Ph\xF2ng tuy\u1EBFn Tam \u0110i\u1EC7p"
   m_EditorClassIdentifier: 
-  id: 98712755784c87c4a9622aa998b7cb79
-  image: {fileID: 21300000, guid: 00350960c8bda434fb2e0b4157210140, type: 3}
-  cost: 2
+  id: f68e964f7d719894a92802bec28a4291
+  image: {fileID: 21300000, guid: 951d2c736cc411f4aa7762e68f4f96e1, type: 3}
+  cost: 4
   category: 
-  intiatives: []
-  hasInitiative: 0
-  description: "H\u1ED3i 3 m\xE1u cho 1 qu\xE2n b\u1EA5t k\xEC, sau \u0111\xF3 h\u1ED3i
-    2 m\xE1u cho hero"
+  intiatives:
+  - abilityType: 0
+    targets: 03
+    ability: {fileID: 0}
+  hasInitiative: 1
+  description: "G\xE2y 2 dame cho qu\xE2n \u0111\u1ECBch, n\u1EBFu tr\xEAn s\xE2n
+    c\xF3 Ng\xF4 Th\xEC Nh\u1EADm th\xEC g\xE2y 3 dame"
   targeted: 0
-  healthChange: 3
+  healthChange: -2
   strengthChange: 0
   cardDraw: 0
   untilEndOfTurn: 0

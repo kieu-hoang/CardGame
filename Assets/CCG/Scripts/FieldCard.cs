@@ -9,8 +9,10 @@ public class FieldCard : Entity
     [Header("Card Properties")]
     public Image image; // card image on field
     public Text cardName; // Text of the card name
+    public Text costText; // Text of the card mana or cost
     public Text healthText; // Text of the health
     public Text strengthText; // Text of the strength
+    public Text descriptionText; //Text of the description
 
     [Header("Shine")]
     public Image shine;
@@ -33,6 +35,8 @@ public class FieldCard : Entity
             image.color = Color.white;
             image.sprite = card.image;
             cardName.text = card.name;
+            costText.text = card.cost;
+            descriptionText.text = card.description;
 
             // Update card hover info
             cardHover.UpdateFieldCardInfo(card);
@@ -48,7 +52,7 @@ public class FieldCard : Entity
     [Command(ignoreAuthority = true)]
     public void CmdUpdateWaitTurn()
     {
-        Debug.LogError("Here");
+        //Debug.LogError("Here");
         if (waitTurn > 0) waitTurn--;
     }
 }

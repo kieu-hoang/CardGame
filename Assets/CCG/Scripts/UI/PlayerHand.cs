@@ -9,7 +9,8 @@ public class PlayerHand : MonoBehaviour
     public PlayerType playerType;
     private Player player;
     private PlayerInfo enemyInfo;
-    private int cardCount = 0; // Amount of cards in hand
+    private bool start = true;
+    public int cardCount = 0; // Amount of cards in hand
 
     void Update()
     {
@@ -18,23 +19,29 @@ public class PlayerHand : MonoBehaviour
 
         if (playerType == PlayerType.PLAYER && Input.GetKeyDown(KeyCode.C))
         {
-            player.deck.DrawCard(3);
+            if (start)
+            {
+                player.deck.DrawCard(3);
+                start = false;
+            }
         }
 
         if (IsEnemyHand())
         {
             // instantiate/destroy enough slots
-            UIUtils.BalancePrefabs(cardPrefab.gameObject, enemyInfo.handCount, handContent);
+                if (enemyInfo.cardCount + enemyInfo.handCount -enemyInfo.deckCount > 0)
+                    UIUtils.BalancePrefabs(cardPrefab.gameObject, enemyInfo.cardCount + enemyInfo.handCount - enemyInfo.deckCount, handContent);
+                Debug.Log("Card Count: " + enemyInfo.cardCount);
+                // refresh all members
+                for (int i = 0; i < enemyInfo.cardCount + enemyInfo.handCount - enemyInfo.deckCount; ++i)
+                {
+                    HandCard slot = handContent.GetChild(i).GetComponent<HandCard>();
 
-            // refresh all members
-            for (int i = 0; i < enemyInfo.handCount; ++i)
-            {
-                HandCard slot = handContent.GetChild(i).GetComponent<HandCard>();
+                    slot.AddCardBack();
 
-                slot.AddCardBack();
-
-                cardCount = enemyInfo.handCount;
-            }
+                    cardCount = enemyInfo.cardCount + enemyInfo.handCount - enemyInfo.deckCount;
+                }
+            
         }
     }
 
@@ -42,7 +49,7 @@ public class PlayerHand : MonoBehaviour
     {
         GameObject cardObj = Instantiate(cardPrefab.gameObject);
         cardObj.transform.SetParent(handContent, false);
-
+        
         CardInfo card = player.deck.hand[index];
         HandCard slot = cardObj.GetComponent<HandCard>();
 
@@ -60,6 +67,6 @@ public class PlayerHand : MonoBehaviour
         }
     }
 
-    bool IsEnemyHand() => player && player.hasEnemy && player.deck.hand.Count == 7 && playerType == PlayerType.ENEMY && enemyInfo.handCount != cardCount;
+    bool IsEnemyHand() => player && player.hasEnemy && playerType == PlayerType.ENEMY; //&& enemyInfo.handCount != cardCount
     bool IsPlayerHand() => player && player.deck.spawnInitialCards && playerType == PlayerType.PLAYER;
 }

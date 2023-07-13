@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Mirror;
 
 public class GameManager : NetworkBehaviour
@@ -16,7 +17,7 @@ public class GameManager : NetworkBehaviour
 
     [Header("Deck")]
     public int deckSize = 30; // Maximum deck size
-    public int identicalCardCount = 6; // How many identical cards we allow to have in a deck
+    public int identicalCardCount = 2; // How many identical cards we allow to have in a deck
 
     [Header("Battlefield")]
     public PlayerField playerField;
@@ -94,6 +95,7 @@ public class GameManager : NetworkBehaviour
         if (isOurTurn)
         {
             playerField.UpdateFieldCards();
+            Player.localPlayer.deck.DrawCard(1);
             Player.localPlayer.deck.CmdStartNewTurn();
         }
     }
@@ -106,4 +108,5 @@ public class GameManager : NetworkBehaviour
         player.currentMax++;
         isOurTurn = true;
     }
+    
 }

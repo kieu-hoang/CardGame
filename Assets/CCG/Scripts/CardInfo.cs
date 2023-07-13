@@ -12,9 +12,15 @@ public partial struct CardInfo
     public string cardID;
     public int amount; // Used for deck building only. Serves no purpose once the card is in the game / on the board.
 
-    public CardInfo(ScriptableCard data, int amount = 1)
+
+    public CardInfo(ScriptableCard data, int amount = 0)
     {
         cardID = data.CardID;
+        this.amount = amount;
+    }
+
+    public void setAmount(int amount)
+    {
         this.amount = amount;
     }
 

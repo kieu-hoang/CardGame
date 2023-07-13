@@ -31,6 +31,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -49,7 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneId: 0
   serverOnly: 0
-  m_AssetId: b0ee6066df71dc1409ac460c4e296c81
+  m_AssetId: 
   hasSpawned: 0
 --- !u!114 &2970783521937405538
 MonoBehaviour:
@@ -77,8 +78,7 @@ MonoBehaviour:
   waitTurn: 1
   taunt: 0
   username: 
-  portrait: {fileID: 8242311448698324140, guid: d9669b31d91b84c469de11491d9b8fc8,
-    type: 3}
+  portrait: {fileID: 8242311448698324140, guid: d9669b31d91b84c469de11491d9b8fc8, type: 3}
   deck: {fileID: 2970783521937405539}
   cardback: {fileID: 21300000, guid: c7bf45f0ef95bed4491c5809fc6bf484, type: 3}
   tauntCount: 0
@@ -107,16 +107,38 @@ MonoBehaviour:
   deckSize: 0
   handSize: 7
   startingDeck:
+  - card: {fileID: 11400000, guid: bb5d76108a9d6944a968d682d55cb63f, type: 2}
+    amount: 2
+  - card: {fileID: 11400000, guid: 4fb7d13ea47cfc146a18fa37781159c5, type: 2}
+    amount: 2
+  - card: {fileID: 11400000, guid: d611b6dc488d47144be2f5a5b723ee50, type: 2}
+    amount: 2
+  - card: {fileID: 11400000, guid: 1d6441c0a2691c04ea7bf93a825f0678, type: 2}
+    amount: 2
+  - card: {fileID: 11400000, guid: 8cffe4d6b627e8a4981845751af874dd, type: 2}
+    amount: 2
+  - card: {fileID: 11400000, guid: ce27ae6b0656c4d48a646cbb43458cda, type: 2}
+    amount: 2
+  - card: {fileID: 11400000, guid: d611b6dc488d47144be2f5a5b723ee50, type: 2}
+    amount: 2
+  - card: {fileID: 11400000, guid: b8327131d0128464dbb7cee1940ad766, type: 2}
+    amount: 2
+  - card: {fileID: 11400000, guid: ed3d5391410892a448e16d4d72270cea, type: 2}
+    amount: 2
+  - card: {fileID: 11400000, guid: 922337293507b0d419c210cc6efb865c, type: 2}
+    amount: 2
+  - card: {fileID: 11400000, guid: ab3c341bdf8d8ed4ab87b28ba586f69b, type: 2}
+    amount: 2
+  - card: {fileID: 11400000, guid: d63530f1dec3f0649a282d7fad846d10, type: 2}
+    amount: 2
+  - card: {fileID: 11400000, guid: a7c5463fd79eb534685f9306abeb0c16, type: 2}
+    amount: 2
+  - card: {fileID: 11400000, guid: dc010d10e1f6610459dba4944e069df5, type: 2}
+    amount: 2
+  - card: {fileID: 11400000, guid: b39a77c9e4d828b449079bf030c6f3cc, type: 2}
+    amount: 1
   - card: {fileID: 11400000, guid: 8ec01c1a6eddc8141b9d75b9b76e1630, type: 2}
     amount: 1
-  - card: {fileID: 11400000, guid: ce27ae6b0656c4d48a646cbb43458cda, type: 2}
-    amount: 1
-  - card: {fileID: 11400000, guid: ed3d5391410892a448e16d4d72270cea, type: 2}
-    amount: 1
-  - card: {fileID: 11400000, guid: d611b6dc488d47144be2f5a5b723ee50, type: 2}
-    amount: 1
-  - card: {fileID: 11400000, guid: bb5d76108a9d6944a968d682d55cb63f, type: 2}
-    amount: 26
   spawnInitialCards: 1
 --- !u!114 &1537437544569787812
 MonoBehaviour:
