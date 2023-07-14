@@ -18,8 +18,19 @@ public class Card
 
     public Sprite thisImage;
 
-    public string color;
+    // public string color;
+    public enum Element
+    {
+        NoElement,
+        Metal,
+        Wood,
+        Water,
+        Fire,
+        Earth
+    }
     
+    public Element element;
+
     public int returnXcards;
     
     public int healXpower;
@@ -33,7 +44,8 @@ public class Card
         
     }
 
-    public Card(int Id, string CardName, int Dame, int Blood, int Mana, string CardDescription, Sprite ThisImage, string Color, int DrawXcards, int AddXmaxMana, int ReturnXcards, int HealXpower, bool Spell, int DamageBySpell, int IncreaseXdame)
+//  public Card(int Id, string CardName, int Dame, int Blood, int Mana, string CardDescription, Sprite ThisImage, string Color, int DrawXcards, int AddXmaxMana, int ReturnXcards, int HealXpower, bool Spell, int DamageBySpell, int IncreaseXdame)
+    public Card(int Id, string CardName, int Dame, int Blood, int Mana, string CardDescription, Sprite ThisImage, Element element, int DrawXcards, int AddXmaxMana, int ReturnXcards, int HealXpower, bool Spell, int DamageBySpell, int IncreaseXdame)
     {
         id = Id;
         cardName = CardName;
@@ -43,7 +55,8 @@ public class Card
         cardDescription = CardDescription;
 
         thisImage = ThisImage;
-        color = Color;
+        // color = Color;
+        this.element = element;
 
         drawXcards = DrawXcards;
         addXmaxMana = AddXmaxMana;

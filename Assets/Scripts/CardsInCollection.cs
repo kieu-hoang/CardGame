@@ -58,29 +58,29 @@ public class CardsInCollection : MonoBehaviour
         }
         else
         {
-            if (thisCard.color == "Red")
+            if (thisCard.element == Card.Element.Fire)
             {
-                frame.GetComponent<Image>().color = new Color32(255, 0, 0, 255);
+                frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardFire");
             }
-            if (thisCard.color == "Blue")
+            if (thisCard.element == Card.Element.Water)
             {
-                frame.GetComponent<Image>().color = new Color32(0, 0, 255, 255);
+                frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardWater");
             }
-            if (thisCard.color == "Yellow")
+            if (thisCard.element == Card.Element.Metal)
             {
-                frame.GetComponent<Image>().color = new Color32(255, 255, 0, 255);
+                frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardMetal");
             }
-            if (thisCard.color == "Green")
+            if (thisCard.element == Card.Element.Wood)
             {
-                frame.GetComponent<Image>().color = new Color32(60, 159, 81, 255);
+                frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardWood");
             }
-            if (thisCard.color == "Brown")
+            if (thisCard.element == Card.Element.Earth)
             {
-                frame.GetComponent<Image>().color = new Color32(109, 45, 45, 255);
+                frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardEarth");
             }
-            if (thisCard.color == "Black")
+            if (thisCard.element == Card.Element.NoElement)
             {
-                frame.GetComponent<Image>().color = new Color32(0, 0, 0, 255);
+                frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardNoElement");
             }
         }
     }
