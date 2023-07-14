@@ -11,7 +11,7 @@ public class GameManager : NetworkBehaviour
     public int maxMana = 7;
 
     [Header("Hand")]
-    public int handSize = 7;
+    public int handSize = 30;
     public PlayerHand playerHand;
     public PlayerHand enemyHand;
 
@@ -38,23 +38,23 @@ public class GameManager : NetworkBehaviour
 
     // Not sent from Player / Object with Authority, so we need to ignoreAuthority. 
     // We could also have this command run on the Player instead
-    [Command(ignoreAuthority = true)]
-    public void CmdOnCardHover(float moveBy, int index)
-    {
-        // Only move cards if there are any in our opponent's opponent's hand (our hand from our opponent's point of view).
-        if (enemyHand.handContent.transform.childCount > 0 && isServer) RpcCardHover(moveBy, index);
-    }
+    // [Command(ignoreAuthority = true)]
+    // public void CmdOnCardHover(float moveBy, int index)
+    // {
+    //     // Only move cards if there are any in our opponent's opponent's hand (our hand from our opponent's point of view).
+    //     if (enemyHand.handContent.transform.childCount > 0 && isServer) RpcCardHover(moveBy, index);
+    // }
 
-    [ClientRpc]
-    public void RpcCardHover(float moveBy, int index)
-    {
-        // Only move card for the player that isn't currently hovering
-        if (!isHovering)
-        {
-            HandCard card = enemyHand.handContent.transform.GetChild(index).GetComponent<HandCard>();
-            card.transform.localPosition = new Vector2(card.transform.localPosition.x, moveBy);
-        }
-    }
+    // [ClientRpc]
+    // public void RpcCardHover(float moveBy, int index)
+    // {
+    //     // Only move card for the player that isn't currently hovering
+    //     if (!isHovering)
+    //     {
+    //         HandCard card = enemyHand.handContent.transform.GetChild(index).GetComponent<HandCard>();
+    //         card.transform.localPosition = new Vector2(card.transform.localPosition.x, moveBy);
+    //     }
+    // }
 
     [Command(ignoreAuthority = true)]
     public void CmdOnFieldCardHover(GameObject cardObject, bool activateShine, bool targeting)
@@ -95,7 +95,8 @@ public class GameManager : NetworkBehaviour
         if (isOurTurn)
         {
             playerField.UpdateFieldCards();
-            Player.localPlayer.deck.DrawCard(1);
+            if (Player.localPlayer.handCardCount < 7)
+                Player.localPlayer.deck.DrawCard(1);
             Player.localPlayer.deck.CmdStartNewTurn();
         }
     }

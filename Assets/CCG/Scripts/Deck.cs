@@ -62,9 +62,8 @@ public class Deck : NetworkBehaviour
         PlayerHand playerHand = Player.gameManager.playerHand;
         for (int i = 0; i < amount; ++i)
         {
-            int index = i;
-            playerHand.AddCard(index);
-            player.CmdAddDrawCard(1);
+            playerHand.AddCard();
+            player.CmdAddCardCount(1);
         }
         spawnInitialCards = false;
     }
@@ -82,6 +81,7 @@ public class Deck : NetworkBehaviour
             newCard.health = creature.health;
             newCard.strength = creature.strength;
             newCard.costText.text = card.cost;
+            newCard.descriptionText.text = card.description;
             newCard.image.sprite = card.image;
             newCard.image.color = Color.white;
 
@@ -95,7 +95,7 @@ public class Deck : NetworkBehaviour
             NetworkServer.Spawn(boardCard);
 
             // Remove card from hand
-            hand.RemoveAt(index);
+            //hand.RemoveAt(index);
 
             if (isServer) RpcPlayCard(boardCard, index);
         }
@@ -122,10 +122,11 @@ public class Deck : NetworkBehaviour
             //NetworkServer.Spawn(boardCard);
 
             // Remove card from hand
-            hand.RemoveAt(index);
+            //hand.RemoveAt(index);
 
-            Player.gameManager.playerHand.RemoveCard(index);
+            //Player.gameManager.playerHand.RemoveCard(index);
         }
+        player.CmdAddCardCount(-1);
     }
 
     [Command]

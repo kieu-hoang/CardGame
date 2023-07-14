@@ -1,9 +1,11 @@
-﻿using UnityEngine.EventSystems;
+﻿using System;
+using UnityEngine.EventSystems;
 using UnityEngine;
 
 public class PlayerField : MonoBehaviour, IDropHandler
 {
     public Transform content;
+    public int fieldCount;
 
     public void OnDrop(PointerEventData eventData)
     {
@@ -12,7 +14,7 @@ public class PlayerField : MonoBehaviour, IDropHandler
         int manaCost = card.cost.text.ToInt();
 
         //
-        if (player.IsOurTurn() && player.deck.CanPlayCard(manaCost))
+        if (player.IsOurTurn() && player.deck.CanPlayCard(manaCost) && fieldCount < 5)
         {
             int index = card.handIndex;
             CardInfo cardInfo = player.deck.hand[index];
@@ -20,7 +22,7 @@ public class PlayerField : MonoBehaviour, IDropHandler
             //
             Player.gameManager.isSpawning = true;
             Player.gameManager.isHovering = false;
-            Player.gameManager.CmdOnCardHover(0, index);
+            //Player.gameManager.CmdOnCardHover(0, index); // 13/7 fixing...
             player.deck.CmdPlayCard(cardInfo, index); // Summon card onto the board
             player.combat.CmdChangeMana(-manaCost); // Reduce player's mana
         }
@@ -34,5 +36,10 @@ public class PlayerField : MonoBehaviour, IDropHandler
             FieldCard card = content.GetChild(i).GetComponent<FieldCard>();
             card.CmdUpdateWaitTurn();
         }
+    }
+
+    private void Update()
+    {
+        fieldCount = content.childCount;
     }
 }

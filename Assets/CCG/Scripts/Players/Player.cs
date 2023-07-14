@@ -37,9 +37,9 @@ public class Player : Entity
     // We store all our enemy's info in a PlayerInfo struct so we can pass it through the network when needed.
     [HideInInspector] public static GameManager gameManager;
     [SyncVar, HideInInspector] public bool firstPlayer = false; // Is it player 1, player 2, etc.
-    [SyncVar] public int drawCardCount = 0;
-
-    public int cardCount;
+    [SyncVar] public int cardCount = 0;
+    public int handCardCount = 0;
+    public int fieldCardCount = 0;
     public override void OnStartLocalPlayer()
     {
         localPlayer = this;
@@ -54,7 +54,7 @@ public class Player : Entity
         base.OnStartClient();
 
         deck.deckList.Callback += deck.OnDeckListChange;
-        //deck.hand.Callback += deck.OnHandChange;
+        deck.hand.Callback += deck.OnHandChange;
         deck.graveyard.Callback += deck.OnGraveyardChange;
     }
 
@@ -86,12 +86,17 @@ public class Player : Entity
             for (int v = 0; v < card.amount; ++v)
             {
                 deck.deckList.Add(card.amount > 0 ? new CardInfo(card.card, 1) : new CardInfo());
-                if (deck.hand.Count < 30) deck.hand.Add(new CardInfo(card.card, 1));
+                //if (deck.hand.Count < 30) deck.hand.Add(new CardInfo(card.card, 1));
             }
         }
-        if (deck.hand.Count == 30)
+        if (deck.deckList.Count == 30)
         {
-            deck.hand.Shuffle();
+            deck.deckList.Shuffle();
+        }
+
+        for (int i = 0; i < 30; i++)
+        {
+            deck.hand.Add(deck.deckList[i]);
         }
     }
 
@@ -120,6 +125,7 @@ public class Player : Entity
             gameManager.StartGame();
         }
 
+        handCardCount = cardCount;
     }
 
     public void UpdateEnemyInfo()
@@ -150,8 +156,8 @@ public class Player : Entity
     public bool IsOurTurn() => gameManager.isOurTurn;
     
     [Command(ignoreAuthority = true)]
-    public void CmdAddDrawCard(int x)
+    public void CmdAddCardCount(int x)
     {
-        drawCardCount += x;
+        cardCount += x;
     }
 }

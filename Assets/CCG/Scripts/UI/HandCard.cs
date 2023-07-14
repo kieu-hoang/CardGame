@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using Mirror;
 using UnityEngine.UI;
-using UnityEngine.XR;
 
 public class HandCard : MonoBehaviour
 {
@@ -26,7 +25,7 @@ public class HandCard : MonoBehaviour
     [Header("Outline")]
     public Image cardOutline;
     public Color readyColor;
-    [HideInInspector] public int handIndex;
+    public int handIndex;
     [HideInInspector] public PlayerType playerType;
 
     // Called from PlayerHand to instantiate the cards in the player's hand
