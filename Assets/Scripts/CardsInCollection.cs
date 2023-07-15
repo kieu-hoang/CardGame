@@ -17,9 +17,8 @@ public class CardsInCollection : MonoBehaviour
     public TMPro.TextMeshProUGUI nameText;
     public TMPro.TextMeshProUGUI dameText;
     public TMPro.TextMeshProUGUI bloodText;
-    public TMPro.TextMeshProUGUI manaText;
     public TMPro.TextMeshProUGUI descriptionText;
-
+    public GameObject[] stars;
     public Sprite thisSprite;
     public Image thatImage;
 
@@ -48,15 +47,29 @@ public class CardsInCollection : MonoBehaviour
         nameText.text = "" + cardName;
         dameText.text = "" + dame;
         bloodText.text = "" + blood;
-        manaText.text = "" + mana;
         descriptionText.text = " " + cardDescription;
+        
+        for (int i = 0; i < stars.Length; i++)
+        {
+            if (i < mana)
+            {
+                stars[i].SetActive(true);
+
+                RectTransform starTransform = stars[i].GetComponent<RectTransform>();
+                starTransform.localPosition = new Vector3(15 * (i - (mana - 1) / 2.0f), starTransform.localPosition.y, starTransform.localPosition.z);
+            }
+            else
+            {
+                stars[i].SetActive(false);
+            }
+        }
 
         thatImage.sprite = thisSprite;
-        if (beGrey == true)
-        {
-            frame.GetComponent<Image>().color = new Color32(155, 155, 155, 255);
-        }
-        else
+        // if (beGrey == true)
+        // {
+        //     frame.GetComponent<Image>().color = new Color32(155, 155, 155, 255);
+        // }
+        // else
         {
             if (thisCard.element == Card.Element.Fire)
             {

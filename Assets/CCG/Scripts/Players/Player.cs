@@ -119,10 +119,13 @@ public class Player : Entity
         {
             UpdateEnemyInfo();
         }
-
-        if (Input.GetKeyDown(KeyCode.G) && isLocalPlayer)
+        if (Input.GetKeyDown(KeyCode.G) && isLocalPlayer && hasEnemy)
         {
-            gameManager.StartGame();
+            if (enemyInfo.firstPlayer == false)
+            {
+                gameManager.StartGame();
+                firstPlayer = true;
+            }
         }
 
         handCardCount = cardCount;

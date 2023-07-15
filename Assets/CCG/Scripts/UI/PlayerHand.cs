@@ -9,7 +9,7 @@ public class PlayerHand : MonoBehaviour
     public PlayerType playerType;
     private Player player;
     private PlayerInfo enemyInfo;
-    private bool start = true;
+    private bool start = false;
     public int cardCount = 0; // Amount of cards in hand
     public static int hIndex = 0;
 
@@ -18,12 +18,12 @@ public class PlayerHand : MonoBehaviour
         player = Player.localPlayer;
         if (player && player.hasEnemy) enemyInfo = player.enemyInfo;
 
-        if (playerType == PlayerType.PLAYER && Input.GetKeyDown(KeyCode.C))
+        if (player && player.hasEnemy && playerType == PlayerType.PLAYER)
         {
-            if (start)
+            if (!start)
             {
                 player.deck.DrawCard(3);
-                start = false;
+                start = true;
             }
         }
 

@@ -6,7 +6,6 @@ using Mirror;
 public partial struct PlayerInfo
 {
     public GameObject player;
-
     public PlayerInfo(GameObject player)
     {
         this.player = player;
@@ -37,6 +36,7 @@ public partial struct PlayerInfo
     public int handCardCount => data.handCardCount;
     public int deckCount => data.deck.deckList.Count;
     public int graveCount => data.deck.graveyard.Count;
+    public bool firstPlayer => data.firstPlayer;
 }
 
 // Card List

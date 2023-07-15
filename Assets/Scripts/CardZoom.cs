@@ -26,7 +26,7 @@ public class CardZoom : MonoBehaviour
         if (transform.parent != Hand.transform)
             return;
         id = gameObject.GetComponent<ThisCard>().id;
-        zoomCard = Instantiate(ZoomCard, new Vector3(transform.position.x, transform.position.y+355,transform.position.z), transform.rotation);
+        zoomCard = Instantiate(ZoomCard, new Vector3(transform.position.x, transform.position.y+350,transform.position.z), transform.rotation);
         zoomCard.GetComponent<ZoomInfo>().thisCard = CardDataBase.cardList[id];
         zoomCard.transform.SetParent(Canvas.transform, true);
         zoomCard.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
