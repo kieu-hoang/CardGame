@@ -174,9 +174,11 @@ public class AICardToHand : MonoBehaviour
         if (actualblood<= 0 && thisCardCanBeDestroyed == true)
         {
             this.transform.SetParent(Graveyard.transform);
+            this.transform.position = new Vector3(transform.position.x + 4000, transform.position.y,
+                transform.position.z);
             hurted = 0;
         }
-        
+
         if (TurnSystem.isYourTurn == false && summoningSickness == false)
         {
             canAttack = true;

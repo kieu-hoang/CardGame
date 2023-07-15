@@ -9,12 +9,11 @@ public class TurnSystem : MonoBehaviour
     public static bool isYourTurn;
     public int yourTurn;
     public int yourOpponentTurn;
-    public TMPro.TextMeshProUGUI turnText;
 
     public static int maxMana;
     public static int currentMana;
-    public TMPro.TextMeshProUGUI manaText;
-
+    public Text manaText;
+    public GameObject button;
     public static bool startTurn;
 
     public int random;
@@ -26,7 +25,7 @@ public class TurnSystem : MonoBehaviour
 
     public static int maxEnemyMana;
     public static int currentEnemyMana;
-    public TMPro.TextMeshProUGUI enemyManaText;
+    public Text enemyManaText;
 
     public static bool protectStart;
     
@@ -46,12 +45,11 @@ public class TurnSystem : MonoBehaviour
     {
         if (isYourTurn)
         {
-            turnText.text = "Lượt của bạn";
-
+            button.SetActive(true);
         }
-        else turnText.text = "Lượt của đối thủ";
+        else button.SetActive(false);
 
-        manaText.text = currentMana + "/" + maxMana;
+        manaText.text = currentMana + "";
 
         if (isYourTurn == true && seconds > 0 && timerStart == true)
         {
@@ -77,7 +75,7 @@ public class TurnSystem : MonoBehaviour
             
         }
 
-        enemyManaText.text = currentEnemyMana + "/" + maxEnemyMana;
+        enemyManaText.text = currentEnemyMana + "";
 
         if (AI.AiEndPhase == true)
         {

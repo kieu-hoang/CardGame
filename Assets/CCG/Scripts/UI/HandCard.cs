@@ -98,6 +98,7 @@ public class HandCard : MonoBehaviour
             int manaCost = cost.text.ToInt();
             if (Player.gameManager.isOurTurn)
             {
+                Debug.Log("Can be here");
                 cardDragHover.canDrag = player.deck.CanPlayCard(manaCost);
                 cardOutline.color = cardDragHover.canDrag ? readyColor : Color.clear;
             }

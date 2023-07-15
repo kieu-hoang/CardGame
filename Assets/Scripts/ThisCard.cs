@@ -103,7 +103,7 @@ public class ThisCard : MonoBehaviour
         canAttack = false;
         summoningSickness = true;
 
-        Enemy = GameObject.Find("EnemyHp");
+        Enemy = GameObject.Find("EnemyPortrait");
 
         targeting = false;
         targetingEnemy = false;
@@ -388,6 +388,7 @@ public class ThisCard : MonoBehaviour
     public void StopAttack()
     {
         staticTargeting = false;
+        Arrow._Hide = true;
     }
     public void OneCardAttack()
     {
@@ -396,6 +397,7 @@ public class ThisCard : MonoBehaviour
     public void OneCardAttackStop()
     {
         onlyThisCardAttack = false;
+        Arrow._Hide = true;
     }
     public void Destroy()
     {

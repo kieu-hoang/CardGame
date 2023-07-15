@@ -8,8 +8,7 @@ public class EnemyHp : MonoBehaviour
     public static float maxHp;
     public static float staticHp;
     public float hp;
-    public Image Health;
-    public TMPro.TextMeshProUGUI hpText;
+    public Text hpText;
 
     // Start is called before the first frame update
     void Start()
@@ -22,12 +21,11 @@ public class EnemyHp : MonoBehaviour
     void Update()
     {
         hp = staticHp;
-        Health.fillAmount = hp / maxHp;
 
         if (hp > maxHp)
         {
             hp = maxHp;
         }
-        hpText.text = hp + "HP";
+        hpText.text = "" + hp;
     }
 }
