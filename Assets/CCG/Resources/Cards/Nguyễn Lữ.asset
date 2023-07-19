@@ -19,10 +19,18 @@ MonoBehaviour:
   intiatives:
   - abilityType: 4
     targets: 02
-    ability: {fileID: 0}
+    damage: 0
+    heal: 0
+    buff: 1
+    debuff: 0
+    untilEndOfTurn: 0
   - abilityType: 1
     targets: 02
-    ability: {fileID: 0}
+    damage: 0
+    heal: 1
+    buff: 0
+    debuff: 0
+    untilEndOfTurn: 0
   hasInitiative: 0
   description: "S\u0129 Kh\xED: T\u0103ng t\u1EA5t c\u1EA3 l\xEDnh c\xF3 tr\xEAn
     s\xE2n 1 dame 1 m\xE1u khi qu\xE2n b\xE0i n\xE0y c\xF2n tr\xEAn s\xE2n"
@@ -30,8 +38,14 @@ MonoBehaviour:
   health: 3
   acceptableTargets: 0301
   creatureType: 
+  element: 0
   hasCharge: 0
   hasTaunt: 0
   deathcrys: []
   hasDeathCry: 0
   cardPrefab: {fileID: 3966246863333951121, guid: 66532acc9bfbbe043b5ef65a717193da, type: 3}
+  targeted: 0
+  healthChange: 1
+  strengthChange: 1
+  cardDraw: 0
+  untilEndOfTurn: 0

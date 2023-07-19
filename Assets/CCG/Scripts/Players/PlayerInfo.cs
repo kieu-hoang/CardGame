@@ -37,6 +37,11 @@ public partial struct PlayerInfo
     public int deckCount => data.deck.deckList.Count;
     public int graveCount => data.deck.graveyard.Count;
     public bool firstPlayer => data.firstPlayer;
+    public bool isTargetable
+    {
+        get => data.isTargetable;
+        set => data.isTargetable = value;
+    }
 }
 
 // Card List

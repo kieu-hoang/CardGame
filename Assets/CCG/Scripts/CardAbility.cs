@@ -9,5 +9,14 @@ public struct CardAbility
 {
     public AbilityType abilityType; // Doesn't actually do anything. This is just to help visualize what each ScriptableAbility is doing.
     public List<Target> targets;
-    public ScriptableAbility ability;
+    public int damage;
+    public int heal;
+    
+    public int buff;
+    public int debuff;
+    
+    // public int draw;
+    // public int discard;
+    
+    public bool untilEndOfTurn;
 }

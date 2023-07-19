@@ -619,7 +619,7 @@ MonoBehaviour:
   creatureType: {fileID: 9170829488711350627}
   cardDragHover: {fileID: 4893882796268763019}
   cardOutline: {fileID: 8030490075463814138}
-  readyColor: {r: 0, g: 1, b: 0.14509805, a: 0}
+  readyColor: {r: 0, g: 1, b: 0.14509805, a: 0.39215687}
   handIndex: 0
   playerType: 0
 --- !u!114 &4893882796268763019

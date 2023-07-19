@@ -16,7 +16,7 @@ public class Combat : NetworkBehaviour
     [Command(ignoreAuthority = true)]
     public void CmdChangeStrength(int amount)
     {
-        // Increase mana by amount. If 3, increase by 3. If -3, reduce by 3.
+        // Increase dame by amount. If 3, increase by 3. If -3, reduce by 3.
         entity.strength += amount;
     }
 

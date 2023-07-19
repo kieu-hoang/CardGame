@@ -47,12 +47,12 @@ public class FieldCard : Entity
 
         if (CanAttack()) shine.color = readyColor;
         else if (CantAttack()) shine.color = Color.clear;
+        
     }
 
     [Command(ignoreAuthority = true)]
     public void CmdUpdateWaitTurn()
     {
-        //Debug.LogError("Here");
         if (waitTurn > 0) waitTurn--;
     }
 }

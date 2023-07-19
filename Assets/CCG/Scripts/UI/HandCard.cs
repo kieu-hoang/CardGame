@@ -14,7 +14,7 @@ public class HandCard : MonoBehaviour
     [Header("Properties")]
     public Text cardName;
     public Text cost;
-    public Text strength;
+    public Text strength; //dame
     public Text health;
     public Text description;
     public Text creatureType;
@@ -98,9 +98,8 @@ public class HandCard : MonoBehaviour
             int manaCost = cost.text.ToInt();
             if (Player.gameManager.isOurTurn)
             {
-                Debug.Log("Can be here");
                 cardDragHover.canDrag = player.deck.CanPlayCard(manaCost);
-                cardOutline.color = cardDragHover.canDrag ? readyColor : Color.clear;
+                cardOutline.GetComponent<Image>().color = cardDragHover.canDrag ? readyColor : Color.clear;
             }
         }
     }

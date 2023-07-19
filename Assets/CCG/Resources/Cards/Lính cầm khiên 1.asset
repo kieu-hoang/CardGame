@@ -24,8 +24,14 @@ MonoBehaviour:
   health: 5
   acceptableTargets: 0301
   creatureType: 
+  element: 0
   hasCharge: 0
-  hasTaunt: 0
+  hasTaunt: 1
   deathcrys: []
   hasDeathCry: 0
   cardPrefab: {fileID: 3966246863333951121, guid: 66532acc9bfbbe043b5ef65a717193da, type: 3}
+  targeted: 0
+  healthChange: 0
+  strengthChange: 0
+  cardDraw: 0
+  untilEndOfTurn: 0

@@ -30,8 +30,7 @@ public class PlayerHand : MonoBehaviour
         if (IsEnemyHand())
         {
             // instantiate/destroy enough slots
-                if (enemyInfo.handCardCount > 0)
-                    UIUtils.BalancePrefabs(cardPrefab.gameObject, enemyInfo.handCardCount, handContent);
+                UIUtils.BalancePrefabs(cardPrefab.gameObject, enemyInfo.handCardCount, handContent);
                 // refresh all members
                 for (int i = 0; i < enemyInfo.handCardCount; ++i)
                 {

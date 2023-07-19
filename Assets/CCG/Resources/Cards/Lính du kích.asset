@@ -16,15 +16,28 @@ MonoBehaviour:
   image: {fileID: 21300000, guid: 2feb4117194fe924ea3fc4f523d7fc00, type: 3}
   cost: 2
   category: 
-  intiatives: []
+  intiatives:
+  - abilityType: 0
+    targets: 04
+    damage: -2
+    heal: 0
+    buff: 0
+    debuff: 0
+    untilEndOfTurn: 0
   hasInitiative: 0
   description: "G\xE2y 2 dame v\xE0o qu\xE2n l\xEDnh b\u1EA5t k\xEC"
   strength: 3
   health: 2
   acceptableTargets: 0301
   creatureType: 
+  element: 0
   hasCharge: 0
   hasTaunt: 0
   deathcrys: []
   hasDeathCry: 0
   cardPrefab: {fileID: 3966246863333951121, guid: 66532acc9bfbbe043b5ef65a717193da, type: 3}
+  targeted: 0
+  healthChange: 1
+  strengthChange: 0
+  cardDraw: 0
+  untilEndOfTurn: 0

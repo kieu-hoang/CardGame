@@ -20,7 +20,7 @@ public abstract partial class Entity : NetworkBehaviour
     [HideInInspector] public bool isTargeting = false;
     [HideInInspector] public GameObject arrowObject;
 
-    public bool isTargetable = true; // If a Player/Minion can be targeted.
+    public bool isTargetable; // If a Player/Minion can be targeted.
 
     [Header("Special Properties")] // These spawn properties are set by our ScriptableCards, when the card is spawned into the game.
     [SyncVar] public int waitTurn = 1; // What turn does this card become active? Is it active as soon as it spawns, or do we wait 1, 2, 3, etc. turns before it can attack?
