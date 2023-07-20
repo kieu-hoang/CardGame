@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Mirror;
+using TMPro;
 using UnityEngine.UI;
 
 public class HandCard : MonoBehaviour
@@ -12,12 +13,15 @@ public class HandCard : MonoBehaviour
     public Image cardback;
 
     [Header("Properties")]
-    public Text cardName;
-    public Text cost;
-    public Text strength; //dame
-    public Text health;
-    public Text description;
+    public TextMeshProUGUI cardName;
+    public TextMeshProUGUI cost;
+    public TextMeshProUGUI strength; //dame
+    public TextMeshProUGUI health;
+    public TextMeshProUGUI description;
     public Text creatureType;
+    
+    public GameObject[] stars;
+    public Image frame;
 
     [Header("Card Drag & Hover")]
     public HandCardDragHover cardDragHover;
@@ -37,6 +41,31 @@ public class HandCard : MonoBehaviour
         // Enable hover on player cards. We disable it for enemy cards.
         cardDragHover.canHover = true;
         cardOutline.gameObject.SetActive(true);
+        
+        if (newCard.element == Element.Fire)
+        {
+            frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardFire");
+        }
+        if (newCard.element == Element.Water)
+        {
+            frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardWater");
+        }
+        if (newCard.element == Element.Metal)
+        {
+            frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardMetal");
+        }
+        if (newCard.element == Element.Wood)
+        {
+            frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardWood");
+        }
+        if (newCard.element == Element.Earth)
+        {
+            frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardEarth");
+        }
+        if (newCard.element == Element.NoElement)
+        {
+            frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardNoElement");
+        }
 
         // Reveal card FRONT, hide card BACK
         cardfront.color = Color.white;
@@ -44,11 +73,27 @@ public class HandCard : MonoBehaviour
 
         // Set card image
         image.sprite = newCard.image;
-
+        
         // Assign description, name and remaining stats
         description.text = newCard.description; // Description
         cost.text = newCard.cost; // Cost
         cardName.text = newCard.name;
+        
+        //set stars in mana
+        for (int i = 0; i < stars.Length; i++)
+        {
+            if (i < cost.text.ToInt())
+            {
+                stars[i].SetActive(true);
+
+                RectTransform starTransform = stars[i].GetComponent<RectTransform>();
+                starTransform.localPosition = new Vector3(15 * (i - (cost.text.ToInt() - 1) / 2.0f), starTransform.localPosition.y, starTransform.localPosition.z);
+            }
+            else
+            {
+                stars[i].SetActive(false);
+            }
+        }
 
         // Only set Health & Strength if CreatureCard
         if (newCard.data is CreatureCard)
@@ -87,6 +132,46 @@ public class HandCard : MonoBehaviour
         // Stats
         health.text = ((CreatureCard)card.data).health.ToString();
         strength.text = ((CreatureCard)card.data).strength.ToString();
+        
+        //set stars in mana
+        for (int i = 0; i < stars.Length; i++)
+        {
+            if (i < cost.text.ToInt())
+            {
+                stars[i].SetActive(true);
+
+                RectTransform starTransform = stars[i].GetComponent<RectTransform>();
+                starTransform.localPosition = new Vector3(15 * (i - (cost.text.ToInt() - 1) / 2.0f), starTransform.localPosition.y, starTransform.localPosition.z);
+            }
+            else
+            {
+                stars[i].SetActive(false);
+            }
+        }
+        if (card.element == Element.Fire)
+        {
+            frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardFire");
+        }
+        if (card.element == Element.Water)
+        {
+            frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardWater");
+        }
+        if (card.element == Element.Metal)
+        {
+            frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardMetal");
+        }
+        if (card.element == Element.Wood)
+        {
+            frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardWood");
+        }
+        if (card.element == Element.Earth)
+        {
+            frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardEarth");
+        }
+        if (card.element == Element.NoElement)
+        {
+            frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardNoElement");
+        }
     }
 
     private void Update()

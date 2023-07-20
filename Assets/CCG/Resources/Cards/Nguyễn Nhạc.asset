@@ -16,6 +16,7 @@ MonoBehaviour:
   image: {fileID: 21300000, guid: 17a88280a0cda264d81bce81e23b290f, type: 3}
   cost: 4
   category: 
+  element: 3
   intiatives:
   - abilityType: 1
     targets: 02
@@ -31,7 +32,6 @@ MonoBehaviour:
   health: 4
   acceptableTargets: 0301
   creatureType: 
-  element: 0
   hasCharge: 0
   hasTaunt: 0
   deathcrys: []

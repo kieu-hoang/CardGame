@@ -9,24 +9,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 796a01ad10bd5e24eb5fe2330ffc66b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 992a434fee04c2f47bebd224e2fb0dee, type: 3}
   m_Name: "\u0110\u1EA1i chi\u1EBFn qu\xE2n Thanh"
   m_EditorClassIdentifier: 
-  id: 1c1032f5cefa0d84783dd6ac6ad4c483
-  image: {fileID: 21300000, guid: 21374e1d20e773b439e11e02dafca722, type: 3}
+  id: 1c1032f5cefa0d84783dd6ac6ad4c111
+  image: {fileID: 21300000, guid: ed571b35cc751e341ae71e0b493264c5, type: 3}
   cost: 5
   category: 
+  element: 0
   intiatives:
   - abilityType: 0
     targets: 03
-    ability: {fileID: 0}
-  hasInitiative: 1
+    damage: -2
+    heal: 0
+    buff: 0
+    debuff: 0
+    untilEndOfTurn: 0
+  hasInitiative: 0
   description: "G\xE2y 2 dame cho to\xE0n b\u1ED9 qu\xE2n \u0111\u1ECBch, n\u1EBFu
     b\xEAn qu\xE2n \u0111\u1ECBch c\xF3 T\xF4n S\u0129 Ngh\u1ECB g\xE2y th\xEAm 1
     dame"
+  strength: 0
+  health: 0
+  acceptableTargets: 0301
+  creatureType: 1
+  hasCharge: 0
+  hasTaunt: 0
+  deathcrys: []
+  hasDeathCry: 0
+  cardPrefab: {fileID: 3966246863333951121, guid: 66532acc9bfbbe043b5ef65a717193da, type: 3}
   targeted: 0
-  healthChange: -2
+  healthChange: 1
   strengthChange: 0
   cardDraw: 0
   untilEndOfTurn: 0
-  cardPrefab: {fileID: 3966246863333951121, guid: 66532acc9bfbbe043b5ef65a717193da, type: 3}

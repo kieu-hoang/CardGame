@@ -9,20 +9,43 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 796a01ad10bd5e24eb5fe2330ffc66b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 992a434fee04c2f47bebd224e2fb0dee, type: 3}
   m_Name: "Thu\u1ED1c c\u1EA7m m\xE1u 1"
   m_EditorClassIdentifier: 
-  id: 98712755784c87c4a9622aa998b7cb79
-  image: {fileID: 21300000, guid: 00350960c8bda434fb2e0b4157210140, type: 3}
+  id: 123a45d9f1ff755489e19370d49de7a5
+  image: {fileID: 21300000, guid: d59ed0b33e33fb8469ecd25d53980fc3, type: 3}
   cost: 2
   category: 
-  intiatives: []
+  element: 0
+  intiatives:
+  - abilityType: 1
+    targets: 04
+    damage: 0
+    heal: 3
+    buff: 0
+    debuff: 0
+    untilEndOfTurn: 0
+  - abilityType: 1
+    targets: 00
+    damage: 0
+    heal: 2
+    buff: 0
+    debuff: 0
+    untilEndOfTurn: 0
   hasInitiative: 0
   description: "H\u1ED3i 3 m\xE1u cho 1 qu\xE2n b\u1EA5t k\xEC, sau \u0111\xF3 h\u1ED3i
     2 m\xE1u cho hero"
+  strength: 0
+  health: 0
+  acceptableTargets: 0301
+  creatureType: 1
+  hasCharge: 0
+  hasTaunt: 0
+  deathcrys: []
+  hasDeathCry: 0
+  cardPrefab: {fileID: 3966246863333951121, guid: 66532acc9bfbbe043b5ef65a717193da, type: 3}
   targeted: 0
-  healthChange: 3
+  healthChange: 1
   strengthChange: 0
   cardDraw: 0
   untilEndOfTurn: 0
-  cardPrefab: {fileID: 3966246863333951121, guid: 66532acc9bfbbe043b5ef65a717193da, type: 3}

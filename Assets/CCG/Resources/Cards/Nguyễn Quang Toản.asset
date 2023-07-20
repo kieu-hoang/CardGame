@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 992a434fee04c2f47bebd224e2fb0dee, type: 3}
-  m_Name: "Nguy\u1EC5n Quan To\u1EA3n"
+  m_Name: "Nguy\u1EC5n Quang To\u1EA3n"
   m_EditorClassIdentifier: 
   id: 9088ca7469ae3b54d83f52babc18f456
   image: {fileID: 21300000, guid: 09e865c14ef7a6842aef479a466543a4, type: 3}
   cost: 5
   category: 
+  element: 2
   intiatives:
   - abilityType: 1
     targets: 02
@@ -31,7 +32,6 @@ MonoBehaviour:
   health: 5
   acceptableTargets: 0301
   creatureType: 
-  element: 0
   hasCharge: 0
   hasTaunt: 0
   deathcrys: []

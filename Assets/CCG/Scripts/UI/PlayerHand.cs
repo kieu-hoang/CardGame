@@ -10,7 +10,7 @@ public class PlayerHand : MonoBehaviour
     private Player player;
     private PlayerInfo enemyInfo;
     private bool start = false;
-    public int cardCount = 0; // Amount of cards in hand
+    public int handCount = 0; // Amount of cards in hand
     public static int hIndex = 0;
 
     void Update()
@@ -39,7 +39,7 @@ public class PlayerHand : MonoBehaviour
                     slot.AddCardBack();
                     slot.cost.text = "10";
                 }
-                cardCount = enemyInfo.handCardCount;
+                handCount = enemyInfo.handCardCount;
         }
     }
 
@@ -65,6 +65,6 @@ public class PlayerHand : MonoBehaviour
     }
 
     bool IsEnemyHand() =>
-        player && player.hasEnemy && playerType == PlayerType.ENEMY && enemyInfo.handCount != cardCount;
+        player && player.hasEnemy && playerType == PlayerType.ENEMY && enemyInfo.handCount != handCount;
     bool IsPlayerHand() => player && player.deck.spawnInitialCards && playerType == PlayerType.PLAYER;
 }

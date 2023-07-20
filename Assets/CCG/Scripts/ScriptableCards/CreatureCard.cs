@@ -25,10 +25,8 @@ public partial class CreatureCard : ScriptableCard
     public List<Target> acceptableTargets = new List<Target>();
 
     [Header("Type")]
-    public List<CreatureType> creatureType;
-
-    public Element element;
-
+    public CreatureType creatureType = CreatureType.SOLDIER;
+    
     [Header("Specialities")]
     public bool hasCharge = false;
     public bool hasTaunt = false;
@@ -50,10 +48,57 @@ public partial class CreatureCard : ScriptableCard
     public virtual void Attack(Entity attacker, Entity target)
     {
         // Reduce the target's health by damage dealt.
-        target.combat.CmdChangeHealth(-attacker.strength);
-        attacker.combat.CmdChangeHealth(-target.strength);
+        if (isOpposition(attacker, target))
+        {
+            target.combat.CmdChangeHealth(-attacker.strength-2);
+            attacker.combat.CmdChangeHealth(-target.strength);
+        }
+        else if (isMutualBirth(attacker, target))
+        {
+            target.combat.CmdChangeHealth(-attacker.strength+2);
+            attacker.combat.CmdChangeHealth(-target.strength);
+        }
+        else
+        {
+            target.combat.CmdChangeHealth(-attacker.strength);
+            attacker.combat.CmdChangeHealth(-target.strength);
+        }
         attacker.DestroyTargetingArrow();
         attacker.combat.CmdIncreaseWaitTurn();
+    }
+
+    public bool isMutualBirth(Entity attacker, Entity target)
+    {
+        if (attacker.element == Element.NoElement || target.element == Element.NoElement)
+            return false;
+        if (attacker.element == Element.Earth && target.element == Element.Metal)
+            return true;
+        if (attacker.element == Element.Metal && target.element == Element.Water)
+            return true;
+        if (attacker.element == Element.Water && target.element == Element.Wood)
+            return true;
+        if (attacker.element == Element.Wood && target.element == Element.Fire)
+            return true;
+        if (attacker.element == Element.Fire && target.element == Element.Earth)
+            return true;
+        return false;
+    }
+    
+    public bool isOpposition(Entity attacker, Entity target)
+    {
+        if (attacker.element == Element.NoElement || target.element == Element.NoElement)
+            return false;
+        if (attacker.element == Element.Earth && target.element == Element.Water)
+            return true;
+        if (attacker.element == Element.Metal && target.element == Element.Wood)
+            return true;
+        if (attacker.element == Element.Water && target.element == Element.Fire)
+            return true;
+        if (attacker.element == Element.Wood && target.element == Element.Earth)
+            return true;
+        if (attacker.element == Element.Fire && target.element == Element.Metal)
+            return true;
+        return false;
     }
 
     private void OnValidate()

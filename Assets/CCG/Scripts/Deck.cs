@@ -83,6 +83,8 @@ public class Deck : NetworkBehaviour
         newCard.descriptionText.text = card.description;
         newCard.image.sprite = card.image;
         newCard.image.color = Color.white;
+        newCard.element = creature.element;
+        
 
         // If creature has charge, reduce waitTurn to 0 so they can attack right away.
         if (creature.hasCharge) newCard.waitTurn = 0;
@@ -240,6 +242,11 @@ public class Deck : NetworkBehaviour
                 }
             }
             boardCard.transform.SetParent(Player.gameManager.playerField.content, false);
+            if (creature.creatureType == CreatureType.SPELL)
+            {
+                new WaitForSeconds(0.4f);
+                Destroy(boardCard);
+            }
             Player.gameManager.isSpawning = false;
         }
         else if (player.hasEnemy)

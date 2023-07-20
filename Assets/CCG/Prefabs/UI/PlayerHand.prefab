@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.019607844}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.08627451}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -218,3 +218,4 @@ MonoBehaviour:
   cardPrefab: {fileID: 4726194260363454408, guid: c20c3fb3157236548969e48a94ddf8cf, type: 3}
   handContent: {fileID: 3534890129573020755}
   playerType: 0
+  cardCount: 0

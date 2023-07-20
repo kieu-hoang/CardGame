@@ -26,6 +26,7 @@ public abstract partial class Entity : NetworkBehaviour
     [SyncVar] public int waitTurn = 1; // What turn does this card become active? Is it active as soon as it spawns, or do we wait 1, 2, 3, etc. turns before it can attack?
     public bool taunt = false; // Whether it's a taunt minion or not.
     // waitTurn is also used for stunning/freezing/etc. minions.
+    public Element element = Element.NoElement;
 
     public bool IsDead() => health <= 0;
     public bool CanAttack() => Player.gameManager.isOurTurn && waitTurn == 0 && casterType == Target.FRIENDLIES;

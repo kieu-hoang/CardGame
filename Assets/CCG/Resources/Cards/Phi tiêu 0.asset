@@ -9,20 +9,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 796a01ad10bd5e24eb5fe2330ffc66b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 992a434fee04c2f47bebd224e2fb0dee, type: 3}
   m_Name: "Phi ti\xEAu 0"
   m_EditorClassIdentifier: 
-  id: 9088ca7469ae3b54d83f52b25918fb9f
-  image: {fileID: 21300000, guid: 00350960c8bda434fb2e0b4157210140, type: 3}
+  id: ce27ae6b0656c4d481646cbb43458123
+  image: {fileID: 21300000, guid: 4cea42a552d4f3c488f068379a1f57f0, type: 3}
   cost: 1
   category: 
-  intiatives: []
+  element: 0
+  intiatives:
+  - abilityType: 0
+    targets: 01
+    damage: -2
+    heal: 0
+    buff: 0
+    debuff: 0
+    untilEndOfTurn: 0
   hasInitiative: 0
-  description: "G\xE2y 2 dame cho ng\u01B0\u1EDDi ch\u01A1i\r\nSpecial: G\xE2y 4
-    dame n\u1EBFu tr\xEAn b\xE0n \u0111\u1EA5u c\xF3 L\xEDnh c\u1EA3m t\u1EED\r\n"
+  description: "G\xE2y 2 dame cho ng\u01B0\u1EDDi ch\u01A1i\r\nSpecial : G\xE2y 4
+    dame n\u1EBFu tr\xEAn b\xE0n \u0111\u1EA5u c\xF3 L\xEDnh c\u1EA3m t\u1EED\r"
+  strength: 0
+  health: 0
+  acceptableTargets: 0301
+  creatureType: 1
+  hasCharge: 0
+  hasTaunt: 0
+  deathcrys: []
+  hasDeathCry: 0
+  cardPrefab: {fileID: 3966246863333951121, guid: 66532acc9bfbbe043b5ef65a717193da, type: 3}
   targeted: 0
-  healthChange: -2
+  healthChange: 1
   strengthChange: 0
   cardDraw: 0
   untilEndOfTurn: 0
-  cardPrefab: {fileID: 3966246863333951121, guid: 66532acc9bfbbe043b5ef65a717193da, type: 3}

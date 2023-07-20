@@ -37,6 +37,7 @@ public partial struct CardInfo
     public string name => data.name; // Scriptable Card name (name of the file)
     public string cost => data.cost.ToString();
     public string description => data.description;
+    public Element element => data.element;
 
     public List<Target> acceptableTargets => ((CreatureCard)data).acceptableTargets;
 }

@@ -16,6 +16,7 @@ MonoBehaviour:
   image: {fileID: 21300000, guid: bac962622e35e984db74dbd202aa42d9, type: 3}
   cost: 5
   category: 
+  element: 1
   intiatives:
   - abilityType: 1
     targets: 02
@@ -26,14 +27,13 @@ MonoBehaviour:
     untilEndOfTurn: 0
   hasInitiative: 0
   description: "S\u0129 Kh\xED: T\u0103ng t\u1EA5t c\u1EA3 l\xEDnh c\xF3 tr\xEAn
-    s\xE2n 3 dame 3 m\xE1u khi qu\xE2n b\xE0i n\xE0y c\xF2n tr\xEAn s\xE2n\r. Khi
+    s\xE2n 3 dame 3 m\xE1u khi qu\xE2n b\xE0i n\xE0y c\xF2n tr\xEAn s\xE2n\r. \nKhi
     tr\xEAn s\xE2n c\xF3 3 anh em nh\xE0 Nguy\u1EC5n: g\xE2y 3 dame cho to\xE0n b\u1ED9
     qu\xE2n \u0111\u1ECBch tr\xEAn s\xE2n trong l\u01B0\u1EE3t \u0111\xF3\r\n"
   strength: 6
   health: 6
   acceptableTargets: 0301
   creatureType: 
-  element: 0
   hasCharge: 0
   hasTaunt: 0
   deathcrys: []

@@ -9,19 +9,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 796a01ad10bd5e24eb5fe2330ffc66b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 992a434fee04c2f47bebd224e2fb0dee, type: 3}
   m_Name: "Phi ti\xEAu 1"
   m_EditorClassIdentifier: 
   id: 775e8feeb6889a9499de0b045f7f9628
-  image: {fileID: 21300000, guid: 00350960c8bda434fb2e0b4157210140, type: 3}
+  image: {fileID: 21300000, guid: 80d42fb1a81503e40893a05fec16264d, type: 3}
   cost: 3
   category: 
-  intiatives: []
+  element: 0
+  intiatives:
+  - abilityType: 0
+    targets: 01
+    damage: -3
+    heal: 0
+    buff: 0
+    debuff: 0
+    untilEndOfTurn: 0
   hasInitiative: 0
-  description: "G\xE2y 3 dame cho ng\u01B0\u1EDDi ch\u01A1i\n"
+  description: "G\xE2y 3 dame cho ng\u01B0\u1EDDi ch\u01A1i"
+  strength: 0
+  health: 0
+  acceptableTargets: 0301
+  creatureType: 1
+  hasCharge: 0
+  hasTaunt: 0
+  deathcrys: []
+  hasDeathCry: 0
+  cardPrefab: {fileID: 3966246863333951121, guid: 66532acc9bfbbe043b5ef65a717193da, type: 3}
   targeted: 0
-  healthChange: -3
+  healthChange: 1
   strengthChange: 0
   cardDraw: 0
   untilEndOfTurn: 0
-  cardPrefab: {fileID: 3966246863333951121, guid: 66532acc9bfbbe043b5ef65a717193da, type: 3}
