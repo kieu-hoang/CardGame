@@ -5,7 +5,7 @@ public class Combat : NetworkBehaviour
 {
     [Header("Entity")]
     public Entity entity;
-
+    
     [Command(ignoreAuthority = true)]
     public void CmdChangeMana(int amount)
     {
@@ -26,7 +26,13 @@ public class Combat : NetworkBehaviour
         // Increase health by amount. If 3, increase by 3. If -3, reduce by 3.
         entity.health += amount;
         if (entity.health > 30) entity.health = 30;
-        if (entity.health <= 0 && entity is not Player) Destroy(entity.gameObject);
+        // if (entity.IsDead() && entity is not Player)
+        // {
+        //     //Destroy(entity.gameObject);
+        //     entity.transform.SetParent(GameManager.graveyard.transform);
+        //     entity.transform.position = new Vector3(entity.transform.position.x + 4000, entity.transform.position.y,
+        //         entity.transform.position.z);
+        // }
     }
 
     [Command(ignoreAuthority = true)]

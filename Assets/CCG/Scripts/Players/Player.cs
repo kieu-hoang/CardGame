@@ -170,6 +170,12 @@ public class Player : Entity
     [Command(ignoreAuthority = true)]
     public void CmdAddCardCount(int x)
     {
+        RpcAddCardCount(x);
+    }
+
+    [ClientRpc]
+    public void RpcAddCardCount(int x)
+    {
         cardCount += x;
     }
 }

@@ -3783,9 +3783,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 65863273}
     - target: {fileID: 810035657886145062, guid: 5acb4cbd0487e1e4786d8ca58d5ae725, type: 3}
+      propertyPath: graveyard
+      value: 
+      objectReference: {fileID: 310121346}
+    - target: {fileID: 810035657886145062, guid: 5acb4cbd0487e1e4786d8ca58d5ae725, type: 3}
       propertyPath: timerText
       value: 
       objectReference: {fileID: 1378632245}
+    - target: {fileID: 810035657886145062, guid: 5acb4cbd0487e1e4786d8ca58d5ae725, type: 3}
+      propertyPath: eGraveyard
+      value: 
+      objectReference: {fileID: 1628911573}
     - target: {fileID: 810035657886145062, guid: 5acb4cbd0487e1e4786d8ca58d5ae725, type: 3}
       propertyPath: enemyField
       value: 

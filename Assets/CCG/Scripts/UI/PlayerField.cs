@@ -59,7 +59,21 @@ public class PlayerField : MonoBehaviour, IDropHandler
             CardInfo card = content.GetChild(i).GetComponent<FieldCard>().card;
             CreatureCard creature = (CreatureCard)card.data;
             if (creature.hasCharge)
-                Destroy(content.GetChild(i).gameObject);
+                //Destroy(content.GetChild(i).gameObject);
+                content.GetChild(i).GetComponent<FieldCard>().health = 0;
+        }
+    }
+
+    public void toGraveyard()
+    {
+        Player player = Player.localPlayer;
+        for (int i = 0; i < content.childCount; i++)
+        {
+            if (content.GetChild(i).GetComponent<FieldCard>().IsDead())
+            {
+                Player.gameManager.isSpawning = true;
+                player.deck.CmdDestroyCard(content.GetChild(i));
+            }
         }
     }
     
@@ -102,5 +116,7 @@ public class PlayerField : MonoBehaviour, IDropHandler
             checkCharge();
         if (Player.localPlayer && !Player.localPlayer.IsOurTurn() && playerType == PlayerType.PLAYER && Player.localPlayer.hasEnemy)
             checkCharge();
+        if (Player.localPlayer && Player.localPlayer.IsOurTurn() && Player.localPlayer.hasEnemy)
+            toGraveyard();
     }
 }

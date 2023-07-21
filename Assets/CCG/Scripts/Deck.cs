@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using Mirror;
 using Random = UnityEngine.Random;
@@ -99,7 +100,7 @@ public class Deck : NetworkBehaviour
         NetworkServer.Spawn(boardCard);
 
         if (isServer) RpcPlayCard(boardCard, index);
-        player.CmdAddCardCount(-1);
+        player.RpcAddCardCount(-1);
     }
 
     [Command]
@@ -249,7 +250,7 @@ public class Deck : NetworkBehaviour
             boardCard.transform.SetParent(Player.gameManager.playerField.content, false);
             if (creature.creatureType == CreatureType.SPELL)
             {
-                new WaitForSeconds(1f);
+                StartCoroutine(Wait());
                 Destroy(boardCard);
             }
             Player.gameManager.isSpawning = false;
@@ -265,9 +266,94 @@ public class Deck : NetworkBehaviour
                 boardCard.GetComponent<FieldCard>().diplomacy = true;
             if (creature.creatureType == CreatureType.SPELL)
             {
-                new WaitForSeconds(1f);
+                StartCoroutine(Wait());
                 Destroy(boardCard);
             }
+        }
+    }
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(0.8f);
+    }
+
+    [Command]
+    public void CmdDestroyCard(Transform card)
+    {
+        if (isServer) RpcDestroyCard(card);
+    }
+
+    [ClientRpc]
+    public void RpcDestroyCard(Transform boardCard)
+    {
+        if (Player.gameManager.isSpawning)
+        {
+            CardInfo card = boardCard.GetComponent<FieldCard>().card;
+            CreatureCard creature = (CreatureCard)card.data;
+            if (creature.hasDeathCry)
+            {
+                foreach (CardAbility cardAbility in creature.deathcrys)
+                {
+                    foreach (Target tar in cardAbility.targets)
+                    {
+                        if (tar == Target.ENEMIES)
+                        {
+                            foreach (Transform child in Player.gameManager.enemyField.content)
+                            {
+                                child.GetComponent<FieldCard>().combat.CmdChangeHealth(cardAbility.damage);
+                            }
+                        }
+                        else if (tar == Target.FRIENDLIES)
+                        {
+                            foreach (Transform child in Player.gameManager.playerField.content)
+                            {
+                                if (child != boardCard.transform)
+                                    child.GetComponent<FieldCard>().combat.CmdChangeHealth(cardAbility.heal);
+                            }
+                        }
+                        else if (tar == Target.RANDOM)
+                        {
+                            if (cardAbility.heal > 0)
+                            {
+                                int x = Random.Range(0, Player.gameManager.playerField.content.childCount);
+                                int i = 0;
+                                foreach (Transform child in Player.gameManager.playerField.content)
+                                {
+                                    if (i == x)
+                                    {
+                                        child.GetComponent<FieldCard>().combat.CmdChangeHealth(cardAbility.heal);
+                                        break;
+                                    }
+                                    i++;
+                                }
+                            }
+                            else if (cardAbility.damage < 0)
+                            {
+                                int x = Random.Range(0, Player.gameManager.enemyField.content.childCount);
+                                int i = 0;
+                                foreach (Transform child in Player.gameManager.enemyField.content)
+                                {
+                                    if (i == x)
+                                    {
+                                        child.GetComponent<FieldCard>().combat.CmdChangeHealth(cardAbility.damage);
+                                        break;
+                                    }
+                                    i++;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            boardCard.SetParent(Player.gameManager.graveyard.transform, false);
+            boardCard.position = new Vector3(boardCard.position.x + 4000, boardCard.position.y,
+                boardCard.position.z);
+            Player.gameManager.isSpawning = false;
+        }
+        else if (player.hasEnemy)
+        {
+            boardCard.SetParent(Player.gameManager.eGraveyard.transform, false);
+            boardCard.position = new Vector3(boardCard.position.x + 4000, boardCard.position.y,
+                boardCard.position.z);
         }
     }
 }

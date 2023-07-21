@@ -714,6 +714,8 @@ MonoBehaviour:
   isTargetable: 1
   waitTurn: 1
   taunt: 0
+  diplomacy: 0
+  element: 0
   card:
     cardID: 
     amount: 0
@@ -730,11 +732,10 @@ MonoBehaviour:
   - {fileID: 3178059022164495375}
   - {fileID: 2874531944308234679}
   frame: {fileID: 2969928717052092413}
-  element: 0
   shine: {fileID: 7895911692240644395}
   hoverColor: {r: 0, g: 0.85490197, b: 0.98039216, a: 0.39215687}
   readyColor: {r: 0, g: 1, b: 0.11764706, a: 0.39215687}
-  targetColor: {r: 0.98039216, g: 0.01960382, b: 0, a: 0.78431374}
+  targetColor: {r: 0.98039216, g: 0, b: 0.7320016, a: 0.50980395}
   cardHover: {fileID: 1731655614884413486}
 --- !u!222 &8867336146261718053
 CanvasRenderer:

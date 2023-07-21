@@ -24,6 +24,10 @@ public class GameManager : NetworkBehaviour
     public PlayerField playerField;
     public PlayerField enemyField;
 
+    [Header("Graveyard")] 
+    public Transform graveyard;
+    public Transform eGraveyard;
+
     [Header("Turn Management")]
     public GameObject endTurnButton;
     public GameObject enemyText;
