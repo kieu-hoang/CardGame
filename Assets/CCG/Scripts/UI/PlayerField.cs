@@ -1,4 +1,5 @@
 ﻿using System;
+using Unity.VisualScripting;
 using UnityEngine.EventSystems;
 using UnityEngine;
 
@@ -50,6 +51,18 @@ public class PlayerField : MonoBehaviour, IDropHandler
         }
         return false;
     }
+    
+    public void checkCharge()
+    {
+        for (int i = 0; i < content.childCount; i++)
+        {
+            CardInfo card = content.GetChild(i).GetComponent<FieldCard>().card;
+            CreatureCard creature = (CreatureCard)card.data;
+            if (creature.hasCharge)
+                Destroy(content.GetChild(i).gameObject);
+        }
+    }
+    
     private void Update()
     {
         fieldCount = content.childCount;
@@ -85,5 +98,9 @@ public class PlayerField : MonoBehaviour, IDropHandler
                 Player.localPlayer.enemyInfo.isTargetable = true;
             }
         }
+        if (Player.localPlayer && Player.localPlayer.IsOurTurn() && playerType == PlayerType.ENEMY && Player.localPlayer.hasEnemy)
+            checkCharge();
+        if (Player.localPlayer && !Player.localPlayer.IsOurTurn() && playerType == PlayerType.PLAYER && Player.localPlayer.hasEnemy)
+            checkCharge();
     }
 }

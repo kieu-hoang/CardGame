@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "Phi ti\xEAu 1"
   m_EditorClassIdentifier: 
   id: 775e8feeb6889a9499de0b045f7f9628
-  image: {fileID: 21300000, guid: 80d42fb1a81503e40893a05fec16264d, type: 3}
+  image: {fileID: 21300000, guid: a3338bf3649ced44991a4bace4c73040, type: 3}
   cost: 3
   category: 
   element: 0

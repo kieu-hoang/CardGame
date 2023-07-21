@@ -63,8 +63,11 @@ public class Deck : NetworkBehaviour
         PlayerHand playerHand = Player.gameManager.playerHand;
         for (int i = 0; i < amount; ++i)
         {
-            playerHand.AddCard();
-            player.CmdAddCardCount(1);
+            if (playerHand.hIndex < deckSize)
+            {
+                playerHand.AddCard();
+                player.CmdAddCardCount(1);
+            }
         }
         spawnInitialCards = false;
     }
@@ -119,6 +122,8 @@ public class Deck : NetworkBehaviour
             Player.gameManager.playerHand.RemoveCard(index); // Update player's hand
             CardInfo card = boardCard.GetComponent<FieldCard>().card;
             CreatureCard creature = (CreatureCard)card.data;
+            if (creature.hasDiplomacy)
+                boardCard.GetComponent<FieldCard>().diplomacy = true;
             if (creature.strengthChange)
             {
                 foreach (CardAbility cardAbility in creature.intiatives)
@@ -244,7 +249,7 @@ public class Deck : NetworkBehaviour
             boardCard.transform.SetParent(Player.gameManager.playerField.content, false);
             if (creature.creatureType == CreatureType.SPELL)
             {
-                new WaitForSeconds(0.4f);
+                new WaitForSeconds(1f);
                 Destroy(boardCard);
             }
             Player.gameManager.isSpawning = false;
@@ -252,8 +257,17 @@ public class Deck : NetworkBehaviour
         else if (player.hasEnemy)
         {
             boardCard.GetComponent<FieldCard>().casterType = Target.ENEMIES;
+            CardInfo card = boardCard.GetComponent<FieldCard>().card;
+            CreatureCard creature = (CreatureCard)card.data;
             boardCard.transform.SetParent(Player.gameManager.enemyField.content, false);
             Player.gameManager.enemyHand.RemoveCard(index);
+            if (creature.hasDiplomacy)
+                boardCard.GetComponent<FieldCard>().diplomacy = true;
+            if (creature.creatureType == CreatureType.SPELL)
+            {
+                new WaitForSeconds(1f);
+                Destroy(boardCard);
+            }
         }
     }
 }

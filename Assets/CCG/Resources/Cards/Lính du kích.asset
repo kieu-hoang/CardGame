@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: "L\xEDnh du k\xEDch"
   m_EditorClassIdentifier: 
   id: d611b6dc488d47144be2f5a5b723ee50
-  image: {fileID: 21300000, guid: 2feb4117194fe924ea3fc4f523d7fc00, type: 3}
+  image: {fileID: 21300000, guid: a4b0fe8b21935354e868361a6e9d31f6, type: 3}
   cost: 2
   category: 
+  element: 0
   intiatives:
   - abilityType: 0
     targets: 04
@@ -29,8 +30,7 @@ MonoBehaviour:
   strength: 3
   health: 2
   acceptableTargets: 0301
-  creatureType: 
-  element: 0
+  creatureType: 0
   hasCharge: 0
   hasTaunt: 0
   deathcrys: []

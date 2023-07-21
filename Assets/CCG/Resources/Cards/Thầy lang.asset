@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: "Th\u1EA7y lang"
   m_EditorClassIdentifier: 
   id: 8ec01c1a6eddc8141b9d75b9b76e1630
-  image: {fileID: 21300000, guid: 4808db4abfd71d44197c113c6bc3eafe, type: 3}
+  image: {fileID: 21300000, guid: 9e6fbe28d4155b14080b8a65cfa31976, type: 3}
   cost: 1
   category: 
+  element: 0
   intiatives:
   - abilityType: 1
     targets: 04
@@ -30,8 +31,7 @@ MonoBehaviour:
   strength: 1
   health: 2
   acceptableTargets: 0301
-  creatureType: 00
-  element: 0
+  creatureType: 0
   hasCharge: 0
   hasTaunt: 0
   deathcrys: []

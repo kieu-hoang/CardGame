@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "R\xFAt b\xE0i"
   m_EditorClassIdentifier: 
   id: b3ccc569113d4c34bb356dc981a31b50
-  image: {fileID: 21300000, guid: 97560d3f234d0d34bb8b4d8785bf7f2f, type: 3}
+  image: {fileID: 21300000, guid: a8678ad1960ea95449e7c036dd799df6, type: 3}
   cost: 2
   category: 
   element: 0

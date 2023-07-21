@@ -11,7 +11,7 @@ public class PlayerHand : MonoBehaviour
     private PlayerInfo enemyInfo;
     private bool start = false;
     public int handCount = 0; // Amount of cards in hand
-    public static int hIndex = 0;
+    public int hIndex = 0;
 
     void Update()
     {

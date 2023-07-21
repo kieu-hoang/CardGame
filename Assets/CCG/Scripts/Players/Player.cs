@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using Mirror;
+using Random = UnityEngine.Random;
 
 // Useful for UI. Whether the player is, well, a player or an enemy.
 public enum PlayerType { PLAYER, ENEMY };
@@ -24,6 +26,7 @@ public class Player : Entity
     [SyncVar] public int maxMana = 7;
     [SyncVar] public int currentMax = 0;
     [SyncVar] public int _mana = 0;
+    private bool started = false;
     public int mana
     {
         get { return Mathf.Min(_mana, maxMana); }
@@ -119,13 +122,19 @@ public class Player : Entity
         {
             UpdateEnemyInfo();
         }
-        if (Input.GetKeyDown(KeyCode.G) && isLocalPlayer && hasEnemy)
+        if (isLocalPlayer && hasEnemy && started == false && Input.GetKeyDown(KeyCode.Space))
         {
             if (enemyInfo.firstPlayer == false)
             {
                 gameManager.StartGame();
                 firstPlayer = true;
+                started = true;
             }
+        }
+        if (isLocalPlayer && hasEnemy && enemyInfo.firstPlayer && started == false)
+        {
+            gameManager.enemyText.SetActive(true);
+            started = true;
         }
 
         handCardCount = cardCount;

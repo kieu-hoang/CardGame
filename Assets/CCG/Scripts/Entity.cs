@@ -25,6 +25,7 @@ public abstract partial class Entity : NetworkBehaviour
     [Header("Special Properties")] // These spawn properties are set by our ScriptableCards, when the card is spawned into the game.
     [SyncVar] public int waitTurn = 1; // What turn does this card become active? Is it active as soon as it spawns, or do we wait 1, 2, 3, etc. turns before it can attack?
     public bool taunt = false; // Whether it's a taunt minion or not.
+    public bool diplomacy = false;
     // waitTurn is also used for stunning/freezing/etc. minions.
     public Element element = Element.NoElement;
 

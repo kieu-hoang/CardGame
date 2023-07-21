@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using Mirror;
 
@@ -25,7 +26,10 @@ public class GameManager : NetworkBehaviour
 
     [Header("Turn Management")]
     public GameObject endTurnButton;
+    public GameObject enemyText;
+    public TMPro.TextMeshProUGUI timerText;
     [HideInInspector] public bool isOurTurn = false;
+    public int seconds = 0;
     [SyncVar, HideInInspector] public int turnCount = 1; // Start at 1
 
     // isHovering is only set to true on the Client that called the OnCardHover function.
@@ -90,7 +94,8 @@ public class GameManager : NetworkBehaviour
         // If isOurTurn was true, set it false. If it was false, set it true.
         isOurTurn = !isOurTurn;
         endTurnButton.SetActive(isOurTurn);
-
+        enemyText.SetActive(!isOurTurn);
+        seconds = 30;
         // If isOurTurn (after updating the bool above)
         if (isOurTurn)
         {
@@ -98,6 +103,24 @@ public class GameManager : NetworkBehaviour
             if (Player.localPlayer.handCardCount < 7)
                 Player.localPlayer.deck.DrawCard(1);
             Player.localPlayer.deck.CmdStartNewTurn();
+            if (seconds > 0)
+            {
+                StartCoroutine(Timer());
+            }
+        }
+    }
+    IEnumerator Timer()
+    {
+        yield return new WaitForSeconds(1);
+        if (seconds > 0 && isOurTurn)
+        {
+            seconds--;
+            timerText.text = "Thời gian: " + seconds + "s";
+            StartCoroutine(Timer());
+        }
+        else if (seconds == 0 && isOurTurn)
+        {
+            CmdEndTurn();
         }
     }
 
@@ -107,5 +130,13 @@ public class GameManager : NetworkBehaviour
         Player player = Player.localPlayer;
         player.deck.CmdStartNewTurn();
         isOurTurn = true;
+        seconds = 30;
+        if (isOurTurn)
+        {
+            if (seconds > 0)
+            {
+                StartCoroutine(Timer());
+            }
+        }
     }
 }

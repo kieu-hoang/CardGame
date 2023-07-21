@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: "L\xEDnh c\u1EA7m khi\xEAn"
   m_EditorClassIdentifier: 
   id: ce27ae6b0656c4d48a646cbb43458cdd
-  image: {fileID: 21300000, guid: 7a817266b6106d14a866ea80a26fe788, type: 3}
+  image: {fileID: 21300000, guid: ad7989516f51d7f44b7ab981ab15891a, type: 3}
   cost: 1
   category: 
+  element: 0
   intiatives: []
   hasInitiative: 0
   description: "Ph\xF2ng th\u1EE7: K\u1EBB \u0111\u1ECBch bu\u1ED9c ph\u1EA3i t\u1EA5n
@@ -23,8 +24,7 @@ MonoBehaviour:
   strength: 1
   health: 3
   acceptableTargets: 0301
-  creatureType: 
-  element: 0
+  creatureType: 0
   hasCharge: 0
   hasTaunt: 1
   deathcrys: []

@@ -30,6 +30,7 @@ public partial class CreatureCard : ScriptableCard
     [Header("Specialities")]
     public bool hasCharge = false;
     public bool hasTaunt = false;
+    public bool hasDiplomacy = false;
     
     [Header("Death Abilities")]
     public List<CardAbility> deathcrys = new List<CardAbility>();
@@ -48,7 +49,22 @@ public partial class CreatureCard : ScriptableCard
     public virtual void Attack(Entity attacker, Entity target)
     {
         // Reduce the target's health by damage dealt.
-        if (isOpposition(attacker, target))
+        if (attacker.diplomacy && target.diplomacy)
+        {
+            target.combat.CmdChangeHealth(-1);
+            attacker.combat.CmdChangeHealth(-1);
+        }
+        else if (attacker.diplomacy)
+        {
+            target.combat.CmdChangeHealth(-attacker.strength);
+            attacker.combat.CmdChangeHealth(-1);
+        }
+        else if (target.diplomacy)
+        {
+            target.combat.CmdChangeHealth(-1);
+            attacker.combat.CmdChangeHealth(-target.strength);
+        }
+        else if (isOpposition(attacker, target))
         {
             target.combat.CmdChangeHealth(-attacker.strength-2);
             attacker.combat.CmdChangeHealth(-target.strength);
