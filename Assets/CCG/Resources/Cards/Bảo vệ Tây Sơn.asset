@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "B\u1EA3o v\u1EC7 T\xE2y S\u01A1n"
   m_EditorClassIdentifier: 
   id: ce27ae6b0656c4d48a646cbb43458123
-  image: {fileID: 21300000, guid: ed571b35cc751e341ae71e0b493264c5, type: 3}
+  image: {fileID: 21300000, guid: eb1eda034a71b1a46b4d6857d07f8cc6, type: 3}
   cost: 5
   category: 
   element: 0
@@ -41,6 +41,7 @@ MonoBehaviour:
   creatureType: 1
   hasCharge: 0
   hasTaunt: 0
+  hasDiplomacy: 0
   deathcrys: []
   hasDeathCry: 0
   cardPrefab: {fileID: 3966246863333951121, guid: 66532acc9bfbbe043b5ef65a717193da, type: 3}

@@ -25,13 +25,13 @@ public class CardDataBase : MonoBehaviour
         cardList.Add (new Card(14, "Phi tiêu 1", 0, 0, 3,"Gây 3 dame cho hero, Gây 5 dame nếu trên bàn đấu có Phạm Văn Tham", Resources.Load <Sprite>("14"), Card.Element.NoElement, 0, 0, 0, 0, true, 3,0));
         cardList.Add (new Card(15, "Trận tập kích", 0, 0, 3, "Gây 2 dame cho toàn bộ quân địch", Resources.Load<Sprite>("15"), Card.Element.NoElement, 0, 0, 0, 0, true, 2,0));
         cardList.Add (new Card(16, "Nguyễn Nhạc", 6, 4, 4,"Sĩ Khí : Tăng tất cả lính có trên sân 2 dame 2 máu khi quân bài này còn trên sân", Resources.Load <Sprite>("16"), Card.Element.Water, 0, 0, 0, 2, false, 0,2));
-        cardList.Add (new Card(17, "Ngô Thì Nhậm", 4, 5, 4, "", Resources.Load<Sprite>("17"), Card.Element.Fire, 0, 0, 0, 0, false, 0,0));
+        cardList.Add (new Card(17, "Ngô Thì Nhậm", 4, 4, 4, "Ngoại giao: Chỉ nhận tối đa 1 dame sau khi mỗi lần bị tấn công", Resources.Load<Sprite>("17"), Card.Element.Fire, 0, 0, 0, 0, false, 0,0));
         cardList.Add (new Card(18, "Phòng tuyến Tam Điệp", 0, 0, 4, "Gây 2 dame cho quân địch, nếu trên sân có Ngô Thì Nhậm thì gây 3 dame", Resources.Load<Sprite>("18"), Card.Element.NoElement, 0, 0, 0, 0, true, 2,0));
         cardList.Add (new Card(19, "Lính cầm khiên 1", 4, 5, 4, "Phòng thủ: Kẻ địch buộc phải tấn công lính này trước", Resources.Load<Sprite>("19"), Card.Element.NoElement, 0, 0,0, 0, false, 0,0));
         cardList.Add (new Card(20, "Thuốc cầm máu 2", 0, 0, 4, "Hồi 3 máu cho toàn bộ quân lính bên mình", Resources.Load<Sprite>("20"), Card.Element.NoElement, 0, 0, 0, 3, true, 0,0));
         cardList.Add (new Card(21, "Nguyễn Huệ", 6, 6, 5, "Sĩ Khí: Tăng tất cả lính có trên sân 3 dame 3 máu khi quân bài này còn trên sân. Khi trên sân có 3 anh em nhà Nguyễn: gây 3 dame cho toàn bộ quân địch trên sân trong lượt đó", Resources.Load<Sprite>("21"), Card.Element.Metal, 0, 0, 0, 3, false, 3,3));
         cardList.Add (new Card(22, "Lính cổ vũ 1", 4, 5, 5,"Tất cả quân bài phép thuật tăng 2 dame khi bàn đấu có quân này", Resources.Load <Sprite>("22"), Card.Element.NoElement, 0, 0, 0, 0, false, 0,2));
-        cardList.Add (new Card(23, "Nguyễn Quang Toản", 5, 5, 5, "", Resources.Load<Sprite>("23"), Card.Element.Metal, 0, 0, 0, 0, false, 0,2));
+        cardList.Add (new Card(23, "Nguyễn Quang Toản", 5, 5, 5, "Sĩ Khí: Tăng tất cả lính có trên sân 2 dame 2 máu", Resources.Load<Sprite>("23"), Card.Element.Metal, 0, 0, 0, 0, false, 0,2));
         cardList.Add (new Card(24, "Bảo vệ Tây Sơn", 0, 0, 5, "Tăng 2 máu cho toàn bộ quân ta, gây 2 dame cho quân địch", Resources.Load<Sprite>("24"), Card.Element.NoElement, 0, 0, 0, 2, true, 2,0));
         cardList.Add (new Card(25, "Đại chiến quân Thanh", 0, 0, 5, "Gây 2 dame cho toàn bộ quân địch, nếu bên quân địch có Tôn Sĩ Nghị gây thêm 1 dame", Resources.Load<Sprite>("25"), Card.Element.NoElement, 0, 0, 0, 0, true, 2,0));
         cardList.Add (new Card(26, "Chiếu cầu hiền", 0, 0, 2, "Gọi lại 1 lá bài đã sử dụng", Resources.Load<Sprite>("26"), Card.Element.NoElement, 0, 0, 1, 0, true, 0,0));

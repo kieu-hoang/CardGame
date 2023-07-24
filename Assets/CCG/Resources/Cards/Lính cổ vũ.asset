@@ -26,14 +26,14 @@ MonoBehaviour:
     debuff: 0
     untilEndOfTurn: 0
   hasInitiative: 0
-  description: "Spell dame +1: T\u1EA5t c\u1EA3 qu\xE2n b\xE0i ph\xE9p thu\u1EADt
-    t\u0103ng 1 dame khi b\xE0n \u0111\u1EA5u c\xF3 qu\xE2n n\xE0y"
+  description: "T\u1EA5t c\u1EA3 qu\xE2n b\xE0i t\u0103ng 1 dame"
   strength: 2
   health: 2
   acceptableTargets: 0301
   creatureType: 0
   hasCharge: 0
   hasTaunt: 0
+  hasDiplomacy: 0
   deathcrys: []
   hasDeathCry: 0
   cardPrefab: {fileID: 3966246863333951121, guid: 66532acc9bfbbe043b5ef65a717193da, type: 3}

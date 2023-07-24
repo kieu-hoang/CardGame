@@ -123,6 +123,17 @@ public class Deck : NetworkBehaviour
             Player.gameManager.playerHand.RemoveCard(index); // Update player's hand
             CardInfo card = boardCard.GetComponent<FieldCard>().card;
             CreatureCard creature = (CreatureCard)card.data;
+            if (card.name == "Phòng tuyến Tam Điệp" && Player.gameManager.playerField.checkPresent("Ngô Thì Nhậm"))
+            {
+                foreach (Transform child in Player.gameManager.enemyField.content)
+                {
+                    child.GetComponent<FieldCard>().combat.CmdChangeHealth(-1);
+                }
+            }
+            if (card.name == "Phi tiêu 0" && Player.gameManager.playerField.checkPresent("Lính cảm tử"))
+            {
+                player.enemyInfo.player.GetComponent<Player>().combat.CmdChangeHealth(-2);
+            }
             if (creature.hasDiplomacy)
                 boardCard.GetComponent<FieldCard>().diplomacy = true;
             if (creature.strengthChange)
@@ -273,7 +284,7 @@ public class Deck : NetworkBehaviour
     }
     IEnumerator Wait()
     {
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(1);
     }
 
     [Command]
@@ -355,5 +366,23 @@ public class Deck : NetworkBehaviour
             boardCard.position = new Vector3(boardCard.position.x + 4000, boardCard.position.y,
                 boardCard.position.z);
         }
+    }
+    [Command]
+    public void CmdAENhaNguyen()
+    {
+        if (isServer) RpcAENhaNguyen();
+    }
+
+    [ClientRpc]
+    public void RpcAENhaNguyen()
+    {
+        if (Player.gameManager.isOurTurn && Player.gameManager.isSpawning)
+        {
+            foreach (Transform child in Player.gameManager.enemyField.content)
+            {
+                child.GetComponent<FieldCard>().combat.CmdChangeHealth(-3);
+            }
+        }
+        Player.gameManager.isSpawning = false;
     }
 }

@@ -34,13 +34,14 @@ MonoBehaviour:
     untilEndOfTurn: 0
   hasInitiative: 0
   description: "H\u1ED3i 3 m\xE1u cho 1 qu\xE2n b\u1EA5t k\xEC, sau \u0111\xF3 h\u1ED3i
-    2 m\xE1u cho hero"
+    2 m\xE1u cho ng\u01B0\u1EDDi ch\u01A1i"
   strength: 0
   health: 0
   acceptableTargets: 0301
   creatureType: 1
   hasCharge: 0
   hasTaunt: 0
+  hasDiplomacy: 0
   deathcrys: []
   hasDeathCry: 0
   cardPrefab: {fileID: 3966246863333951121, guid: 66532acc9bfbbe043b5ef65a717193da, type: 3}

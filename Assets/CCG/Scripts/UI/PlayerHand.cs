@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using Mirror;
 
 public class PlayerHand : MonoBehaviour
@@ -45,6 +46,7 @@ public class PlayerHand : MonoBehaviour
 
     public void AddCard()
     {
+        StartCoroutine(Wait());
         GameObject cardObj = Instantiate(cardPrefab.gameObject);
         cardObj.transform.SetParent(handContent, false);
         
@@ -53,6 +55,10 @@ public class PlayerHand : MonoBehaviour
 
         slot.AddCard(card, hIndex, playerType);
         hIndex++;
+    }
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(1);
     }
 
     public void RemoveCard(int index)

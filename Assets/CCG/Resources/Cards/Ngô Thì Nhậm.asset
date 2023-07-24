@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "Ng\xF4 Th\xEC Nh\u1EADm"
   m_EditorClassIdentifier: 
   id: 9088ca7469ae3b54d83f52b25918f789
-  image: {fileID: 21300000, guid: fdc68cdc9f2ec1d429247b94ff3d5881, type: 3}
+  image: {fileID: 21300000, guid: 146c741f6d93e6e478fdd07b882d31e2, type: 3}
   cost: 4
   category: 
   element: 0

@@ -8,6 +8,7 @@ public class PlayerField : MonoBehaviour, IDropHandler
     public Transform content;
     public int fieldCount;
     public PlayerType playerType;
+    public bool aeNhaNguyenEffect = false;
 
     public void OnDrop(PointerEventData eventData)
     {
@@ -59,7 +60,6 @@ public class PlayerField : MonoBehaviour, IDropHandler
             CardInfo card = content.GetChild(i).GetComponent<FieldCard>().card;
             CreatureCard creature = (CreatureCard)card.data;
             if (creature.hasCharge)
-                //Destroy(content.GetChild(i).gameObject);
                 content.GetChild(i).GetComponent<FieldCard>().health = 0;
         }
     }
@@ -76,47 +76,75 @@ public class PlayerField : MonoBehaviour, IDropHandler
             }
         }
     }
+
+    public bool checkPresent(string name)
+    {
+        for (int i = 0; i < content.childCount; i++)
+        {
+            if (content.GetChild(i).GetComponent<FieldCard>().cardName.text == name)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    public bool checkAENhaNguyen()
+    {
+        if (checkPresent("Nguyễn Huệ") && checkPresent("Nguyễn Lữ") && checkPresent("Nguyễn Nhạc"))
+            return true;
+        return false;
+    }
     
     private void Update()
     {
         fieldCount = content.childCount;
-        if (Player.localPlayer && playerType == PlayerType.ENEMY && Player.localPlayer.hasEnemy)
+        if (Player.localPlayer && Player.localPlayer.hasEnemy)
         {
-            if (checkTaunt() && fieldCount > 0)
+            Player player = Player.localPlayer;
+            if (playerType == PlayerType.ENEMY)
             {
-                Player.localPlayer.enemyInfo.isTargetable = false;
-                for (int i = 0; i < content.childCount; i++)
+                if (checkTaunt() && fieldCount > 0)
                 {
-                    CardInfo card = content.GetChild(i).GetComponent<FieldCard>().card;
-                    CreatureCard creature = (CreatureCard)card.data;
-                    if (creature.hasTaunt == false)
+                    player.enemyInfo.isTargetable = false;
+                    for (int i = 0; i < content.childCount; i++)
                     {
-                        content.GetChild(i).GetComponent<FieldCard>().isTargetable = false;
+                        CardInfo card = content.GetChild(i).GetComponent<FieldCard>().card;
+                        CreatureCard creature = (CreatureCard)card.data;
+                        if (creature.hasTaunt == false)
+                        {
+                            content.GetChild(i).GetComponent<FieldCard>().isTargetable = false;
+                        }
+                        else
+                        {
+                            content.GetChild(i).GetComponent<FieldCard>().isTargetable = true;
+                        }
                     }
-                    else
+                }
+                else if (checkTaunt() == false && fieldCount > 0)
+                {
+                    player.enemyInfo.isTargetable = true;
+                    for (int i = 0; i < content.childCount; i++)
                     {
                         content.GetChild(i).GetComponent<FieldCard>().isTargetable = true;
                     }
                 }
-            }
-            else if (checkTaunt() == false && fieldCount > 0)
-            {
-                Player.localPlayer.enemyInfo.isTargetable = true;
-                for (int i = 0; i < content.childCount; i++)
+                else if (fieldCount == 0)
                 {
-                    content.GetChild(i).GetComponent<FieldCard>().isTargetable = true;
+                    player.enemyInfo.isTargetable = true;
                 }
             }
-            else if (fieldCount == 0)
+            if (player.IsOurTurn() && playerType == PlayerType.ENEMY)
+                checkCharge();
+            if (!player.IsOurTurn() && playerType == PlayerType.PLAYER)
+                checkCharge();
+            if (player.IsOurTurn())
+                toGraveyard();
+            if (checkAENhaNguyen() && aeNhaNguyenEffect == false)
             {
-                Player.localPlayer.enemyInfo.isTargetable = true;
+                Player.gameManager.isSpawning = true;
+                player.deck.CmdAENhaNguyen();
+                aeNhaNguyenEffect = true;
             }
         }
-        if (Player.localPlayer && Player.localPlayer.IsOurTurn() && playerType == PlayerType.ENEMY && Player.localPlayer.hasEnemy)
-            checkCharge();
-        if (Player.localPlayer && !Player.localPlayer.IsOurTurn() && playerType == PlayerType.PLAYER && Player.localPlayer.hasEnemy)
-            checkCharge();
-        if (Player.localPlayer && Player.localPlayer.IsOurTurn() && Player.localPlayer.hasEnemy)
-            toGraveyard();
     }
 }

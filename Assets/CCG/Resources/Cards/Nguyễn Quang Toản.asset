@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "Nguy\u1EC5n Quang To\u1EA3n"
   m_EditorClassIdentifier: 
   id: 9088ca7469ae3b54d83f52babc18f456
-  image: {fileID: 21300000, guid: 09e865c14ef7a6842aef479a466543a4, type: 3}
+  image: {fileID: 21300000, guid: ed571b35cc751e341ae71e0b493264c5, type: 3}
   cost: 5
   category: 
   element: 2
@@ -27,13 +27,14 @@ MonoBehaviour:
     untilEndOfTurn: 0
   hasInitiative: 0
   description: "S\u0129 Kh\xED: T\u0103ng t\u1EA5t c\u1EA3 l\xEDnh c\xF3 tr\xEAn
-    s\xE2n 2 dame 2 m\xE1u"
+    s\xE2n 2 dame 2 m\xE1u."
   strength: 5
   health: 5
   acceptableTargets: 0301
-  creatureType: 
+  creatureType: 0
   hasCharge: 0
   hasTaunt: 0
+  hasDiplomacy: 0
   deathcrys: []
   hasDeathCry: 0
   cardPrefab: {fileID: 3966246863333951121, guid: 66532acc9bfbbe043b5ef65a717193da, type: 3}

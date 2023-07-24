@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: "L\xEDnh c\u1ED5 v\u0169 1"
   m_EditorClassIdentifier: 
   id: d611b6dc488d47144be2f5b5b723ee50
-  image: {fileID: 21300000, guid: e9b7cbd931977b04b999063da613670b, type: 3}
+  image: {fileID: 21300000, guid: 1a182c25f5711644da370b3ae5964a58, type: 3}
   cost: 5
   category: 
+  element: 0
   intiatives:
   - abilityType: 4
     targets: 02
@@ -25,15 +26,14 @@ MonoBehaviour:
     debuff: 0
     untilEndOfTurn: 0
   hasInitiative: 0
-  description: "Spell dame +2: T\u1EA5t c\u1EA3 qu\xE2n b\xE0i ph\xE9p thu\u1EADt
-    t\u0103ng 2 dame khi b\xE0n \u0111\u1EA5u c\xF3 qu\xE2n n\xE0y"
+  description: "T\u1EA5t c\u1EA3 qu\xE2n b\xE0i t\u0103ng 2 dame"
   strength: 4
   health: 5
   acceptableTargets: 0301
-  creatureType: 
-  element: 0
+  creatureType: 0
   hasCharge: 0
   hasTaunt: 0
+  hasDiplomacy: 0
   deathcrys: []
   hasDeathCry: 0
   cardPrefab: {fileID: 3966246863333951121, guid: 66532acc9bfbbe043b5ef65a717193da, type: 3}

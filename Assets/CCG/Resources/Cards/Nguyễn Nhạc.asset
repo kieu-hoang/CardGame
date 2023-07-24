@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "Nguy\u1EC5n Nh\u1EA1c"
   m_EditorClassIdentifier: 
   id: 9088ca7469ae3b54d83f52b25918f456
-  image: {fileID: 21300000, guid: 17a88280a0cda264d81bce81e23b290f, type: 3}
+  image: {fileID: 21300000, guid: 4cea42a552d4f3c488f068379a1f57f0, type: 3}
   cost: 4
   category: 
   element: 3
@@ -27,13 +27,16 @@ MonoBehaviour:
     untilEndOfTurn: 0
   hasInitiative: 0
   description: "S\u0129 Kh\xED: T\u0103ng t\u1EA5t c\u1EA3 l\xEDnh c\xF3 tr\xEAn
-    s\xE2n 2 dame 2 m\xE1u khi qu\xE2n b\xE0i n\xE0y c\xF2n tr\xEAn s\xE2n"
+    s\xE2n 2 dame 2 m\xE1u.\nKhi tr\xEAn s\xE2n c\xF3 3 anh em nh\xE0 Nguy\u1EC5n:
+    g\xE2y 3 dame cho to\xE0n b\u1ED9 qu\xE2n \u0111\u1ECBch tr\xEAn s\xE2n trong
+    l\u01B0\u1EE3t \u0111\xF3\r."
   strength: 6
   health: 4
   acceptableTargets: 0301
-  creatureType: 
+  creatureType: 0
   hasCharge: 0
   hasTaunt: 0
+  hasDiplomacy: 0
   deathcrys: []
   hasDeathCry: 0
   cardPrefab: {fileID: 3966246863333951121, guid: 66532acc9bfbbe043b5ef65a717193da, type: 3}
