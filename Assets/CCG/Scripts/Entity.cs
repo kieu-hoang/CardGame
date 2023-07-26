@@ -52,6 +52,7 @@ public abstract partial class Entity : NetworkBehaviour
         isTargeting = false;
         Cursor.visible = true;
         Destroy(arrowObject);
+        Player.gameManager.CmdNormal(this.gameObject, this.gameObject);
     }
 
     public virtual void Update()

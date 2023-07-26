@@ -22,7 +22,7 @@ public class HandCardDragHover : MonoBehaviour, IBeginDragHandler, IDragHandler,
         if (!canHover) return;
 
         // Move card locally
-        card.transform.localScale = new Vector2(1.2f, 1.2f);
+        card.transform.localScale = new Vector2(1.1f, 1.1f);
         card.transform.localPosition = new Vector2(card.transform.localPosition.x, 100);
         int index = card.transform.GetSiblingIndex();
 
@@ -36,7 +36,7 @@ public class HandCardDragHover : MonoBehaviour, IBeginDragHandler, IDragHandler,
         if (!canHover) return;
 
         // Return to normal
-        card.transform.localScale = new Vector2(0.9f, 0.9f);
+        card.transform.localScale = new Vector2(0.8f, 0.8f);
         card.transform.localPosition = new Vector2(card.transform.localPosition.x, 0);
         int index = card.handIndex;
 

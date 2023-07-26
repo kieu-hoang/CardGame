@@ -41,7 +41,7 @@ public class Player : Entity
     [HideInInspector] public static GameManager gameManager;
     [SyncVar, HideInInspector] public bool firstPlayer = false; // Is it player 1, player 2, etc.
     [SyncVar] public int cardCount = 0;
-    public int handCardCount = 0;
+    //public int handCardCount = 0;
     public int fieldCardCount = 0;
     public override void OnStartLocalPlayer()
     {
@@ -137,7 +137,7 @@ public class Player : Entity
             started = true;
         }
 
-        handCardCount = cardCount;
+        //handCardCount = cardCount;
     }
 
     public void UpdateEnemyInfo()

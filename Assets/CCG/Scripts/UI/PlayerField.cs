@@ -69,6 +69,10 @@ public class PlayerField : MonoBehaviour, IDropHandler
         Player player = Player.localPlayer;
         for (int i = 0; i < content.childCount; i++)
         {
+            CardInfo card = content.GetChild(i).GetComponent<FieldCard>().card;
+            CreatureCard creature = (CreatureCard)card.data;
+            if (creature.creatureType == CreatureType.SPELL)
+                continue;
             if (content.GetChild(i).GetComponent<FieldCard>().IsDead())
             {
                 Player.gameManager.isSpawning = true;

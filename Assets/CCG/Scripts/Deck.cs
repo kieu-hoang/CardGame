@@ -64,7 +64,7 @@ public class Deck : NetworkBehaviour
         PlayerHand playerHand = Player.gameManager.playerHand;
         for (int i = 0; i < amount; ++i)
         {
-            if (playerHand.hIndex < deckSize)
+            if (playerHand.hIndex < deckSize && Player.localPlayer.cardCount < 7)
             {
                 playerHand.AddCard();
                 player.CmdAddCardCount(1);
@@ -98,9 +98,8 @@ public class Deck : NetworkBehaviour
 
         // Spawn it
         NetworkServer.Spawn(boardCard);
-
-        if (isServer) RpcPlayCard(boardCard, index);
         player.RpcAddCardCount(-1);
+        if (isServer) RpcPlayCard(boardCard, index);
     }
 
     [Command]
@@ -261,8 +260,8 @@ public class Deck : NetworkBehaviour
             boardCard.transform.SetParent(Player.gameManager.playerField.content, false);
             if (creature.creatureType == CreatureType.SPELL)
             {
-                StartCoroutine(Wait());
-                Destroy(boardCard);
+                StartCoroutine(Wait(boardCard));
+                
             }
             Player.gameManager.isSpawning = false;
         }
@@ -277,14 +276,14 @@ public class Deck : NetworkBehaviour
                 boardCard.GetComponent<FieldCard>().diplomacy = true;
             if (creature.creatureType == CreatureType.SPELL)
             {
-                StartCoroutine(Wait());
-                Destroy(boardCard);
+                StartCoroutine(Wait(boardCard));
             }
         }
     }
-    IEnumerator Wait()
+    IEnumerator Wait(GameObject boardCard)
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1f);
+        Destroy(boardCard);
     }
 
     [Command]

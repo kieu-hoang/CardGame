@@ -85,6 +85,40 @@ public class GameManager : NetworkBehaviour
         }
     }
 
+    [Command(ignoreAuthority = true)]
+    public void CmdAttack(GameObject attacker)
+    {
+        if (isServer) RpcAttack(attacker);
+    }
+
+    [ClientRpc]
+    public void RpcAttack(GameObject attacker)
+    {
+        if (attacker.GetComponent<Entity>() is Player)
+        {
+            attacker.GetComponent<Player>().portrait = Resources.Load<Sprite>("target");
+        }
+        else 
+            attacker.transform.localScale = new Vector3(0.9f, 0.9f, 0.9f);
+    }
+    
+    [Command(ignoreAuthority = true)]
+    public void CmdNormal(GameObject attacker, GameObject target)
+    {
+        if (isServer) RpcNormal(attacker, target);
+    }
+
+    [ClientRpc]
+    public void RpcNormal(GameObject attacker, GameObject target)
+    {
+        attacker.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+        if (target.GetComponent<Entity>() is Player)
+        {
+            target.GetComponent<Player>().portrait = Resources.Load<Sprite>("Trainer_6");
+        }
+        target.transform.localScale = new Vector3(0.8f,0.8f, 0.8f);
+    }
+    
     // Ends our turn and starts our opponent's turn.
     [Command(ignoreAuthority = true)]
     public void CmdEndTurn()
@@ -104,7 +138,7 @@ public class GameManager : NetworkBehaviour
         if (isOurTurn)
         {
             playerField.UpdateFieldCards();
-            if (Player.localPlayer.handCardCount < 7)
+            if (Player.localPlayer.cardCount < 7)
                 Player.localPlayer.deck.DrawCard(1);
             Player.localPlayer.deck.CmdStartNewTurn();
             if (seconds > 0)

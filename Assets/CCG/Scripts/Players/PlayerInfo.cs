@@ -33,7 +33,7 @@ public partial struct PlayerInfo
 
     // Card count for UI
     public int handCount => data.deck.hand.Count;
-    public int handCardCount => data.handCardCount;
+    public int handCardCount => data.cardCount;
     public int deckCount => data.deck.deckList.Count;
     public int graveCount => data.deck.graveyard.Count;
     public bool firstPlayer => data.firstPlayer;

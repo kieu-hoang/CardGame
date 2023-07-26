@@ -168,6 +168,7 @@ public class HandCard : MonoBehaviour
         {
             frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardEarth");
         }
+
         if (card.element == Element.NoElement)
         {
             frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardNoElement");

@@ -12,6 +12,7 @@ public class FieldCardHover : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         // Make sure our Player isn't already targetting something
         if (!Player.localPlayer.isTargeting && Player.gameManager.isOurTurn && card.casterType == Target.FRIENDLIES && card.CanAttack())
         {
+            Player.gameManager.CmdAttack(transform.gameObject);
             card.SpawnTargetingArrow(card.card);
             HideCardInfo();
         }
@@ -49,6 +50,7 @@ public class FieldCardHover : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             {
                 Player.gameManager.isHoveringField = true;
                 Player.gameManager.CmdOnFieldCardHover(this.gameObject, true, Player.localPlayer.isTargeting);
+                card.cardHover.UpdateFieldCardInfo(card.card);
             }
         }
     }

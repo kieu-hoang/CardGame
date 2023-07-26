@@ -383,7 +383,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1040,7 +1040,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3339622, g: 1, b: 0.47540858, a: 1}
+  m_Color: {r: 0.3339622, g: 1, b: 0.47540858, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1087,7 +1087,7 @@ RectTransform:
   m_GameObject: {fileID: 4180526956830664783}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6948845265932373406}
@@ -1158,7 +1158,7 @@ MonoBehaviour:
   card: {fileID: 4726194260363454408}
   canvasGroup: {fileID: 6037024618880147388}
   canHover: 0
-  canDrag: 0
+  canDrag: 1
   EmptyCard: {fileID: 4180526956830664783, guid: 95ff3520c214ba346b1bcefb4961071e, type: 3}
 --- !u!222 &8867336146261718053
 CanvasRenderer:

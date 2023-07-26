@@ -127,9 +127,14 @@ public class FieldCard : Entity
             frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardNoElement");
         }
 
-        if (CanAttack()) shine.color = targetColor;
-        else if (CantAttack()) shine.color = Color.clear;
-        
+        if (CanAttack())
+        {
+            shine.color = targetColor;
+        }
+        else if (CantAttack())
+        {
+            shine.color = Color.clear;
+        }
     }
 
     [Command(ignoreAuthority = true)]

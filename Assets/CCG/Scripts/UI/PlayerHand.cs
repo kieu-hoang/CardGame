@@ -47,18 +47,19 @@ public class PlayerHand : MonoBehaviour
     public void AddCard()
     {
         StartCoroutine(Wait());
+    }
+    
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(1f);
         GameObject cardObj = Instantiate(cardPrefab.gameObject);
         cardObj.transform.SetParent(handContent, false);
         
         CardInfo card = player.deck.hand[hIndex];
         HandCard slot = cardObj.GetComponent<HandCard>();
-
+        
         slot.AddCard(card, hIndex, playerType);
         hIndex++;
-    }
-    IEnumerator Wait()
-    {
-        yield return new WaitForSeconds(1);
     }
 
     public void RemoveCard(int index)

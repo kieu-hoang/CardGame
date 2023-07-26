@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ArrowHead : MonoBehaviour
@@ -31,7 +33,12 @@ public class ArrowHead : MonoBehaviour
                 spriteRenderer.sprite = targetHead;
                 if (Input.GetMouseButtonDown(0))
                 {
-                    if (!IsAbility) ((CreatureCard)card.data).Attack(caster, target);
+                    if (!IsAbility)
+                    {
+                        Player.gameManager.CmdAttack(target.gameObject);
+                        //((CreatureCard)card.data).Attack(caster, target);
+                        Attack(caster, target);
+                    }
                     //else card.data.Cast(caster, target);
                 }
             }
@@ -44,5 +51,17 @@ public class ArrowHead : MonoBehaviour
         {
             spriteRenderer.sprite = defaultHead;
         }
+    }
+
+    public void Attack(Entity caster, Entity target)
+    {
+        StartCoroutine(Wait(caster, target));
+    }
+
+    IEnumerator Wait(Entity caster, Entity target)
+    {
+        yield return new WaitForSeconds(0.5f);
+        ((CreatureCard)card.data).Attack(caster, target);
+        Player.gameManager.CmdNormal(caster.gameObject, target.gameObject);
     }
 }

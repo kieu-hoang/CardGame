@@ -26,13 +26,6 @@ public class Combat : NetworkBehaviour
         // Increase health by amount. If 3, increase by 3. If -3, reduce by 3.
         entity.health += amount;
         if (entity.health > 30) entity.health = 30;
-        // if (entity.IsDead() && entity is not Player)
-        // {
-        //     //Destroy(entity.gameObject);
-        //     entity.transform.SetParent(GameManager.graveyard.transform);
-        //     entity.transform.position = new Vector3(entity.transform.position.x + 4000, entity.transform.position.y,
-        //         entity.transform.position.z);
-        // }
     }
 
     [Command(ignoreAuthority = true)]

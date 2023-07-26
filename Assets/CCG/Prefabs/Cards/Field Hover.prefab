@@ -1661,7 +1661,7 @@ RectTransform:
   m_GameObject: {fileID: 7609117196320406584}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 81687400616275885}
@@ -1697,7 +1697,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 5052970955239283898}
-  cardfront: {fileID: 4506738597198866644}
+  cardfront: {fileID: 8647662494539813511}
   cardback: {fileID: 6413283389746162512}
   cardName: {fileID: 6962262859706924019}
   cost: {fileID: 8956308284948218879}
