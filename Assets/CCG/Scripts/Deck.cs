@@ -117,7 +117,6 @@ public class Deck : NetworkBehaviour
         {
             // Set our FieldCard as a FRIENDLY creature for our local player, and ENEMY for our opponent.
             boardCard.GetComponent<FieldCard>().casterType = Target.FRIENDLIES;
-            //boardCard.transform.SetParent(Player.gameManager.playerField.content, false);
             Player.gameManager.playerHand.RemoveCard(index); // Update player's hand
             CardInfo card = boardCard.GetComponent<FieldCard>().card;
             CreatureCard creature = (CreatureCard)card.data;
@@ -360,7 +359,6 @@ public class Deck : NetworkBehaviour
                     boardCard.transform.SetParent(Player.gameManager.graveyard, false);
                     boardCard.transform.position = new Vector3(boardCard.transform.position.x + 4000, boardCard.transform.position.y,
                         boardCard.transform.position.z);
-                    //Player.gameManager.isSpawning = false;
                 }
                 else if (boardCard.transform.parent == Player.gameManager.enemyField.content)
                 {
@@ -419,26 +417,21 @@ public class Deck : NetworkBehaviour
                     boardCard.transform.SetParent(Player.gameManager.eGraveyard, false);
                     boardCard.transform.position = new Vector3(boardCard.transform.position.x + 4000, boardCard.transform.position.y,
                         boardCard.transform.position.z);
-                    //Player.gameManager.isSpawning = false;
                 }
             }
             else
             {
                 if (boardCard.transform.parent == Player.gameManager.playerField.content)
                 {
-                    Debug.Log("Card " + boardCard.GetComponent<FieldCard>().cardName.text + " in Player Field");
                     boardCard.transform.SetParent(Player.gameManager.graveyard, false);
                     boardCard.transform.position = new Vector3(boardCard.transform.position.x + 4000, boardCard.transform.position.y,
                         boardCard.transform.position.z);
-                    //Player.gameManager.isSpawning = false;
                 }
                 else if (boardCard.transform.parent == Player.gameManager.enemyField.content)
-                {   
-                    Debug.Log("Card " + boardCard.GetComponent<FieldCard>().cardName.text + " in Enemy Field");
+                {
                     boardCard.transform.SetParent(Player.gameManager.eGraveyard, false);
                     boardCard.transform.position = new Vector3(boardCard.transform.position.x + 4000, boardCard.transform.position.y,
                         boardCard.transform.position.z);
-                    //Player.gameManager.isSpawning = false;
                 }
             }
         }
@@ -446,14 +439,12 @@ public class Deck : NetworkBehaviour
         {
             if (boardCard.transform.parent == Player.gameManager.playerField.content)
             {
-                Debug.Log("Card " + boardCard.GetComponent<FieldCard>().cardName.text + " in Player Field but not in turn");
                 boardCard.transform.SetParent(Player.gameManager.graveyard, false);
                 boardCard.transform.position = new Vector3(boardCard.transform.position.x + 4000, boardCard.transform.position.y,
                     boardCard.transform.position.z);
             }
             else if (boardCard.transform.parent == Player.gameManager.enemyField.content)
             {
-                Debug.Log("Card " + boardCard.GetComponent<FieldCard>().cardName.text + " in Enemy Field but not in turn");
                 boardCard.transform.SetParent(Player.gameManager.eGraveyard, false);
                 boardCard.transform.position = new Vector3(boardCard.transform.position.x + 4000, boardCard.transform.position.y,
                     boardCard.transform.position.z);

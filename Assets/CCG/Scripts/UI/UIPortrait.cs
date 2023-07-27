@@ -27,7 +27,7 @@ public partial class UIPortrait : MonoBehaviour
             portrait.sprite = player.portrait;
             username.text = player.username;
             deckAmount.text = player.actualDeckSize.ToString();
-            graveyardAmount.text = player.deck.graveyard.Count.ToString();
+            graveyardAmount.text = (Player.gameManager.graveyard.childCount - 1) + "";
             handAmount.text = player.cardCount.ToString();
             health.text = player.health.ToString();
             mana.text = player.mana.ToString();
@@ -40,7 +40,7 @@ public partial class UIPortrait : MonoBehaviour
             portrait.sprite = enemyInfo.portrait;
             username.text = enemyInfo.username;
             deckAmount.text = enemyInfo.deckCount.ToString();
-            graveyardAmount.text = enemyInfo.graveCount.ToString();
+            graveyardAmount.text = (Player.gameManager.eGraveyard.childCount - 1) + "";
             handAmount.text = enemyInfo.handCardCount.ToString();
             health.text = enemyInfo.health.ToString();
             mana.text = enemyInfo.mana.ToString();

@@ -125,7 +125,7 @@ public class PlayerField : MonoBehaviour, IDropHandler
                 }
                 else if (checkTaunt() == false && fieldCount > 0)
                 {
-                    player.enemyInfo.isTargetable = true;
+                    player.enemyInfo.isTargetable = false; //Rule: only attack hero if have no cards in field
                     for (int i = 0; i < content.childCount; i++)
                     {
                         content.GetChild(i).GetComponent<FieldCard>().isTargetable = true;
