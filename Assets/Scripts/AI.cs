@@ -256,7 +256,6 @@ public class AI : MonoBehaviour
                     summonID = cardsID[index - 1];
                     foreach (Transform child in Hand.transform)
                     {
-
                         if (child.GetComponent<AICardToHand>().id == summonID && CardDataBase.cardList[summonID].mana <= currentMana)
                         {
                             child.transform.SetParent(Zone.transform);
@@ -264,14 +263,7 @@ public class AI : MonoBehaviour
                             currentMana = TurnSystem.currentEnemyMana;
                         }
                     }
-                }
-            }
-
-
-            for (int i = 0; i < deckSize; i++)
-            {
-                if (cardsID[i] != 0)
-                {
+                    index--;
                 }
             }
 
