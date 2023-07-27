@@ -10,7 +10,7 @@ public class Deck : NetworkBehaviour
     public Player player;
     [HideInInspector] public int deckSize = 30;
     [HideInInspector] public int handSize = 7;
-
+    
     [Header("Decks")]
     public SyncListCard deckList = new SyncListCard(); // DeckList used during the match. Contains all cards in the deck. This is where we'll be drawing card froms.
     public SyncListCard graveyard = new SyncListCard(); // Cards in player graveyard.
@@ -52,7 +52,6 @@ public class Deck : NetworkBehaviour
         
     }
 
-
     ///////////////
     public bool CanPlayCard(int manaCost)
     {
@@ -66,8 +65,9 @@ public class Deck : NetworkBehaviour
         {
             if (playerHand.hIndex < deckSize && Player.localPlayer.cardCount < 7)
             {
-                playerHand.AddCard();
                 player.CmdAddCardCount(1);
+                playerHand.AddCard();
+                Player.gameManager.audioSource.PlayOneShot(Player.gameManager.draw,1f);
             }
         }
         spawnInitialCards = false;
@@ -98,7 +98,6 @@ public class Deck : NetworkBehaviour
 
         // Spawn it
         NetworkServer.Spawn(boardCard);
-        player.RpcAddCardCount(-1);
         if (isServer) RpcPlayCard(boardCard, index);
     }
 
@@ -192,7 +191,10 @@ public class Deck : NetworkBehaviour
             }
             if (creature.cardDraw > 0)
             {
-                DrawCard(creature.cardDraw);
+                if (player.cardCount == 6)
+                    DrawCard(1);
+                if (player.cardCount < 6)
+                    DrawCard(creature.cardDraw);
             }
             if (creature.healthChange)
             {
@@ -283,10 +285,10 @@ public class Deck : NetworkBehaviour
     IEnumerator Wait(GameObject boardCard)
     {
         yield return new WaitForSeconds(1f);
-        Destroy(boardCard);
+        CmdDestroyCard(boardCard.transform);
     }
 
-    [Command]
+    [Command(ignoreAuthority = true)]
     public void CmdDestroyCard(Transform card)
     {
         if (isServer) RpcDestroyCard(card);
@@ -295,75 +297,167 @@ public class Deck : NetworkBehaviour
     [ClientRpc]
     public void RpcDestroyCard(Transform boardCard)
     {
-        if (Player.gameManager.isSpawning)
+        if (Player.gameManager.isOurTurn)
         {
             CardInfo card = boardCard.GetComponent<FieldCard>().card;
             CreatureCard creature = (CreatureCard)card.data;
             if (creature.hasDeathCry)
             {
-                foreach (CardAbility cardAbility in creature.deathcrys)
+                if (boardCard.transform.parent == Player.gameManager.playerField.content)
                 {
-                    foreach (Target tar in cardAbility.targets)
+                    foreach (CardAbility cardAbility in creature.deathcrys)
                     {
-                        if (tar == Target.ENEMIES)
+                        foreach (Target tar in cardAbility.targets)
                         {
-                            foreach (Transform child in Player.gameManager.enemyField.content)
+                            if (tar == Target.ENEMIES)
                             {
-                                child.GetComponent<FieldCard>().combat.CmdChangeHealth(cardAbility.damage);
-                            }
-                        }
-                        else if (tar == Target.FRIENDLIES)
-                        {
-                            foreach (Transform child in Player.gameManager.playerField.content)
-                            {
-                                if (child != boardCard.transform)
-                                    child.GetComponent<FieldCard>().combat.CmdChangeHealth(cardAbility.heal);
-                            }
-                        }
-                        else if (tar == Target.RANDOM)
-                        {
-                            if (cardAbility.heal > 0)
-                            {
-                                int x = Random.Range(0, Player.gameManager.playerField.content.childCount);
-                                int i = 0;
-                                foreach (Transform child in Player.gameManager.playerField.content)
-                                {
-                                    if (i == x)
-                                    {
-                                        child.GetComponent<FieldCard>().combat.CmdChangeHealth(cardAbility.heal);
-                                        break;
-                                    }
-                                    i++;
-                                }
-                            }
-                            else if (cardAbility.damage < 0)
-                            {
-                                int x = Random.Range(0, Player.gameManager.enemyField.content.childCount);
-                                int i = 0;
                                 foreach (Transform child in Player.gameManager.enemyField.content)
                                 {
-                                    if (i == x)
-                                    {
-                                        child.GetComponent<FieldCard>().combat.CmdChangeHealth(cardAbility.damage);
-                                        break;
-                                    }
-                                    i++;
+                                    child.GetComponent<FieldCard>().combat.CmdChangeHealth(cardAbility.damage);
                                 }
                             }
-                        }
+                            else if (tar == Target.FRIENDLIES)
+                            {
+                                foreach (Transform child in Player.gameManager.playerField.content)
+                                {
+                                    if (child != boardCard.transform)
+                                        child.GetComponent<FieldCard>().combat.CmdChangeHealth(cardAbility.heal);
+                                }
+                            }
+                            else if (tar == Target.RANDOM)
+                            {
+                                if (cardAbility.heal > 0)
+                                {
+                                    int x = Random.Range(0, Player.gameManager.playerField.content.childCount);
+                                    int i = 0;
+                                    foreach (Transform child in Player.gameManager.playerField.content)
+                                    {
+                                        if (i == x)
+                                        {
+                                            child.GetComponent<FieldCard>().combat.CmdChangeHealth(cardAbility.heal);
+                                            break;
+                                        }
+                                        i++;
+                                    }
+                                }
+                                else if (cardAbility.damage < 0)
+                                {
+                                    int x = Random.Range(0, Player.gameManager.enemyField.content.childCount);
+                                    int i = 0;
+                                    foreach (Transform child in Player.gameManager.enemyField.content)
+                                    {
+                                        if (i == x)
+                                        {
+                                            child.GetComponent<FieldCard>().combat.CmdChangeHealth(cardAbility.damage);
+                                            break;
+                                        }
+                                        i++;
+                                    }
+                                }
+                            }
+                        } 
                     }
+                    boardCard.transform.SetParent(Player.gameManager.graveyard, false);
+                    boardCard.transform.position = new Vector3(boardCard.transform.position.x + 4000, boardCard.transform.position.y,
+                        boardCard.transform.position.z);
+                    //Player.gameManager.isSpawning = false;
+                }
+                else if (boardCard.transform.parent == Player.gameManager.enemyField.content)
+                {
+                    foreach (CardAbility cardAbility in creature.deathcrys)
+                    {
+                        foreach (Target tar in cardAbility.targets)
+                        {
+                            if (tar == Target.ENEMIES)
+                            {
+                                foreach (Transform child in Player.gameManager.playerField.content)
+                                {
+                                    child.GetComponent<FieldCard>().combat.CmdChangeHealth(cardAbility.damage);
+                                }
+                            }
+                            else if (tar == Target.FRIENDLIES)
+                            {
+                                foreach (Transform child in Player.gameManager.enemyField.content)
+                                {
+                                    if (child != boardCard.transform)
+                                        child.GetComponent<FieldCard>().combat.CmdChangeHealth(cardAbility.heal);
+                                }
+                            }
+                            else if (tar == Target.RANDOM)
+                            {
+                                if (cardAbility.heal > 0)
+                                {
+                                    int x = Random.Range(0, Player.gameManager.enemyField.content.childCount);
+                                    int i = 0;
+                                    foreach (Transform child in Player.gameManager.enemyField.content)
+                                    {
+                                        if (i == x)
+                                        {
+                                            child.GetComponent<FieldCard>().combat.CmdChangeHealth(cardAbility.heal);
+                                            break;
+                                        }
+                                        i++;
+                                    }
+                                }
+                                else if (cardAbility.damage < 0)
+                                {
+                                    int x = Random.Range(0, Player.gameManager.playerField.content.childCount);
+                                    int i = 0;
+                                    foreach (Transform child in Player.gameManager.playerField.content)
+                                    {
+                                        if (i == x)
+                                        {
+                                            child.GetComponent<FieldCard>().combat.CmdChangeHealth(cardAbility.damage);
+                                            break;
+                                        }
+                                        i++;
+                                    }
+                                }
+                            }
+                        } 
+                    }
+                    boardCard.transform.SetParent(Player.gameManager.eGraveyard, false);
+                    boardCard.transform.position = new Vector3(boardCard.transform.position.x + 4000, boardCard.transform.position.y,
+                        boardCard.transform.position.z);
+                    //Player.gameManager.isSpawning = false;
                 }
             }
-            boardCard.SetParent(Player.gameManager.graveyard.transform, false);
-            boardCard.position = new Vector3(boardCard.position.x + 4000, boardCard.position.y,
-                boardCard.position.z);
-            Player.gameManager.isSpawning = false;
+            else
+            {
+                if (boardCard.transform.parent == Player.gameManager.playerField.content)
+                {
+                    Debug.Log("Card " + boardCard.GetComponent<FieldCard>().cardName.text + " in Player Field");
+                    boardCard.transform.SetParent(Player.gameManager.graveyard, false);
+                    boardCard.transform.position = new Vector3(boardCard.transform.position.x + 4000, boardCard.transform.position.y,
+                        boardCard.transform.position.z);
+                    //Player.gameManager.isSpawning = false;
+                }
+                else if (boardCard.transform.parent == Player.gameManager.enemyField.content)
+                {   
+                    Debug.Log("Card " + boardCard.GetComponent<FieldCard>().cardName.text + " in Enemy Field");
+                    boardCard.transform.SetParent(Player.gameManager.eGraveyard, false);
+                    boardCard.transform.position = new Vector3(boardCard.transform.position.x + 4000, boardCard.transform.position.y,
+                        boardCard.transform.position.z);
+                    //Player.gameManager.isSpawning = false;
+                }
+            }
         }
         else if (player.hasEnemy)
         {
-            boardCard.SetParent(Player.gameManager.eGraveyard.transform, false);
-            boardCard.position = new Vector3(boardCard.position.x + 4000, boardCard.position.y,
-                boardCard.position.z);
+            if (boardCard.transform.parent == Player.gameManager.playerField.content)
+            {
+                Debug.Log("Card " + boardCard.GetComponent<FieldCard>().cardName.text + " in Player Field but not in turn");
+                boardCard.transform.SetParent(Player.gameManager.graveyard, false);
+                boardCard.transform.position = new Vector3(boardCard.transform.position.x + 4000, boardCard.transform.position.y,
+                    boardCard.transform.position.z);
+            }
+            else if (boardCard.transform.parent == Player.gameManager.enemyField.content)
+            {
+                Debug.Log("Card " + boardCard.GetComponent<FieldCard>().cardName.text + " in Enemy Field but not in turn");
+                boardCard.transform.SetParent(Player.gameManager.eGraveyard, false);
+                boardCard.transform.position = new Vector3(boardCard.transform.position.x + 4000, boardCard.transform.position.y,
+                    boardCard.transform.position.z);
+            }
         }
     }
     [Command]

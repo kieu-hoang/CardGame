@@ -13,6 +13,11 @@ public class PlayerHand : MonoBehaviour
     private bool start = false;
     public int handCount = 0; // Amount of cards in hand
     public int hIndex = 0;
+    
+    public GameObject cardInDeck1;
+    public GameObject cardInDeck2;
+    public GameObject cardInDeck3;
+    public GameObject cardInDeck4;
 
     void Update()
     {
@@ -28,6 +33,26 @@ public class PlayerHand : MonoBehaviour
             }
         }
 
+        if (player && player.hasEnemy)
+        {
+            if (player.actualDeckSize < 30)
+            {
+                cardInDeck1.SetActive (false);
+            }
+            if (player.actualDeckSize < 20)
+            {
+                cardInDeck2.SetActive(false);
+            }
+            if (player.actualDeckSize < 2)
+            {
+                cardInDeck3.SetActive(false);
+            }
+            if (player.actualDeckSize < 1)
+            {
+                cardInDeck4.SetActive(false);
+            }
+        }
+        
         if (IsEnemyHand())
         {
             // instantiate/destroy enough slots
@@ -41,6 +66,22 @@ public class PlayerHand : MonoBehaviour
                     slot.cost.text = "10";
                 }
                 handCount = enemyInfo.handCardCount;
+                if (enemyInfo.deckCount < 20)
+                {
+                    cardInDeck1.SetActive (false);
+                }
+                if (enemyInfo.deckCount < 10)
+                {
+                    cardInDeck2.SetActive(false);
+                }
+                if (enemyInfo.deckCount < 2)
+                {
+                    cardInDeck3.SetActive(false);
+                }
+                if (enemyInfo.deckCount < 1)
+                {
+                    cardInDeck4.SetActive(false);
+                }
         }
     }
 

@@ -35,6 +35,10 @@ public class GameManager : NetworkBehaviour
     [HideInInspector] public bool isOurTurn = false;
     public int seconds = 0;
     [SyncVar, HideInInspector] public int turnCount = 1; // Start at 1
+    
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip shuffle, draw;
 
     // isHovering is only set to true on the Client that called the OnCardHover function.
     // We only want the hovering to appear on the enemy's Client, so we must exclude the OnCardHover caller from the Rpc call.

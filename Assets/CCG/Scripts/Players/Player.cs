@@ -41,8 +41,8 @@ public class Player : Entity
     [HideInInspector] public static GameManager gameManager;
     [SyncVar, HideInInspector] public bool firstPlayer = false; // Is it player 1, player 2, etc.
     [SyncVar] public int cardCount = 0;
-    //public int handCardCount = 0;
-    public int fieldCardCount = 0;
+    [SyncVar] public int actualDeckSize = 30;
+    
     public override void OnStartLocalPlayer()
     {
         localPlayer = this;
@@ -136,8 +136,7 @@ public class Player : Entity
             gameManager.enemyText.SetActive(true);
             started = true;
         }
-
-        //handCardCount = cardCount;
+        //actualDeckSize = deck.actualDeckSize;
     }
 
     public void UpdateEnemyInfo()
@@ -177,5 +176,7 @@ public class Player : Entity
     public void RpcAddCardCount(int x)
     {
         cardCount += x;
+        if (x > 0)
+            actualDeckSize -= x;
     }
 }

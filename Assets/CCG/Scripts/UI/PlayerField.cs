@@ -26,6 +26,7 @@ public class PlayerField : MonoBehaviour, IDropHandler
             Player.gameManager.isSpawning = true;
             Player.gameManager.isHovering = false;
             //Player.gameManager.CmdOnCardHover(0, index); // 13/7 fixing...
+            player.CmdAddCardCount(-1);
             player.deck.CmdPlayCard(cardInfo, index); // Summon card onto the board
             player.combat.CmdChangeMana(-manaCost); // Reduce player's mana
         }
@@ -71,11 +72,9 @@ public class PlayerField : MonoBehaviour, IDropHandler
         {
             CardInfo card = content.GetChild(i).GetComponent<FieldCard>().card;
             CreatureCard creature = (CreatureCard)card.data;
-            if (creature.creatureType == CreatureType.SPELL)
-                continue;
-            if (content.GetChild(i).GetComponent<FieldCard>().IsDead())
+            if (creature.creatureType != CreatureType.SPELL && content.GetChild(i).GetComponent<FieldCard>().IsDead())
             {
-                Player.gameManager.isSpawning = true;
+                //Player.gameManager.isSpawning = true;
                 player.deck.CmdDestroyCard(content.GetChild(i));
             }
         }
