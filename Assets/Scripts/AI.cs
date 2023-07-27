@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -79,7 +80,7 @@ public class AI : MonoBehaviour
         {
             for (int i = 0;i < deckSize; i++)
             {
-                x = Random.Range(1, 26);
+                x = UnityEngine.Random.Range(1, 26);
                 deck.Add(CardDataBase.cardList[x]);
             }
             // for (int i = 0; i < deckSize; i++)
@@ -206,10 +207,8 @@ public class AI : MonoBehaviour
         }
         if (summonPhase == true)
         {
-            summonID = 0;
-
             int index = 0;
-            for (int i=0; i < deckSize; i++)
+            for (int i = 0; i < deckSize; i++)
             {
                 if (AiCanSummon[i] == true)
                 {
@@ -217,22 +216,62 @@ public class AI : MonoBehaviour
                     index++;
                 }
             }
-            for (int i = 0; i < deckSize; i++)
+
+            // Optimize Card Summoning
+            int[,] L = new int[index + 1, currentMana + 1];
+
+            for (int i = 0; i <= index; i++)
             {
-                if (cardsID[i] != 0)
+                L[i, 0] = 0;
+            }
+
+            for (int j = 0; j <= currentMana; j++)
+            {
+                L[0, j] = 0;
+            }
+
+            for (int i = 1; i <= index; i++)
+            {
+                for (int j = 1; j <= currentMana; j++)
                 {
-                    summonID = cardsID[i];
-                    foreach(Transform child in Hand.transform)
+                    if (CardDataBase.cardList[cardsID[i - 1]].mana > j)
+                        L[i, j] = L[i - 1, j];
+                    else
+                        L[i, j] = Math.Max(L[i - 1, j],
+                            L[i - 1, j - CardDataBase.cardList[cardsID[i - 1]].mana] 
+                            + CardDataBase.cardList[cardsID[i - 1]].dame 
+                            + CardDataBase.cardList[cardsID[i - 1]].blood);
+                }
+            }
+
+            // Summoning Cards
+            while (index > 0)
+            {
+                if (L[index, currentMana] == L[index - 1, currentMana])
+                {
+                    index--;
+                }
+                else
+                {
+                    summonID = cardsID[index - 1];
+                    foreach (Transform child in Hand.transform)
                     {
-                
+
                         if (child.GetComponent<AICardToHand>().id == summonID && CardDataBase.cardList[summonID].mana <= currentMana)
                         {
                             child.transform.SetParent(Zone.transform);
                             TurnSystem.currentEnemyMana -= CardDataBase.cardList[summonID].mana;
                             currentMana = TurnSystem.currentEnemyMana;
                         }
-                
                     }
+                }
+            }
+
+
+            for (int i = 0; i < deckSize; i++)
+            {
+                if (cardsID[i] != 0)
+                {
                 }
             }
 
@@ -305,7 +344,7 @@ public class AI : MonoBehaviour
         for (int i=0;i<deckSize;i++)
         {
             container = deck[i];
-            int randomIndex = Random.Range(i, deckSize);
+            int randomIndex = UnityEngine.Random.Range(i, deckSize);
             deck[i] = deck[randomIndex];
             deck[randomIndex] = container;
         }
