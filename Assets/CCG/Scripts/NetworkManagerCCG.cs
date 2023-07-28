@@ -11,6 +11,7 @@ public class NetworkManagerCCG : NetworkManager
         Transform startPos = GetStartPosition();
         GameObject player = Instantiate(playerPrefab);
 
-        NetworkServer.AddPlayerForConnection(conn, player);
+        if (NetworkServer.AddPlayerForConnection(conn, player) == false)
+            NetworkServer.AddPlayerForConnection(conn, player);
     }
 }

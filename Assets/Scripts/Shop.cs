@@ -47,9 +47,13 @@ public class Shop : MonoBehaviour
             showedNumber = shouldOpen + increaser;
             shouldOpenText.text = "" + showedNumber;
             PlayerPrefs.SetInt("shouldOpen",shouldOpen);
+            if (gold < 0)
+                gold = 0;
         }
         else
         {
+            if (gold < 0)
+                gold = 0;
             PlayerPrefs.SetInt("gold", gold);
         }
     }
@@ -76,12 +80,15 @@ public class Shop : MonoBehaviour
 
     public void Plus()
     {
-        increaser++;
+        if (increaser*100 <= gold - 100)
+            increaser++;
     }
 
     public void Minus()
     {
         increaser--;
+        if (increaser < 0)
+            increaser = 0;
     }
 
     public void Confirm()

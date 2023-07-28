@@ -58,4 +58,9 @@ public class EndGameP : MonoBehaviour
         yield return new WaitForSeconds(2.5f);
         SceneManager.LoadScene(menu);
     }
+
+    public void Return()
+    {
+        StartCoroutine(ReturnToMenu());
+    }
 }

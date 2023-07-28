@@ -46,13 +46,9 @@ public class GameManager : NetworkBehaviour
     [HideInInspector] public bool isHovering = false;
     [HideInInspector] public bool isHoveringField = false;
     [HideInInspector] public bool isSpawning = false;
-    
-    [Header("Concede Defeat")]
-    //public TMPro.TextMeshProUGUI LoseText;
-    //public GameObject LoseTextGameObject;
 
     public GameObject concedeWindow;
-    //public string menu = "Menu";
+    public GameObject menu;
 
     public SyncListPlayerInfo players = new SyncListPlayerInfo(); // Information of all players online. One is player, other is opponent.
 
@@ -201,21 +197,11 @@ public class GameManager : NetworkBehaviour
 
     public void ConcedeDefeat()
     {
-        //StartCoroutine(EndGame());
         concedeWindow.SetActive(false);
         Player player = Player.localPlayer;
         if (isOurTurn)
         {
             player.GetComponent<Player>().combat.CmdChangeHealth(-30);
         }
-    }
-
-    IEnumerator EndGame()
-    {
-        // LoseTextGameObject.SetActive(true);
-        // LoseText.text = "BẠN THUA RỒI";
-        concedeWindow.SetActive(false);
-        yield return new WaitForSeconds(2.5f);
-        // SceneManager.LoadScene(menu);
     }
 }
