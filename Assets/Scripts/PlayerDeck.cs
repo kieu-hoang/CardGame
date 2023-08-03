@@ -44,7 +44,7 @@ public class PlayerDeck : MonoBehaviour
         x = 0;
         deckSize = 30;
 
-        // for (int i = 1; i <= 8; i++)
+        // for (int i = 1; i <= 25; i++)
         // {
         //     if (PlayerPrefs.GetInt("deck" + i, 0) > 0)
         //     {

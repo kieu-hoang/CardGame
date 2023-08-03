@@ -15,6 +15,8 @@ public class EndGame : MonoBehaviour
     public string menu;
 
     public bool protect;
+
+    public GameObject firework;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,7 +39,8 @@ public class EndGame : MonoBehaviour
         if (EnemyHp.staticHp <= 0)
         {
             textObject.SetActive(true);
-            victoryText.text = "***CHIẾN THẮNG***";
+            firework.SetActive(true);
+            victoryText.text = "CHIẾN THẮNG";
             if (gotMoney == false)
             {
                 money.GetComponent<Shop>().gold += 50;
@@ -53,7 +56,7 @@ public class EndGame : MonoBehaviour
 
     IEnumerator ReturnToMenu()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
         SceneManager.LoadScene(menu);
     }
 }

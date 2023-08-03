@@ -21,11 +21,13 @@ public class Shop : MonoBehaviour
     public GameObject morePacksWindow;
 
     public bool playDuel;
+
+    public bool paid = false;
     // Start is called before the first frame update
     void Start()
     {
         gold = 750;
-        gold = PlayerPrefs.GetInt("gold", 750);
+        gold = PlayerPrefs.GetInt("gold", 1000);
         shouldOpen = PlayerPrefs.GetInt("shouldOpen", 0);
         if (shouldOpen > 0)
         {
@@ -41,19 +43,16 @@ public class Shop : MonoBehaviour
             goldText.text = "Tài khoản của bạn: " + gold + " Thông bảo";
             if (shouldOpen > 0)
             {
+                paid = false;
                 StartCoroutine(Wait());
             }
 
             showedNumber = shouldOpen + increaser;
             shouldOpenText.text = "" + showedNumber;
             PlayerPrefs.SetInt("shouldOpen",shouldOpen);
-            if (gold < 0)
-                gold = 0;
         }
         else
         {
-            if (gold < 0)
-                gold = 0;
             PlayerPrefs.SetInt("gold", gold);
         }
     }
@@ -82,6 +81,8 @@ public class Shop : MonoBehaviour
     {
         if (increaser*100 <= gold - 100)
             increaser++;
+        if (increaser < 0)
+            increaser = 0;
     }
 
     public void Minus()
@@ -102,8 +103,13 @@ public class Shop : MonoBehaviour
 
     IEnumerator Wait()
     {
-        yield return new WaitForSeconds(0.5f);
-        gold -= 100;
+        yield return new WaitForSeconds(1f);
+        if (!paid)
+        {
+            gold -= 100;
+            paid = true;
+        }
+        
         PlayerPrefs.SetInt("gold", gold);
         SceneManager.LoadScene("OpenPack");
     }

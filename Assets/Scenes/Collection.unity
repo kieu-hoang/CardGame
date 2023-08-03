@@ -1185,7 +1185,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1803001968955466600, guid: a9dcfab0434fde44bbcdbc777032d912, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1803001968955466600, guid: a9dcfab0434fde44bbcdbc777032d912, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2999,10 +2999,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 889076982}
+  - {fileID: 2107922276}
   - {fileID: 1552182276}
   - {fileID: 1958507924}
-  - {fileID: 2107922276}
-  - {fileID: 889076982}
   m_Father: {fileID: 1469725346}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3104,7 +3104,7 @@ MonoBehaviour:
   CardThree: {fileID: 1552182284}
   CardFour: {fileID: 1958507932}
   notBeCollection: 0
-  HowManyCards: 0000000001000000010000000b000000010000000100000001000000010000000100000001000000010000000200000003000000040000000500000006000000070000000800000009000000010000000100000001000000010000000100000001000000
+  HowManyCards: 0000000009000000090000000900000009000000090000000900000009000000090000000900000009000000090000000900000009000000090000000900000009000000090000000900000009000000090000000900000009000000090000000900000009000000
   CardOneText: {fileID: 96007330}
   CardTwoText: {fileID: 1438804720}
   CardThreeText: {fileID: 2121724107}
@@ -3134,7 +3134,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1803001968955466600, guid: a9dcfab0434fde44bbcdbc777032d912, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1803001968955466600, guid: a9dcfab0434fde44bbcdbc777032d912, type: 3}
       propertyPath: m_AnchorMax.x
@@ -4298,7 +4298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1803001968955466600, guid: a9dcfab0434fde44bbcdbc777032d912, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1803001968955466600, guid: a9dcfab0434fde44bbcdbc777032d912, type: 3}
       propertyPath: m_AnchorMax.x
@@ -4863,7 +4863,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1803001968955466600, guid: a9dcfab0434fde44bbcdbc777032d912, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1803001968955466600, guid: a9dcfab0434fde44bbcdbc777032d912, type: 3}
       propertyPath: m_AnchorMax.x

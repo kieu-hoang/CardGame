@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DeckCreator : MonoBehaviour
 {
@@ -29,40 +31,47 @@ public class DeckCreator : MonoBehaviour
     public static int lastAdded;
 
     public int[] quantity;
+    public GameObject notice;
+    public TextMeshProUGUI total;
+    public TextMeshProUGUI noticeText;
+    public GameObject panel;
     
     // Start is called before the first frame update
     void Start()
     {
         sum = 0;
-        numberOfCardsInDatabase = 24;
+        numberOfCardsInDatabase = 25;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        total.text = sum + "/30";
     }
 
     public void CreateDeck()
     {
-        for (int i = 0; i <= numberOfCardsInDatabase; i++)
+        notice.SetActive(true);
+        if (sum < 30)
         {
-            sum += cardsWithThisId[i];
+            noticeText.text = "Chưa đủ 30 lá bài!!!";
         }
-
-        if (sum == 30)
+        else if (sum == 30)
         {
             for (int i = 0; i <= numberOfCardsInDatabase; i++)
             {
                 PlayerPrefs.SetInt("deck"+i,cardsWithThisId[i]);
             }
-        }
-
-        sum = 0;
-        numberOfDifferentCards = 0;
-        for (int i = 0; i <= numberOfCardsInDatabase; i++)
-        {
-            savedDeck[i] = PlayerPrefs.GetInt("deck" + i, 0);
+            DestroyPanel();
+            sum = 0;
+            numberOfDifferentCards = 0;
+            for (int i = 0; i <= numberOfCardsInDatabase; i++)
+            {
+                savedDeck[i] = PlayerPrefs.GetInt("deck" + i, 0);
+                cardsWithThisId[i] = 0;
+                alreadyCreated[i] = false;
+            }
+            noticeText.text = "Đã tạo bộ bài";
         }
     }
 
@@ -95,14 +104,20 @@ public class DeckCreator : MonoBehaviour
 
     public void Drop()
     {
-        if (mouseOverDeck == true && coll.GetComponent<Collection>().HowManyCards[dragged] > 0)
+        notice.SetActive(false);
+        if (mouseOverDeck == true && coll.GetComponent<Collection>().HowManyCards[dragged] > 0 && sum < 30)
         {
+            if ((dragged > 10 && cardsWithThisId[dragged] >= 1) || cardsWithThisId[dragged] >= 2)
+            {
+                return;
+            }
             cardsWithThisId[dragged]++;
             if (cardsWithThisId[dragged] < 0)
             {
                 cardsWithThisId[dragged] = 0;
             }
 
+            sum += 1;
             coll.GetComponent<Collection>().HowManyCards[dragged]--;
             CalculateDrop();
         }
@@ -123,6 +138,14 @@ public class DeckCreator : MonoBehaviour
         else if (cardsWithThisId[i] > 0 && alreadyCreated[i] == true)
         {
             quantity[i]++;
+        }
+    }
+
+    public void DestroyPanel()
+    {
+        foreach (Transform card in panel.transform)
+        {
+            Destroy(card.gameObject);
         }
     }
 }

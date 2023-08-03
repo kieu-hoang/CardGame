@@ -15,6 +15,8 @@ public class EndGameP : MonoBehaviour
     public string menu;
 
     public bool protect;
+
+    public GameObject winFire;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +41,7 @@ public class EndGameP : MonoBehaviour
         if (enemyHp <= 0)
         {
             textObject.SetActive(true);
+            winFire.SetActive(true);
             victoryText.text = "***CHIẾN THẮNG***";
             if (gotMoney == false)
             {

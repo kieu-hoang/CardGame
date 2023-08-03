@@ -3154,6 +3154,7 @@ MonoBehaviour:
   shouldOpenText: {fileID: 688776769}
   morePacksWindow: {fileID: 1568246014}
   playDuel: 0
+  paid: 0
 --- !u!1 &1965583827
 GameObject:
   m_ObjectHideFlags: 0

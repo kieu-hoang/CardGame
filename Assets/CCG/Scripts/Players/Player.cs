@@ -50,6 +50,7 @@ public class Player : Entity
 
         // Get and update the player's username and stats
         CmdLoadPlayer(PlayerPrefs.GetString("Name"));
+        deck.CmdCreateDeck();
         CmdLoadDeck();
     }
 

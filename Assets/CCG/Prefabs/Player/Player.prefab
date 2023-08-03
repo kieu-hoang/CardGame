@@ -65,7 +65,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0.1
+  syncInterval: 0
   combat: {fileID: 1537437544569787812}
   health: 30
   strength: 0
@@ -92,8 +92,7 @@ MonoBehaviour:
     player: {fileID: 0}
   firstPlayer: 0
   cardCount: 0
-  handCardCount: 0
-  fieldCardCount: 0
+  actualDeckSize: 30
 --- !u!114 &2970783521937405539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,61 +106,63 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0.1
+  syncInterval: 0
   player: {fileID: 2970783521937405538}
   deckSize: 0
   handSize: 7
   startingDeck:
-  - card: {fileID: 11400000, guid: bb5d76108a9d6944a968d682d55cb63f, type: 2}
-    amount: 2
-  - card: {fileID: 11400000, guid: 4fb7d13ea47cfc146a18fa37781159c5, type: 2}
-    amount: 1
-  - card: {fileID: 11400000, guid: d611b6dc488d47144be2f5a5b723ee50, type: 2}
-    amount: 2
+  - card: {fileID: 11400000, guid: c472daa99bf4fdc498181c3884a8ee55, type: 2}
+    amount: 0
   - card: {fileID: 11400000, guid: 1d6441c0a2691c04ea7bf93a825f0678, type: 2}
-    amount: 2
-  - card: {fileID: 11400000, guid: 8cffe4d6b627e8a4981845751af874dd, type: 2}
-    amount: 1
-  - card: {fileID: 11400000, guid: ce27ae6b0656c4d48a646cbb43458cda, type: 2}
-    amount: 2
-  - card: {fileID: 11400000, guid: e4c85df4cd1ef4d4d915631957cbd123, type: 2}
-    amount: 1
-  - card: {fileID: 11400000, guid: b8327131d0128464dbb7cee1940ad766, type: 2}
-    amount: 2
-  - card: {fileID: 11400000, guid: ed3d5391410892a448e16d4d72270cea, type: 2}
-    amount: 1
-  - card: {fileID: 11400000, guid: 922337293507b0d419c210cc6efb865c, type: 2}
-    amount: 1
-  - card: {fileID: 11400000, guid: ab3c341bdf8d8ed4ab87b28ba586f69b, type: 2}
-    amount: 1
-  - card: {fileID: 11400000, guid: d63530f1dec3f0649a282d7fad846d10, type: 2}
-    amount: 1
-  - card: {fileID: 11400000, guid: a7c5463fd79eb534685f9306abeb0c16, type: 2}
-    amount: 1
-  - card: {fileID: 11400000, guid: dc010d10e1f6610459dba4944e069df5, type: 2}
-    amount: 1
-  - card: {fileID: 11400000, guid: b39a77c9e4d828b449079bf030c6f3cc, type: 2}
-    amount: 1
+    amount: 0
   - card: {fileID: 11400000, guid: 8ec01c1a6eddc8141b9d75b9b76e1630, type: 2}
-    amount: 1
-  - card: {fileID: 11400000, guid: 9088ca7469ae3b54d83f52b25918fb9f, type: 2}
-    amount: 1
-  - card: {fileID: 11400000, guid: 775e8feeb6889a9499de0b045f7f9628, type: 2}
-    amount: 1
-  - card: {fileID: 11400000, guid: f68e964f7d719894a92802bec28a4291, type: 2}
-    amount: 1
-  - card: {fileID: 11400000, guid: b3ccc569113d4c34bb356dc981a31b50, type: 2}
-    amount: 1
+    amount: 0
   - card: {fileID: 11400000, guid: bc3a45d9f1ff755489e19370d49de7a5, type: 2}
-    amount: 1
+    amount: 0
+  - card: {fileID: 11400000, guid: bb5d76108a9d6944a968d682d55cb63f, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: 9088ca7469ae3b54d83f52b25918fb9f, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: b3ccc569113d4c34bb356dc981a31b50, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: d611b6dc488d47144be2f5a5b723ee50, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: ed3d5391410892a448e16d4d72270cea, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: ce27ae6b0656c4d48a646cbb43458cda, type: 2}
+    amount: 0
   - card: {fileID: 11400000, guid: ea084a2f2d1daef40b3eca3cb531bfe0, type: 2}
-    amount: 1
-  - card: {fileID: 11400000, guid: 73887dc35c7653a459b92fbf25348142, type: 2}
-    amount: 1
+    amount: 0
+  - card: {fileID: 11400000, guid: ab3c341bdf8d8ed4ab87b28ba586f69b, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: b39a77c9e4d828b449079bf030c6f3cc, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: b8327131d0128464dbb7cee1940ad766, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: 775e8feeb6889a9499de0b045f7f9628, type: 2}
+    amount: 0
   - card: {fileID: 11400000, guid: 41ed3edc2d9124d47adfd5eb63e81ca7, type: 2}
-    amount: 1
+    amount: 0
+  - card: {fileID: 11400000, guid: d63530f1dec3f0649a282d7fad846d10, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: dc010d10e1f6610459dba4944e069df5, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: f68e964f7d719894a92802bec28a4291, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: 4fb7d13ea47cfc146a18fa37781159c5, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: 73887dc35c7653a459b92fbf25348142, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: 922337293507b0d419c210cc6efb865c, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: 8cffe4d6b627e8a4981845751af874dd, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: a7c5463fd79eb534685f9306abeb0c16, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: e4c85df4cd1ef4d4d915631957cbd123, type: 2}
+    amount: 0
   - card: {fileID: 11400000, guid: 1c1032f5cefa0d84783dd6ac6ad4c483, type: 2}
-    amount: 1
+    amount: 0
   spawnInitialCards: 1
 --- !u!114 &1537437544569787812
 MonoBehaviour:
