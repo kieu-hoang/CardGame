@@ -31,7 +31,7 @@ public class EndGameP : MonoBehaviour
         if (playerHp <= 0)
         {
             textObject.SetActive(true);
-            victoryText.text = "!!!BẠN THUA RỒI!!!";
+            victoryText.text = "BẠN THUA RỒI!!!";
             if (protect == false)
             {
                 StartCoroutine(ReturnToMenu());
@@ -42,7 +42,7 @@ public class EndGameP : MonoBehaviour
         {
             textObject.SetActive(true);
             winFire.SetActive(true);
-            victoryText.text = "***CHIẾN THẮNG***";
+            victoryText.text = "CHIẾN THẮNG";
             if (gotMoney == false)
             {
                 money.GetComponent<Shop>().gold += 50;
@@ -58,7 +58,7 @@ public class EndGameP : MonoBehaviour
 
     IEnumerator ReturnToMenu()
     {
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(5f);
         SceneManager.LoadScene(menu);
     }
 

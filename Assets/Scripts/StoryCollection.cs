@@ -14,7 +14,7 @@ public class StoryCollection : MonoBehaviour
     void Start()
     {
         current = 1;
-        storiesInCollection = 10;
+        storiesInCollection = 8;
         numberOfStoryOnPage = 1;
     }
 

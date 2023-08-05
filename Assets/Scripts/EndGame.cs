@@ -29,7 +29,7 @@ public class EndGame : MonoBehaviour
         if (PlayerHp.staticHp <= 0)
         {
             textObject.SetActive(true);
-            victoryText.text = "!!!BẠN THUA RỒI!!!";
+            victoryText.text = "BẠN THUA RỒI!!!";
             if (protect == false)
             {
                 StartCoroutine(ReturnToMenu());

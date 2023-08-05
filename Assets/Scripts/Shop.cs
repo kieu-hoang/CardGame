@@ -26,13 +26,16 @@ public class Shop : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gold = 750;
+        gold = 1000;
         gold = PlayerPrefs.GetInt("gold", 1000);
         shouldOpen = PlayerPrefs.GetInt("shouldOpen", 0);
         if (shouldOpen > 0)
         {
             shouldOpen--;
         }
+
+        if (shouldOpen < 0)
+            shouldOpen = 0;
     }
 
     // Update is called once per frame

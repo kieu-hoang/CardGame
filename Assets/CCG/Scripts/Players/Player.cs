@@ -50,7 +50,6 @@ public class Player : Entity
 
         // Get and update the player's username and stats
         CmdLoadPlayer(PlayerPrefs.GetString("Name"));
-        deck.CmdCreateDeck();
         CmdLoadDeck();
     }
 
@@ -84,6 +83,11 @@ public class Player : Entity
     [Command]
     public void CmdLoadDeck()
     {
+        for (int i = 0; i <= 25; i++)
+        {
+            deck.startingDeck[i].amount = PlayerPrefs.GetInt("deck" + i, 0);
+            //Debug.Log("Card " + i + ": " + deck.startingDeck[i].amount);
+        }
         // Fill deck from startingDeck array
         for (int i = 0; i < deck.startingDeck.Length; ++i)
         {
@@ -91,7 +95,7 @@ public class Player : Entity
             for (int v = 0; v < card.amount; ++v)
             {
                 deck.deckList.Add(card.amount > 0 ? new CardInfo(card.card, 1) : new CardInfo());
-                //if (deck.hand.Count < 30) deck.hand.Add(new CardInfo(card.card, 1));
+                //Debug.Log("Card " + i + ": " + deck.deckList[i].amount);
             }
         }
         if (deck.deckList.Count == 30)
@@ -102,6 +106,7 @@ public class Player : Entity
         for (int i = 0; i < 30; i++)
         {
             deck.hand.Add(deck.deckList[i]);
+            //Debug.Log("Card " + i + ": " + deck.hand[i].amount);
         }
     }
 

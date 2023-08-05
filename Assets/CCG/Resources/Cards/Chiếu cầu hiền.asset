@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 992a434fee04c2f47bebd224e2fb0dee, type: 3}
   m_Name: "Chi\u1EBFu c\u1EA7u hi\u1EC1n"
   m_EditorClassIdentifier: 
-  id: ce27ae6b0656c4d48a646cbb43458cdk
+  id: 4427ae6b0656c4d48a646cbb43458cdk
   image: {fileID: 21300000, guid: a801b105a77167448864f64145ca16c2, type: 3}
   cost: 2
   category: 

@@ -469,14 +469,5 @@ public class Deck : NetworkBehaviour
         }
         Player.gameManager.isSpawning = false;
     }
-
-    [Command]
-    public void CmdCreateDeck()
-    {
-        for (int i = 0; i <= 25; i++)
-        {
-            startingDeck[i].amount = PlayerPrefs.GetInt("deck" + i, 0);
-        }
-    }
     
 }
