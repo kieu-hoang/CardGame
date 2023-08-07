@@ -26,7 +26,7 @@ MonoBehaviour:
     debuff: 0
     untilEndOfTurn: 0
   hasInitiative: 0
-  description: "H\u1ED3i S\u1EE9c: H\u1ED3i 2 m\xE1u cho qu\xE2n l\xEDnh b\u1EA5t
+  description: "H\u1ED3i S\u1EE9c: T\u0103ng 2 m\xE1u cho qu\xE2n l\xEDnh b\u1EA5t
     k\xEC"
   strength: 1
   health: 2
@@ -34,6 +34,7 @@ MonoBehaviour:
   creatureType: 0
   hasCharge: 0
   hasTaunt: 0
+  hasDiplomacy: 0
   deathcrys: []
   hasDeathCry: 0
   cardPrefab: {fileID: 3966246863333951121, guid: 66532acc9bfbbe043b5ef65a717193da, type: 3}

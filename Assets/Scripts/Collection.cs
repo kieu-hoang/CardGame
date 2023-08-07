@@ -47,7 +47,7 @@ public class Collection : MonoBehaviour
         x = 1;
         for (int i = 0; i <= 25; i++)
         {
-            HowManyCards[i] = PlayerPrefs.GetInt("x" + i, 0);
+            HowManyCards[i] = PlayerPrefs.GetInt("x" + i, 1);
         }
         
         if (openPack == true)

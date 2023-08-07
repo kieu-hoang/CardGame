@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Mirror;
 public class EndGameP : MonoBehaviour
 {
     public TMPro.TextMeshProUGUI victoryText;
@@ -17,10 +18,13 @@ public class EndGameP : MonoBehaviour
     public bool protect;
 
     public GameObject winFire;
+
+    public NetworkManagerHUDCCG manager;
     // Start is called before the first frame update
     void Start()
     {
         textObject.SetActive(false);
+        manager = GameObject.Find("Network Manager").GetComponent<NetworkManagerHUDCCG>();
     }
 
     // Update is called once per frame
@@ -34,6 +38,7 @@ public class EndGameP : MonoBehaviour
             victoryText.text = "BẠN THUA RỒI!!!";
             if (protect == false)
             {
+                manager.StopButtons();
                 StartCoroutine(ReturnToMenu());
                 protect = true;
             }
@@ -50,6 +55,7 @@ public class EndGameP : MonoBehaviour
             }
             if (protect == false)
             {
+                manager.StopButtons();
                 StartCoroutine(ReturnToMenu());
                 protect = true;
             }    

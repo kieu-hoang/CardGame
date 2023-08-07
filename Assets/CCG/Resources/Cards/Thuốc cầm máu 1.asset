@@ -33,7 +33,7 @@ MonoBehaviour:
     debuff: 0
     untilEndOfTurn: 0
   hasInitiative: 0
-  description: "H\u1ED3i 3 m\xE1u cho 1 qu\xE2n b\u1EA5t k\xEC, sau \u0111\xF3 h\u1ED3i
+  description: "T\u0103ng 3 m\xE1u cho 1 qu\xE2n b\u1EA5t k\xEC, sau \u0111\xF3 t\u0103ng
     2 m\xE1u cho ng\u01B0\u1EDDi ch\u01A1i"
   strength: 0
   health: 0

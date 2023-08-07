@@ -39,7 +39,7 @@ public class GameManager : NetworkBehaviour
     
     [Header("Audio")]
     public AudioSource audioSource;
-    public AudioClip shuffle, draw;
+    public AudioClip shuffle, draw, theme;
 
     // isHovering is only set to true on the Client that called the OnCardHover function.
     // We only want the hovering to appear on the enemy's Client, so we must exclude the OnCardHover caller from the Rpc call.
@@ -148,6 +148,10 @@ public class GameManager : NetworkBehaviour
             playerField.UpdateFieldCards();
             if (Player.localPlayer.cardCount < 7)
                 Player.localPlayer.deck.DrawCard(1);
+            if (Player.localPlayer.actualDeckSize <= 0)
+            {
+                Player.localPlayer.combat.CmdChangeHealth(-1);
+            }
             Player.localPlayer.deck.CmdStartNewTurn();
             if (seconds > 0)
             {

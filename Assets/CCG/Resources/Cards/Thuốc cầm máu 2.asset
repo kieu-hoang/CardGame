@@ -26,7 +26,7 @@ MonoBehaviour:
     debuff: 0
     untilEndOfTurn: 0
   hasInitiative: 0
-  description: "H\u1ED3i 3 m\xE1u cho to\xE0n b\u1ED9 l\xEDnh b\xEAn m\xECnh"
+  description: "T\u0103ng 3 m\xE1u cho to\xE0n b\u1ED9 l\xEDnh b\xEAn m\xECnh"
   strength: 0
   health: 0
   acceptableTargets: 0301

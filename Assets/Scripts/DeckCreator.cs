@@ -107,7 +107,7 @@ public class DeckCreator : MonoBehaviour
         notice.SetActive(false);
         if (mouseOverDeck == true && coll.GetComponent<Collection>().HowManyCards[dragged] > 0 && sum < 30)
         {
-            if ((dragged > 10 && cardsWithThisId[dragged] >= 1) || cardsWithThisId[dragged] >= 2)
+            if ((dragged > 15 && cardsWithThisId[dragged] >= 1) || (dragged is > 10 and <= 15 && cardsWithThisId[dragged] >= 2) || cardsWithThisId[dragged] >= 3)
             {
                 return;
             }

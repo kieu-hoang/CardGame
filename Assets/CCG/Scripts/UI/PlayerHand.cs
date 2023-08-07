@@ -33,13 +33,13 @@ public class PlayerHand : MonoBehaviour
             }
         }
 
-        if (player && player.hasEnemy)
+        if (player && player.hasEnemy && IsPlayerHand())
         {
-            if (player.actualDeckSize < 30)
+            if (player.actualDeckSize < 20)
             {
                 cardInDeck1.SetActive (false);
             }
-            if (player.actualDeckSize < 20)
+            if (player.actualDeckSize < 10)
             {
                 cardInDeck2.SetActive(false);
             }
@@ -56,32 +56,33 @@ public class PlayerHand : MonoBehaviour
         if (IsEnemyHand())
         {
             // instantiate/destroy enough slots
-                UIUtils.BalancePrefabs(cardPrefab.gameObject, enemyInfo.handCardCount, handContent);
+            UIUtils.BalancePrefabs(cardPrefab.gameObject, enemyInfo.handCardCount, handContent);
                 // refresh all members
-                for (int i = 0; i < enemyInfo.handCardCount; ++i)
-                {
-                    HandCard slot = handContent.GetChild(i).GetComponent<HandCard>();
+            for (int i = 0; i < enemyInfo.handCardCount; ++i)
+            {
+                HandCard slot = handContent.GetChild(i).GetComponent<HandCard>();
 
-                    slot.AddCardBack();
-                    slot.cost.text = "10";
-                }
-                handCount = enemyInfo.handCardCount;
-                if (enemyInfo.deckCount < 20)
-                {
-                    cardInDeck1.SetActive (false);
-                }
-                if (enemyInfo.deckCount < 10)
-                {
-                    cardInDeck2.SetActive(false);
-                }
-                if (enemyInfo.deckCount < 2)
-                {
-                    cardInDeck3.SetActive(false);
-                }
-                if (enemyInfo.deckCount < 1)
-                {
-                    cardInDeck4.SetActive(false);
-                }
+                slot.AddCardBack();
+                slot.cost.text = "10";
+            }
+            
+            if (enemyInfo.deckCount < 20)
+            {
+                cardInDeck1.SetActive (false);
+            }
+            if (enemyInfo.deckCount < 10)
+            {
+                cardInDeck2.SetActive(false);
+            }
+            if (enemyInfo.deckCount < 2)
+            {
+                cardInDeck3.SetActive(false);
+            }
+            if (enemyInfo.deckCount < 1)
+            {
+                cardInDeck4.SetActive(false);
+            }
+            handCount = enemyInfo.handCardCount;
         }
     }
 
@@ -114,5 +115,5 @@ public class PlayerHand : MonoBehaviour
 
     bool IsEnemyHand() =>
         player && player.hasEnemy && playerType == PlayerType.ENEMY && enemyInfo.handCount != handCount;
-    bool IsPlayerHand() => player && player.deck.spawnInitialCards && playerType == PlayerType.PLAYER;
+    bool IsPlayerHand() => player && playerType == PlayerType.PLAYER; //player.deck.spawnInitialCards &&
 }

@@ -28,6 +28,7 @@ public class Player : Entity
     [SyncVar] public int currentMax = 0;
     [SyncVar] public int _mana = 0;
     private bool started = false;
+    private bool startTheme = false;
     public int mana
     {
         get { return Mathf.Min(_mana, maxMana); }
@@ -83,21 +84,45 @@ public class Player : Entity
     [Command]
     public void CmdLoadDeck()
     {
+        int total = 0;
         for (int i = 0; i <= 25; i++)
         {
             deck.startingDeck[i].amount = PlayerPrefs.GetInt("deck" + i, 0);
-            //Debug.Log("Card " + i + ": " + deck.startingDeck[i].amount);
+            total += deck.startingDeck[i].amount;
         }
-        // Fill deck from startingDeck array
-        for (int i = 0; i < deck.startingDeck.Length; ++i)
+
+        if (total == 30)
         {
-            CardAndAmount card = deck.startingDeck[i];
-            for (int v = 0; v < card.amount; ++v)
+            // Fill deck from startingDeck array
+            for (int i = 0; i < deck.startingDeck.Length; ++i)
             {
-                deck.deckList.Add(card.amount > 0 ? new CardInfo(card.card, 1) : new CardInfo());
-                //Debug.Log("Card " + i + ": " + deck.deckList[i].amount);
+                CardAndAmount card = deck.startingDeck[i];
+                for (int v = 0; v < card.amount; ++v)
+                {
+                    deck.deckList.Add(card.amount > 0 ? new CardInfo(card.card, 1) : new CardInfo());
+                }
             }
         }
+        else
+        {
+            // Fill deck from startingDeck array
+            for (int i = 1; i < deck.startingDeck.Length; ++i)
+            {
+                CardAndAmount card = deck.startingDeck[i];
+                if (i < 5)
+                {
+                    for (int v = 0; v < 2; ++v)
+                    {
+                        deck.deckList.Add(card.amount > 0 ? new CardInfo(card.card, 1) : new CardInfo());
+                    }
+                }
+                else
+                {
+                    deck.deckList.Add(card.amount > 0 ? new CardInfo(card.card, 1) : new CardInfo());
+                }
+            }
+        }
+        
         if (deck.deckList.Count == 30)
         {
             deck.deckList.Shuffle();
@@ -106,7 +131,6 @@ public class Player : Entity
         for (int i = 0; i < 30; i++)
         {
             deck.hand.Add(deck.deckList[i]);
-            //Debug.Log("Card " + i + ": " + deck.hand[i].amount);
         }
     }
 
@@ -134,7 +158,7 @@ public class Player : Entity
             if (enemyInfo.firstPlayer == false)
             {
                 gameManager.StartGame();
-                firstPlayer = true;
+                CmdSetFirstPlayer();
                 started = true;
             }
         }
@@ -143,9 +167,19 @@ public class Player : Entity
             gameManager.enemyText.SetActive(true);
             started = true;
         }
-        //actualDeckSize = deck.actualDeckSize;
+
+        if (isLocalPlayer && hasEnemy && startTheme == false)
+        {
+            gameManager.audioSource.PlayOneShot(gameManager.theme,1f);
+            startTheme = true;
+        }
     }
 
+    [Command(ignoreAuthority = true)]
+    public void CmdSetFirstPlayer()
+    {
+        firstPlayer = true;
+    }
     public void UpdateEnemyInfo()
     {
         // Find all Players and add them to the list.

@@ -104,10 +104,11 @@ public class Deck : NetworkBehaviour
     [Command]
     public void CmdStartNewTurn()
     {
+        player.currentMax++;
         if (player.currentMax >= player.maxMana) 
             player.currentMax = player.maxMana;
-        player.currentMax++;
         player.mana = player.currentMax;
+        
     }
 
     [ClientRpc]

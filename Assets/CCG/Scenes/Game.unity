@@ -1806,6 +1806,7 @@ MonoBehaviour:
   menu: Menu
   protect: 0
   winFire: {fileID: 1525160734}
+  manager: {fileID: 0}
 --- !u!1001 &420637804
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6981,7 +6982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e71de22ec7e68af4ca27d5adf51c7b03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dontDestroyOnLoad: 1
+  dontDestroyOnLoad: 0
   runInBackground: 1
   startOnHeadless: 1
   showDebugMessages: 0
@@ -8296,6 +8297,10 @@ PrefabInstance:
       propertyPath: menu
       value: 
       objectReference: {fileID: 429982951}
+    - target: {fileID: 810035657886145062, guid: 5acb4cbd0487e1e4786d8ca58d5ae725, type: 3}
+      propertyPath: theme
+      value: 
+      objectReference: {fileID: 8300000, guid: 8c3a3e9d1f3d9d84689154ea3bb2f3dc, type: 3}
     - target: {fileID: 810035657886145062, guid: 5acb4cbd0487e1e4786d8ca58d5ae725, type: 3}
       propertyPath: maxMana
       value: 7

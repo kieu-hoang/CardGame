@@ -13,7 +13,7 @@ using Mirror;
 [HelpURL("https://mirror-networking.com/docs/Components/NetworkManagerHUD.html")]
 public class NetworkManagerHUDCCG : MonoBehaviour
 {
-    NetworkManager manager;
+    public static NetworkManager manager;
 
     string username = "";
 
@@ -34,6 +34,7 @@ public class NetworkManagerHUDCCG : MonoBehaviour
 
     void Awake()
     {
+        showGUI = true;
         manager = GetComponent<NetworkManager>();
 
         // Set last username used (if any) in the username's input field
@@ -69,7 +70,7 @@ public class NetworkManagerHUDCCG : MonoBehaviour
             }
         }
 
-        StopButtons();
+        //StopButtons();
 
         GUILayout.EndArea();
     }
@@ -147,31 +148,34 @@ public class NetworkManagerHUDCCG : MonoBehaviour
         }
     }
 
-    void StopButtons()
+    public void StopButtons()
     {
         // stop host if host mode
         if (NetworkServer.active && NetworkClient.isConnected)
         {
-            if (GUILayout.Button("Stop Host"))
-            {
-                manager.StopHost();
-            }
+            manager.StopHost();
+            // if (GUILayout.Button("Stop Host"))
+            // {
+            //     manager.StopHost();
+            // }
         }
         // stop client if client-only
         else if (NetworkClient.isConnected)
         {
-            if (GUILayout.Button("Stop Client"))
-            {
-                manager.StopClient();
-            }
+            manager.StopClient();
+            // if (GUILayout.Button("Stop Client"))
+            // {
+            //     manager.StopClient();
+            // }
         }
         // stop server if server-only
         else if (NetworkServer.active)
         {
-            if (GUILayout.Button("Stop Server"))
-            {
-                manager.StopServer();
-            }
+            manager.StopServer();
+            // if (GUILayout.Button("Stop Server"))
+            // {
+            //     manager.StopServer();
+            // }
         }
     }
 }
