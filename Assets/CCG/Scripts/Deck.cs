@@ -260,6 +260,7 @@ public class Deck : NetworkBehaviour
                 }
             }
             boardCard.transform.SetParent(Player.gameManager.playerField.content, false);
+            Player.gameManager.audioSource.PlayOneShot(Player.gameManager.play, 1.5f);
             if (creature.creatureType == CreatureType.SPELL)
             {
                 StartCoroutine(Wait(boardCard));
@@ -273,6 +274,7 @@ public class Deck : NetworkBehaviour
             CardInfo card = boardCard.GetComponent<FieldCard>().card;
             CreatureCard creature = (CreatureCard)card.data;
             boardCard.transform.SetParent(Player.gameManager.enemyField.content, false);
+            Player.gameManager.audioSource.PlayOneShot(Player.gameManager.play, 1.5f);
             Player.gameManager.enemyHand.RemoveCard(index);
             if (creature.hasDiplomacy)
                 boardCard.GetComponent<FieldCard>().diplomacy = true;

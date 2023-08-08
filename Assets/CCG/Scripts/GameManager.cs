@@ -39,7 +39,7 @@ public class GameManager : NetworkBehaviour
     
     [Header("Audio")]
     public AudioSource audioSource;
-    public AudioClip shuffle, draw, theme;
+    public AudioClip shuffle, draw, theme, play, win, lose, attack;
 
     // isHovering is only set to true on the Client that called the OnCardHover function.
     // We only want the hovering to appear on the enemy's Client, so we must exclude the OnCardHover caller from the Rpc call.
@@ -102,6 +102,7 @@ public class GameManager : NetworkBehaviour
     [ClientRpc]
     public void RpcAttack(GameObject attacker)
     {
+        audioSource.PlayOneShot(Player.gameManager.attack, 1f);
         if (attacker.GetComponent<Entity>() is Player)
         {
             attacker.GetComponent<Player>().portrait = Resources.Load<Sprite>("target");

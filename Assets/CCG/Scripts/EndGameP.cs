@@ -2,10 +2,12 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Mirror;
+using Unity.VisualScripting;
+
 public class EndGameP : MonoBehaviour
 {
-    public TMPro.TextMeshProUGUI victoryText;
-    public GameObject textObject;
+    public GameObject winImage;
+    public GameObject loseImage;
 
     public GameObject money;
     public int playerHp;
@@ -18,12 +20,18 @@ public class EndGameP : MonoBehaviour
     public bool protect;
 
     public GameObject winFire;
+    public GameObject loseFire;
 
     public NetworkManagerHUDCCG manager;
+
+    public GameManager gameManager;
+
+    public bool end = false;
     // Start is called before the first frame update
     void Start()
     {
-        textObject.SetActive(false);
+        winImage.SetActive(false);
+        loseImage.SetActive(false);
         manager = GameObject.Find("Network Manager").GetComponent<NetworkManagerHUDCCG>();
     }
 
@@ -34,8 +42,15 @@ public class EndGameP : MonoBehaviour
         enemyHp = GameObject.Find("EnemyPortrait").GetComponent<UIPortrait>().health.text.ToInt();
         if (playerHp <= 0)
         {
-            textObject.SetActive(true);
-            victoryText.text = "BẠN THUA RỒI!!!";
+            loseImage.SetActive(true);
+            loseFire.SetActive(true);
+            if (!end)
+            {
+                gameManager.audioSource.Stop();
+                gameManager.audioSource.clip = gameManager.lose;
+                gameManager.audioSource.Play();
+                end = true;
+            }
             if (protect == false)
             {
                 manager.StopButtons();
@@ -45,9 +60,15 @@ public class EndGameP : MonoBehaviour
         }
         if (enemyHp <= 0)
         {
-            textObject.SetActive(true);
+            winImage.SetActive(true);
             winFire.SetActive(true);
-            victoryText.text = "CHIẾN THẮNG";
+            if (!end)
+            {
+                gameManager.audioSource.Stop();
+                gameManager.audioSource.clip = gameManager.win;
+                gameManager.audioSource.Play();
+                end = true;
+            }
             if (gotMoney == false)
             {
                 money.GetComponent<Shop>().gold += 50;
