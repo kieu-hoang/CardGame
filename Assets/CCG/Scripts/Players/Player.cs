@@ -84,45 +84,21 @@ public class Player : Entity
     [Command]
     public void CmdLoadDeck()
     {
-        int total = 0;
         for (int i = 0; i <= 25; i++)
         {
-            deck.startingDeck[i].amount = PlayerPrefs.GetInt("deck" + i, 0);
-            total += deck.startingDeck[i].amount;
+            deck.startingDeck[i].amount = i == 0 ? PlayerPrefs.GetInt("deck" + i, 0) : PlayerPrefs.GetInt("deck" + i, i<5 ? 2 : 1);
         }
 
-        if (total == 30)
+        // Fill deck from startingDeck array
+        for (int i = 0; i < deck.startingDeck.Length; ++i)
         {
-            // Fill deck from startingDeck array
-            for (int i = 0; i < deck.startingDeck.Length; ++i)
+            CardAndAmount card = deck.startingDeck[i];
+            for (int v = 0; v < card.amount; ++v)
             {
-                CardAndAmount card = deck.startingDeck[i];
-                for (int v = 0; v < card.amount; ++v)
-                {
-                    deck.deckList.Add(card.amount > 0 ? new CardInfo(card.card, 1) : new CardInfo());
-                }
+                deck.deckList.Add(card.amount > 0 ? new CardInfo(card.card, 1) : new CardInfo());
             }
         }
-        else
-        {
-            // Fill deck from startingDeck array
-            for (int i = 1; i < deck.startingDeck.Length; ++i)
-            {
-                CardAndAmount card = deck.startingDeck[i];
-                if (i < 5)
-                {
-                    for (int v = 0; v < 2; ++v)
-                    {
-                        deck.deckList.Add(card.amount > 0 ? new CardInfo(card.card, 1) : new CardInfo());
-                    }
-                }
-                else
-                {
-                    deck.deckList.Add(card.amount > 0 ? new CardInfo(card.card, 1) : new CardInfo());
-                }
-            }
-        }
-        
+
         if (deck.deckList.Count == 30)
         {
             deck.deckList.Shuffle();
@@ -153,9 +129,9 @@ public class Player : Entity
         {
             UpdateEnemyInfo();
         }
-        if (isLocalPlayer && hasEnemy && started == false && Input.GetKeyDown(KeyCode.Space))
+        if (isLocalPlayer && hasEnemy && started == false) // && Input.GetKeyDown(KeyCode.Space))
         {
-            if (enemyInfo.firstPlayer == false)
+            if (isServer)
             {
                 gameManager.StartGame();
                 CmdSetFirstPlayer();

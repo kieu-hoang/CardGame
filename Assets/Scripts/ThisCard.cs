@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Security.Principal;
 using UnityEngine;
 using UnityEngine.UI;
@@ -86,6 +87,10 @@ public class ThisCard : MonoBehaviour
     public int increaseXdame;
     public int actualDame;
     public int dameIncrease;
+    
+    public bool isTarget;
+    public bool attackedTarget = false;
+    public bool deathcrys;
 
     void Start()
     {
@@ -99,8 +104,9 @@ public class ThisCard : MonoBehaviour
         drawX = 0;
         hurted = 0;
         dameIncrease = 0;
-        
+
         canAttack = false;
+        
         summoningSickness = true;
 
         Enemy = GameObject.Find("EnemyPortrait");
@@ -119,11 +125,20 @@ public class ThisCard : MonoBehaviour
     void Update()
     {
         Hand = GameObject.Find("Hand");
-        if (this.transform.parent == Hand.transform.parent)
+        if (this.transform.parent == Hand.transform)
         {
             cardBack = false;
+            if (!isTarget)
+                transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         }
+        if (isTarget)
+            transform.localScale = new Vector3(0.9f, 0.9f, 0.9f);
         id = thisCard.id;
+        // if (thisCard.id == 4)
+        // {
+        //     summoningSickness = false;
+        //     cantAttack = false;
+        // }
         cardName = thisCard.cardName;
         dame = thisCard.dame;
         
@@ -139,6 +154,7 @@ public class ThisCard : MonoBehaviour
         healXpower = thisCard.healXpower;
         
         increaseXdame = thisCard.increaseXdame;
+        deathcrys = thisCard.deathcrys;
 
         spell = thisCard.spell;
         damageDealtBySpell = thisCard.damageDealtBySpell;
@@ -205,8 +221,8 @@ public class ThisCard : MonoBehaviour
             this.tag = "Untagged";
         }
 
-        if (TurnSystem.currentMana >= mana && summoned == false && beInGraveyard == false && TurnSystem.isYourTurn == true && TurnSystem.protectStart == false
-            )
+        if (TurnSystem.currentMana >= mana && summoned == false && beInGraveyard == false && TurnSystem.isYourTurn == true 
+            && TurnSystem.protectStart == false && CardsInZone.howMany < 5)
         {
             canBeSummon = true;
         }
@@ -226,8 +242,13 @@ public class ThisCard : MonoBehaviour
         {
             summoningSickness = false;
             cantAttack = false;
+            attackedTarget = false;
         }
-        if (TurnSystem.isYourTurn == true && summoningSickness == false && cantAttack == false)
+        if (TurnSystem.isYourTurn && summoningSickness == false && cantAttack == false && summoned)
+        {
+            canAttack = true;
+        }
+        else if (TurnSystem.isYourTurn && id == 4 && summoned && attackedTarget == false)
         {
             canAttack = true;
         }
@@ -246,27 +267,28 @@ public class ThisCard : MonoBehaviour
         targeting = staticTargeting;
         targetingEnemy = staticTargetingEnemy;
 
-        if (targetingEnemy == true)
+        if (targetingEnemy)
         {
-            bool flag = true;
-            foreach (Transform child in EnemyZone.transform)
-            {
-                if (child.GetComponent<AICardToHand>().id == 1 || child.GetComponent<AICardToHand>().id == 13 ||
-                    child.GetComponent<AICardToHand>().id == 19)
-                {
-                    Target = null;
-                    flag = false;
-                    break;
-                }
-            }
-            if (flag == true)
-                Target = Enemy;
+            bool flag = !(CardsInZone.eHowMany > 0);
+            
+            // foreach (Transform child in EnemyZone.transform)
+            // {
+            //     if (child.GetComponent<AICardToHand>().id == 1 || child.GetComponent<AICardToHand>().id == 13 ||
+            //         child.GetComponent<AICardToHand>().id == 19)
+            //     {
+            //         Target = null;
+            //         flag = false;
+            //         break;
+            //     }
+            // }
+
+            Target = flag ? Enemy : null;
         }
         else
         {
             Target = null;
         }
-        if (targeting == true && onlyThisCardAttack == true)
+        if (targeting && onlyThisCardAttack)
         {
             Attack();
         }
@@ -292,13 +314,13 @@ public class ThisCard : MonoBehaviour
         {
             UcanReturn = false;
         }
-        if (canHeal == true && summoned == true)
+        if (canHeal == true && summoned == true && !deathcrys)
         {
             Heal();
             canHeal = false;
         }
 
-        if (canIncreaseDame == true && summoned == true)
+        if (canIncreaseDame == true && summoned == true && !deathcrys)
         {
             increaseDame();
             canIncreaseDame = false;
@@ -307,18 +329,48 @@ public class ThisCard : MonoBehaviour
         {
             dealDamage = true;
         }
-        if (dealDamage == true && this.transform.parent == battleZone.transform && stopDealDamage == false)
+        if (dealDamage == true && transform.parent == battleZone.transform && stopDealDamage == false && !deathcrys)
         {
-            dealXDamage(damageDealtBySpell);
+            dealXDamage();
         }
         if (stopDealDamage == true)
         {
             dealDamage = false;
         }
-        if (this.transform.parent == battleZone.transform && spell == true && dealDamage == false)
+        if (this.transform.parent == battleZone.transform && spell && dealDamage == false)
         {
-            Destroy();
+            StartCoroutine(DestroySpell());
         }
+    }
+
+    IEnumerator DestroySpell()
+    {
+        yield return new WaitForSeconds(1f);
+        this.transform.SetParent(Graveyard.transform);
+        this.transform.position = new Vector3(transform.position.x + 4000, transform.position.y,
+            transform.position.z);
+        hurted = 0;
+        // canBeDestroyed = true;
+        // if (canBeDestroyed == true)
+        // {
+        //     for (int i = 0; i < 32; i++)
+        //     {
+        //         if (Graveyard.GetComponent<GraveyardScript>().graveyard[i].id == 0)
+        //         {
+        //             Graveyard.GetComponent<GraveyardScript>().graveyard[i] = CardDataBase.cardList[id];
+        //             Graveyard.GetComponent<GraveyardScript>().objectsInGraveyard[i] = this.gameObject;
+        //             canBeDestroyed = false;
+        //             summoned = false;
+        //             beInGraveyard = true;
+        //             hurted = 0;
+        //             
+        //             transform.SetParent(Graveyard.transform);
+        //             transform.position = new Vector3(transform.position.x + 4000, transform.position.y,
+        //                 transform.position.z);
+        //             break;
+        //         }
+        //     }
+        // }
     }
     public void Summon()
     {
@@ -340,14 +392,15 @@ public class ThisCard : MonoBehaviour
     }
     public void Attack()
     {
-        if (canAttack == true && summoned == true)
+        if (canAttack && summoned)
         {
             if (Target != null)
             {
-                if (Target == Enemy)
+                if (Target == Enemy && attackedTarget == false)
                 {
-                    EnemyHp.staticHp -= (dame + dameIncrease);
+                    EnemyHp.staticHp -= actualDame;
                     targeting = false;
+                    attackedTarget = true;
                     cantAttack = true;
                     Arrow._Hide = true;
                 }
@@ -356,10 +409,24 @@ public class ThisCard : MonoBehaviour
             {
                 foreach(Transform child in EnemyZone.transform)
                 {
-                    if (child.GetComponent<AICardToHand>().isTarget == true)
+                    if (child.GetComponent<AICardToHand>().isTarget)
                     {
-                        child.GetComponent<AICardToHand>().hurted += (dame + dameIncrease);
-                        hurted += child.GetComponent<AICardToHand>().dame;
+                        if (child.GetComponent<AICardToHand>().id == 17)
+                            child.GetComponent<AICardToHand>().hurted += 1;
+                        else
+                            child.GetComponent<AICardToHand>().hurted += actualDame;
+                        if (id == 17)
+                            hurted += 1;
+                        else
+                            hurted += child.GetComponent<AICardToHand>().actualDame;
+                        if (isMutualBirth(transform.GetComponent<ThisCard>(), child.GetComponent<AICardToHand>()))
+                        {
+                            child.GetComponent<AICardToHand>().hurted -= 2;
+                        }
+                        if (isOpposition(transform.GetComponent<ThisCard>(), child.GetComponent<AICardToHand>()))
+                        {
+                            child.GetComponent<AICardToHand>().hurted += 2;
+                        }
                         cantAttack = true;
                         Arrow._Hide = true;
                         child.GetComponent<AICardToHand>().isTarget = false;
@@ -401,28 +468,46 @@ public class ThisCard : MonoBehaviour
     }
     public void Destroy()
     {
-        Graveyard = GameObject.Find("Graveyard");
-        canBeDestroyed = true;
-        if (canBeDestroyed == true)
+        if (deathcrys)
         {
-            for (int i = 0; i < 40; i++)
+            if (canHeal)
             {
-                if (Graveyard.GetComponent<GraveyardScript>().graveyard[i].id == 0)
-                {
-                    Graveyard.GetComponent<GraveyardScript>().graveyard[i] = CardDataBase.cardList[id];
-                    Graveyard.GetComponent<GraveyardScript>().objectsInGraveyard[i] = this.gameObject;
-                    canBeDestroyed = false;
-                    summoned = false;
-                    beInGraveyard = true;
-                    hurted = 0;
-                    
-                    transform.SetParent(Graveyard.transform);
-                    transform.position = new Vector3(transform.position.x + 4000, transform.position.y,
-                        transform.position.z);
-                    break;
-                }
+                Heal();
+                canHeal = false;
+            }
+
+            if (dealDamage)
+            {
+                dealXDamage();
+                dealDamage = false;
             }
         }
+        transform.SetParent(Graveyard.transform);
+        transform.position = new Vector3(transform.position.x + 4000, transform.position.y,
+            transform.position.z);
+        hurted = 0;
+        // canBeDestroyed = true;
+        // if (canBeDestroyed)
+        // {
+        //     for (int i = 0; i < 32; i++)
+        //     {
+        //         if (Graveyard.GetComponent<GraveyardScript>().graveyard[i].id == 0)
+        //         {
+        //             Graveyard.GetComponent<GraveyardScript>().graveyard[i] = CardDataBase.cardList[id];
+        //             Graveyard.GetComponent<GraveyardScript>().objectsInGraveyard[i] = this.gameObject;
+        //             canBeDestroyed = false;
+        //             summoned = false;
+        //             beInGraveyard = true;
+        //             hurted = 0;
+        //             
+        //             transform.SetParent(Graveyard.transform);
+        //             transform.position = new Vector3(transform.position.x + 4000, transform.position.y,
+        //                 transform.position.z);
+        //             
+        //             break;
+        //         }
+        //     }
+        // }
     }
     public void Return(int x)
     {
@@ -433,13 +518,13 @@ public class ThisCard : MonoBehaviour
     {
         if (healXpower > 0)
         {
-            if (transform.GetComponent<ThisCard>().id == 2 || transform.GetComponent<ThisCard>().id == 3)
+            if (id == 2 || id == 3)
                 HealOne();
-            else if (transform.GetComponent<ThisCard>().id == 20 || transform.GetComponent<ThisCard>().id == 24)
+            else if (id == 20 || id == 24 || id == 21 || id == 11 || id == 16 || id == 12)
                 HealAll();
-            else if (transform.GetComponent<ThisCard>().id == 10)
+            else if (id == 10)
             {
-                HealAll();
+                HealOne();
                 HealHero();
             }
         }
@@ -447,21 +532,28 @@ public class ThisCard : MonoBehaviour
 
     public void HealOne()
     {
-        if (CardsInZone.howMany <= 2)
+        int x = Random.Range(0, CardsInZone.howMany-1);
+        int i = 0;
+        if (CardsInZone.howMany <= 1)
             return;
         foreach (Transform child in battleZone.transform)
         {
-            if (child != transform && child.GetComponent<ThisCard>() != null)
+            if (i == x)
             {
-                child.GetComponent<ThisCard>().hurted -= healXpower;
-                break;
+                if (child != transform && child.GetComponent<ThisCard>() != null)
+                {
+                    child.GetComponent<ThisCard>().hurted -= healXpower;
+                    break;
+                }
+                continue;
             }
+            i++;
         }
     }
 
     public void HealAll()
     {
-        if (CardsInZone.howMany <= 2)
+        if (CardsInZone.howMany <= 1)
             return;
         foreach (Transform child in battleZone.transform)
         {
@@ -473,14 +565,16 @@ public class ThisCard : MonoBehaviour
     public void HealHero()
     {
         PlayerHp.staticHp += healXpower;
+        if (id == 10)
+            PlayerHp.staticHp -= 1;
         if (PlayerHp.staticHp > PlayerHp.maxHp)
             PlayerHp.staticHp = PlayerHp.maxHp;
     }
-    public void dealXDamage(int x)
+    public void dealXDamage()
     {
-        if (transform.GetComponent<ThisCard>().id == 5 || transform.GetComponent<ThisCard>().id == 14)
+        if (id == 5 || id == 14)
             dealHero();
-        else if (transform.GetComponent<ThisCard>().id == 7)
+        else if (id == 7)
             dealOne();
         else
             dealAll();
@@ -489,17 +583,22 @@ public class ThisCard : MonoBehaviour
     public void dealHero()
     {
         EnemyHp.staticHp -= damageDealtBySpell;
+        if (id == 5 && Field.checkChargePlayer())
+            EnemyHp.staticHp -= damageDealtBySpell;
         stopDealDamage = true;
     }
 
     public void dealAll()
     {
         foreach (Transform child in EnemyZone.transform)
-        {
-            child.GetComponent<AICardToHand>().isTarget = true;
-            if (child.GetComponent<AICardToHand>().isTarget == true)
+        {   
+            if (child.GetComponent<AICardToHand>() != null)
+                child.GetComponent<AICardToHand>().isTarget = true;
+            if (child.GetComponent<AICardToHand>() != null && child.GetComponent<AICardToHand>().isTarget)
             {
                 child.GetComponent<AICardToHand>().hurted += damageDealtBySpell;
+                if (id == 18 && Field.checkNTN())
+                    child.GetComponent<AICardToHand>().hurted += 1;
                 child.GetComponent<AICardToHand>().isTarget = false;
             }
         }
@@ -508,7 +607,7 @@ public class ThisCard : MonoBehaviour
 
     public void dealOne()
     {
-        int x = Random.Range(0, EnemyZone.GetComponent<CardsInZone>().howManyCards);
+        int x = Random.Range(0, CardsInZone.eHowMany);
         int i = 0;
         foreach (Transform child in EnemyZone.transform)
         {
@@ -529,12 +628,45 @@ public class ThisCard : MonoBehaviour
 
     public void increaseDame()
     {
-        if (CardsInZone.howMany <= 2)
+        if (CardsInZone.howMany <= 1)
             return;
         foreach (Transform child in battleZone.transform)
         {
             if (child != transform && child.GetComponent<ThisCard>() != null)
                 child.GetComponent<ThisCard>().dameIncrease += increaseXdame;
         }
+    }
+
+    public bool isMutualBirth(ThisCard player, AICardToHand enemy)
+    {
+        if (player.thisCard.element == Card.Element.NoElement  || enemy.thisCard.element == Card.Element.NoElement)
+            return false;
+        if (player.thisCard.element == Card.Element.Earth && enemy.thisCard.element == Card.Element.Metal)
+            return true;
+        if (player.thisCard.element == Card.Element.Metal && enemy.thisCard.element == Card.Element.Water)
+            return true;
+        if (player.thisCard.element == Card.Element.Water && enemy.thisCard.element == Card.Element.Wood)
+            return true;
+        if (player.thisCard.element == Card.Element.Wood && enemy.thisCard.element == Card.Element.Fire)
+            return true;
+        if (player.thisCard.element == Card.Element.Fire && enemy.thisCard.element == Card.Element.Earth)
+            return true;
+        return false;
+    }
+    public bool isOpposition(ThisCard player, AICardToHand enemy)
+    {
+        if (player.thisCard.element == Card.Element.NoElement  || enemy.thisCard.element == Card.Element.NoElement)
+            return false;
+        if (player.thisCard.element == Card.Element.Earth && enemy.thisCard.element == Card.Element.Water)
+            return true;
+        if (player.thisCard.element == Card.Element.Metal && enemy.thisCard.element == Card.Element.Wood)
+            return true;
+        if (player.thisCard.element == Card.Element.Water && enemy.thisCard.element == Card.Element.Fire)
+            return true;
+        if (player.thisCard.element == Card.Element.Wood && enemy.thisCard.element == Card.Element.Earth)
+            return true;
+        if (player.thisCard.element == Card.Element.Fire && enemy.thisCard.element == Card.Element.Metal)
+            return true;
+        return false;
     }
 }

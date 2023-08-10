@@ -88,7 +88,7 @@ public class GraveyardScript : MonoBehaviour
     public void CalculateGraveyard()
     {
         int x = 0;
-        for (int i = 0; i < 40; i++)
+        for (int i = 0; i < 32; i++)
         {
             if (graveyard[i].id != 0)
             {

@@ -8,13 +8,15 @@ public class AI : MonoBehaviour
     public List<Card> deck = new List<Card>();
     public Card container = new Card();
     public static List<Card> staticEnemyDeck = new List<Card>();
+    public int[] startingDeck;
 
-    public List<Card> cardsInHand = new List<Card>();
+    public List<AICardToHand> cardsInHand = new List<AICardToHand>();
 
-    public List<Card> cardsInZone = new List<Card>();
+    public List<AICardToHand> cardsInZone = new List<AICardToHand>();
     
     public GameObject Hand;
     public GameObject Zone;
+    public GameObject PlayerZone;
     public GameObject Graveyard;
 
     public int x;
@@ -53,11 +55,15 @@ public class AI : MonoBehaviour
     public bool[] canAttack;
     public static bool AiEndPhase;
     public static int whichEnemy;
+    private const int DECKSIZE = 30;
+    
+    public AudioSource audioSource;
+    public AudioClip shuffle, drawAudio;
 
     // Start is called before the first frame update
     private void Awake()
     {
-        //Shuffle();
+        deckSize = 30;
     }
     void Start()
     {
@@ -66,38 +72,37 @@ public class AI : MonoBehaviour
         //StartCoroutine(StartGame());
         Hand = GameObject.Find("EnemyHand");
         Zone = GameObject.Find("EnemyZone");
+        PlayerZone = GameObject.Find("Zone");
         Graveyard = GameObject.Find("EGraveyard");
 
         x = 0;
-        deckSize = 30;
         draw = true;
-        // for (int i = 0;i < deckSize; i++)
+        // for (int i = 0;i < DECKSIZE; i++)
         // {
         //     x = Random.Range(1, 10);
         //     deck.Add(CardDataBase.cardList[x]);
         // }
         if (whichEnemy == 1)
         {
-            for (int i = 0;i < deckSize; i++)
+            for (int i = 0; i <= 25; i++)
             {
-                x = UnityEngine.Random.Range(1, 26);
-                deck.Add(CardDataBase.cardList[x]);
+                startingDeck[i] = i == 0 ? PlayerPrefs.GetInt("deck" + i, 0) : PlayerPrefs.GetInt("deck" + i, i<5 ? 2 : 1);
             }
-            // for (int i = 0; i < deckSize; i++)
-            // {
-            //     if (i <= 19)
-            //     {
-            //         deck.Add(CardDataBase.cardList[2]);
-            //     }
-            //     else
-            //     {
-            //         deck.Add(CardDataBase.cardList[3]);
-            //     }
-            // }
+            for (int i = 0; i <= 25; i++)
+            {
+                if (startingDeck[i] > 0)
+                {
+                    for (int j = 1; j <= startingDeck[i]; j++)
+                    {
+                        deck[x] = CardDataBase.cardList[i];
+                        x++;
+                    }
+                }
+            }
         }
         if (whichEnemy == 2)
         {
-            for (int i = 0; i < deckSize; i++)
+            for (int i = 0; i < DECKSIZE; i++)
             {
                 if (i <= 19)
                 {
@@ -118,11 +123,11 @@ public class AI : MonoBehaviour
     void Update()
     {
         staticEnemyDeck = deck;
-        if (deckSize < 30)
+        if (deckSize < 20)
         {
             cardInDeck1.SetActive(false);
         }
-        if (deckSize < 20)
+        if (deckSize < 10)
         {
             cardInDeck2.SetActive(false);
         }
@@ -137,12 +142,17 @@ public class AI : MonoBehaviour
 
         if (AICardToHand.DrawX > 0)
         {
-            StartCoroutine(Draw(AICardToHand.DrawX));
+            for (int i = 0; i < AICardToHand.DrawX; i++)
+            {
+                if (CardsInHand.eHowMany < 7 && deckSize > 0)
+                    StartCoroutine(Draw(1));
+            }
             AICardToHand.DrawX = 0;
         }
         if (TurnSystem.startTurn == false && draw == false)
         {
-            StartCoroutine(Draw(1));
+            if (CardsInHand.eHowMany < 7 && deckSize > 0)
+                StartCoroutine(Draw(1));
             draw = true;
         }
         
@@ -157,34 +167,31 @@ public class AI : MonoBehaviour
             }
             foreach (Transform child in Hand.transform)
             {
-                cardsInHand[j] = child.GetComponent<AICardToHand>().thisCard;
+                cardsInHand[j] = child.GetComponent<AICardToHand>();
                 j++;
             }
-            for (int i = 0; i < deckSize; i++)
+            for (int i = 0; i < DECKSIZE; i++)
             {
                 if (i >= howManyCards)
                 {
-                    cardsInHand[i] = CardDataBase.cardList[0];
+                    cardsInHand[i] = aiCardToHand;
                 }
             }
             j = 0;
         }
         if (TurnSystem.isYourTurn == false)
         {
-            for (int i=0; i<deckSize; i++)
+            for (int i=0; i< CardsInHand.eHowMany; i++)
             {
-                if (cardsInHand[i].id != 0)
+                if (currentMana >= cardsInHand[i].mana && CardsInZone.eHowMany < 5)
                 {
-                    if (currentMana >= cardsInHand[i].mana)
-                    {
-                        AiCanSummon[i] = true;
-                    }
+                    AiCanSummon[i] = true;
                 }
             }
         }
         else
         {
-            for (int i=0; i < deckSize; i++)
+            for (int i=0; i < DECKSIZE; i++)
             {
                 AiCanSummon[i] = false;
             }
@@ -208,7 +215,7 @@ public class AI : MonoBehaviour
         if (summonPhase == true)
         {
             int index = 0;
-            for (int i = 0; i < deckSize; i++)
+            for (int i = 0; i < DECKSIZE; i++)
             {
                 if (AiCanSummon[i] == true)
                 {
@@ -216,61 +223,75 @@ public class AI : MonoBehaviour
                     index++;
                 }
             }
-
-            // Optimize Card Summoning
-            int[,] L = new int[index + 1, currentMana + 1];
-
-            for (int i = 0; i <= index; i++)
+            // // Random for checking
+            index = 0;
+            foreach (Transform child in Hand.transform)
             {
-                L[i, 0] = 0;
-            }
-
-            for (int j = 0; j <= currentMana; j++)
-            {
-                L[0, j] = 0;
-            }
-
-            for (int i = 1; i <= index; i++)
-            {
-                for (int j = 1; j <= currentMana; j++)
+                summonID = cardsID[index];
+                if (child.GetComponent<AICardToHand>().id == summonID && CardDataBase.cardList[summonID].mana <= currentMana)
                 {
-                    if (CardDataBase.cardList[cardsID[i - 1]].mana > j)
-                        L[i, j] = L[i - 1, j];
-                    else
-                        L[i, j] = Math.Max(L[i - 1, j],
-                            L[i - 1, j - CardDataBase.cardList[cardsID[i - 1]].mana] 
-                            + CardDataBase.cardList[cardsID[i - 1]].dame 
-                            + CardDataBase.cardList[cardsID[i - 1]].blood);
+                    child.transform.SetParent(Zone.transform);
+                    TurnSystem.currentEnemyMana -= CardDataBase.cardList[summonID].mana;
+                    currentMana = TurnSystem.currentEnemyMana;
                 }
-            }
 
-            // Summoning Cards
-            while (index > 0)
-            {
-                if (L[index, currentMana] == L[index - 1, currentMana])
-                {
-                    index--;
-                }
-                else
-                {
-                    summonID = cardsID[index - 1];
-                    foreach (Transform child in Hand.transform)
-                    {
-                        if (child.GetComponent<AICardToHand>().id == summonID && CardDataBase.cardList[summonID].mana <= currentMana)
-                        {
-                            child.transform.SetParent(Zone.transform);
-                            TurnSystem.currentEnemyMana -= CardDataBase.cardList[summonID].mana;
-                            currentMana = TurnSystem.currentEnemyMana;
-                        }
-                    }
-                    index--;
-                }
-            }
+                index++;
+            }    
+
+                // // Optimize Card Summoning
+            // int[,] L = new int[index + 1, currentMana + 1];
+            //
+            // for (int i = 0; i <= index; i++)
+            // {
+            //     L[i, 0] = 0;
+            // }
+            //
+            // for (int j = 0; j <= currentMana; j++)
+            // {
+            //     L[0, j] = 0;
+            // }
+            //
+            // for (int i = 1; i <= index; i++)
+            // {
+            //     for (int j = 1; j <= currentMana; j++)
+            //     {
+            //         if (CardDataBase.cardList[cardsID[i - 1]].mana > j)
+            //             L[i, j] = L[i - 1, j];
+            //         else
+            //             L[i, j] = Math.Max(L[i - 1, j],
+            //                 L[i - 1, j - CardDataBase.cardList[cardsID[i - 1]].mana] 
+            //                 + CardDataBase.cardList[cardsID[i - 1]].dame 
+            //                 + CardDataBase.cardList[cardsID[i - 1]].blood);
+            //     }
+            // }
+            //
+            // // Summoning Cards
+            // while (index > 0)
+            // {
+            //     if (L[index, currentMana] == L[index - 1, currentMana])
+            //     {
+            //         index--;
+            //     }
+            //     else
+            //     {
+            //         summonID = cardsID[index - 1];
+            //         foreach (Transform child in Hand.transform)
+            //         {
+            //             if (child.GetComponent<AICardToHand>().id == summonID && CardDataBase.cardList[summonID].mana <= currentMana)
+            //             {
+            //                 child.transform.SetParent(Zone.transform);
+            //                 TurnSystem.currentEnemyMana -= CardDataBase.cardList[summonID].mana;
+            //                 currentMana = TurnSystem.currentEnemyMana;
+            //             }
+            //         }
+            //         index--;
+            //     }
+            // }
 
             summonPhase = false;
             attackPhase = true;
         }
-        if (0 == 0)
+        if (attackPhase)
         {
             int k = 0;
             int howManyCards2 = 0;
@@ -283,7 +304,7 @@ public class AI : MonoBehaviour
                 canAttack[k] = child.GetComponent<AICardToHand>().canAttack;
                 k++;
             }
-            for (int i = 0; i < deckSize; i++)
+            for (int i = 0; i < DECKSIZE; i++)
             {
                 if (i >= howManyCards2)
                 {
@@ -302,34 +323,107 @@ public class AI : MonoBehaviour
             }
             foreach (Transform child in Zone.transform)
             {
-                cardsInZone[l] = child.GetComponent<AICardToHand>().thisCard;
+                cardsInZone[l] = child.GetComponent<AICardToHand>();
                 l++;
             }
-            for (int i = 0; i < deckSize; i++)
+            for (int i = 0; i < DECKSIZE; i++)
             {
                 if (i >= howManyCards3)
                 {
-                    cardsInZone[i] = CardDataBase.cardList[0];
+                    cardsInZone[i] = aiCardToHand;
                 }
             }
             l = 0;
         }
-        if (attackPhase == true && endPhase == false)
+        if (attackPhase && endPhase == false)
         {
-            for (int i = 0; i<deckSize; i++)
-            {
-                if (canAttack[i] == true) 
-                {
-                    PlayerHp.staticHp -= cardsInZone[i].dame;
-                }
-            }
-            endPhase = true;
+            //StartCoroutine(EndPhase());
+            DoEndPhase();
         }
-        if (endPhase == true)
+        if (endPhase)
         {
             AiEndPhase = true;
         }
+    }
 
+    IEnumerator EndPhase()
+    {
+        yield return new WaitForSeconds(1.5f);
+        DoEndPhase();
+    }
+
+    public void DoEndPhase()
+    {
+        for (int i = 0; i< CardsInZone.eHowMany ; i++)
+        {
+            if (canAttack[i])
+            {
+                if (CardsInZone.howMany == 0)
+                {
+                    if (!cardsInZone[i].attackedTarget)
+                    {
+                        PlayerHp.staticHp -= cardsInZone[i].actualDame;
+                        cardsInZone[i].attackedTarget = true;
+                        canAttack[i] = false;
+                    }
+                }
+                else
+                {
+                    if (checkTaunt())
+                    {
+                        foreach (Transform child in PlayerZone.transform)
+                        {
+                            if (canAttack[i] && child.GetComponent<ThisCard>().actualblood > 0)
+                            {
+                                if (child.GetComponent<ThisCard>().id == 1 || child.GetComponent<ThisCard>().id == 13 ||
+                                    child.GetComponent<ThisCard>().id == 19)
+                                {
+                                    child.GetComponent<ThisCard>().isTarget = true;
+                                }
+
+                                if (!child.GetComponent<ThisCard>().isTarget) continue;
+                                child.GetComponent<ThisCard>().hurted += cardsInZone[i].actualDame;
+                                cardsInZone[i].hurted += child.GetComponent<ThisCard>().actualDame;
+                                child.GetComponent<ThisCard>().isTarget = false;
+                                canAttack[i] = false;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (Transform child in PlayerZone.transform)
+                        {
+                            if (canAttack[i] && child.GetComponent<ThisCard>().actualblood > 0)
+                            {
+                                child.GetComponent<ThisCard>().isTarget = true;
+                                if (!child.GetComponent<ThisCard>().isTarget) continue;
+                                if (child.GetComponent<ThisCard>().id == 17)
+                                    child.GetComponent<ThisCard>().hurted += 1;
+                                else 
+                                    child.GetComponent<ThisCard>().hurted += cardsInZone[i].actualDame;
+                                if (cardsInZone[i].id == 17)
+                                    cardsInZone[i].hurted += 1;
+                                else
+                                    cardsInZone[i].hurted += child.GetComponent<ThisCard>().actualDame;
+                                if (isMutualBirth(cardsInZone[i].GetComponent<AICardToHand>(), child.GetComponent<ThisCard>()))
+                                {
+                                    child.GetComponent<ThisCard>().hurted -= 2;
+                                }
+                                if (isOpposition(cardsInZone[i].GetComponent<AICardToHand>(), child.GetComponent<ThisCard>()))
+                                {
+                                    child.GetComponent<ThisCard>().hurted += 2;
+                                }
+                                child.GetComponent<ThisCard>().isTarget = false;
+                                canAttack[i] = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        endPhase = true;
     }
     public void Shuffle()
     {
@@ -362,18 +456,64 @@ public class AI : MonoBehaviour
     IEnumerator Draw(int x)
     {
         for (int i =0; i<x;i++) 
-        { 
-            yield return new WaitForSeconds(1);
-            Instantiate(CardToHand, transform.position, transform.rotation);
+        {
+            if (CardsInHand.eHowMany < 7 && deckSize > 0)
+            {
+                yield return new WaitForSeconds(1);
+                audioSource.PlayOneShot(drawAudio,1f);
+                Instantiate(CardToHand, transform.position, transform.rotation);
+            }
         }
     }
-    IEnumerator WaitOneSeconds()
-    {
-        yield return new WaitForSeconds(1);
-    }
+    
     IEnumerator WaitForSummonPhase()
     {
         yield return new WaitForSeconds(3);
         summonPhase = true;
+    }
+
+    public bool checkTaunt()
+    {
+        foreach (Transform child in PlayerZone.transform)
+        {
+            if (child.GetComponent<ThisCard>().id == 1 || child.GetComponent<ThisCard>().id == 13 ||
+                child.GetComponent<ThisCard>().id == 19)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    public bool isMutualBirth(AICardToHand player, ThisCard enemy)
+    {
+        if (player.thisCard.element == Card.Element.NoElement  || enemy.thisCard.element == Card.Element.NoElement)
+            return false;
+        if (player.thisCard.element == Card.Element.Earth && enemy.thisCard.element == Card.Element.Metal)
+            return true;
+        if (player.thisCard.element == Card.Element.Metal && enemy.thisCard.element == Card.Element.Water)
+            return true;
+        if (player.thisCard.element == Card.Element.Water && enemy.thisCard.element == Card.Element.Wood)
+            return true;
+        if (player.thisCard.element == Card.Element.Wood && enemy.thisCard.element == Card.Element.Fire)
+            return true;
+        if (player.thisCard.element == Card.Element.Fire && enemy.thisCard.element == Card.Element.Earth)
+            return true;
+        return false;
+    }
+    public bool isOpposition(AICardToHand player, ThisCard enemy)
+    {
+        if (player.thisCard.element == Card.Element.NoElement  || enemy.thisCard.element == Card.Element.NoElement)
+            return false;
+        if (player.thisCard.element == Card.Element.Earth && enemy.thisCard.element == Card.Element.Water)
+            return true;
+        if (player.thisCard.element == Card.Element.Metal && enemy.thisCard.element == Card.Element.Wood)
+            return true;
+        if (player.thisCard.element == Card.Element.Water && enemy.thisCard.element == Card.Element.Fire)
+            return true;
+        if (player.thisCard.element == Card.Element.Wood && enemy.thisCard.element == Card.Element.Earth)
+            return true;
+        if (player.thisCard.element == Card.Element.Fire && enemy.thisCard.element == Card.Element.Metal)
+            return true;
+        return false;
     }
 }

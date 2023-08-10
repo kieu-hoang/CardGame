@@ -38,6 +38,7 @@ public class AICardToHand : MonoBehaviour
     public int returnXcards;
 
     public GameObject Hand;
+    public GameObject EnemyZone;
 
     public int z = 0;
     public GameObject It;
@@ -59,6 +60,20 @@ public class AICardToHand : MonoBehaviour
     public GameObject battleZone;
 
     public int healXpower;
+    //new 
+    public bool spell;
+    public int damageDealtBySpell;
+
+    public bool dealDamage;
+
+    public bool stopDealDamage;
+    public int increaseXdame;
+    public int actualDame;
+    public int dameIncrease;
+    public bool deathcrys;
+    
+    public bool attackedTarget = false;
+    public GameObject attackBorder;
     // Start is called before the first frame update
     void Start()
     {
@@ -73,15 +88,15 @@ public class AICardToHand : MonoBehaviour
 
         Graveyard = GameObject.Find("EGraveyard");
         StartCoroutine(AfterVoidStart());
-
-        AiZone = GameObject.Find("EnemyZone");
-
         summoningSickness = true;
+        
+        AiZone = GameObject.Find("EnemyZone");
         battleZone = GameObject.Find("EnemyZone");
+        EnemyZone = GameObject.Find("Zone");
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         if (z == 0)
         {
@@ -94,12 +109,21 @@ public class AICardToHand : MonoBehaviour
         if (this.transform.parent == Hand.transform)
         {
             cardBack = true;
+            transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         }
         if (this.transform.parent == AiZone.transform)
         {
             cardBack = false;
+            if (!isTarget)
+                transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         }
+        if (isTarget)
+            transform.localScale = new Vector3(0.9f, 0.9f, 0.9f);
         id = thisCard.id;
+        if (thisCard.id == 4)
+        {
+            summoningSickness = false;
+        }
         cardName = thisCard.cardName;
         dame = thisCard.dame;
         blood = thisCard.blood;
@@ -110,12 +134,18 @@ public class AICardToHand : MonoBehaviour
         drawXcards = thisCard.drawXcards;
         addXmaxMana = thisCard.addXmaxMana;
 
-        returnXcards = thisCard.returnXcards;
+        increaseXdame = thisCard.increaseXdame;
+        deathcrys = thisCard.deathcrys;
+        
+        spell = thisCard.spell;
+        damageDealtBySpell = thisCard.damageDealtBySpell;
 
+        returnXcards = thisCard.returnXcards;
         actualblood = blood - hurted;
+        actualDame = dame + dameIncrease;
 
         nameText.text = "" + cardName;
-        dameText.text = "" + dame;
+        dameText.text = "" + actualDame;
         bloodText.text = "" + actualblood;
         descriptionText.text = "• " + cardDescription;
         for (int i = 0; i < stars.Length; i++)
@@ -171,14 +201,11 @@ public class AICardToHand : MonoBehaviour
             cardBack = false;
             this.tag = "Untagged";
         }
-        if (actualblood<= 0 && thisCardCanBeDestroyed == true)
+        if (TurnSystem.isYourTurn && transform.parent == AiZone.transform)
         {
-            this.transform.SetParent(Graveyard.transform);
-            this.transform.position = new Vector3(transform.position.x + 4000, transform.position.y,
-                transform.position.z);
-            hurted = 0;
+            summoningSickness = false;
+            attackedTarget = false;
         }
-
         if (TurnSystem.isYourTurn == false && summoningSickness == false)
         {
             canAttack = true;
@@ -187,35 +214,65 @@ public class AICardToHand : MonoBehaviour
         {
             canAttack = false;
         }
-        if (TurnSystem.isYourTurn == true && this.transform.parent == AiZone.transform)
+
+        if (canAttack && transform.parent == battleZone.transform)
         {
-            summoningSickness = false;
+            attackBorder.SetActive(true);
+        }
+        else 
+            attackBorder.SetActive(false);
+
+        if (actualblood <= 0 && thisCardCanBeDestroyed && spell == false && id != 4)
+        {
+            if (deathcrys && !isSummoned)
+            {
+                if (healXpower > 0)
+                {
+                    Heal();
+                }
+                if (increaseXdame > 0)
+                {
+                    increaseDame();
+                }
+                if (damageDealtBySpell > 0)
+                {
+                    dealXDamage();
+                }
+                isSummoned = true;
+            }
+            this.transform.SetParent(Graveyard.transform);
+            this.transform.position = new Vector3(transform.position.x + 4000, transform.position.y,
+                transform.position.z);
+            hurted = 0;
         }
 
-        if (this.transform.parent == battleZone.transform && isSummoned == false)
+        if (this.transform.parent == battleZone.transform && isSummoned == false && !deathcrys)
         {
             if (drawXcards > 0)
             {
                 DrawX = drawXcards;
-                isSummoned = true;
             }
-
-            if (id == 6)
-            {
-                TurnSystem.maxEnemyMana += 1;
-                isSummoned = true;
-            }
-
             if (healXpower > 0)
             {
-                EnemyHp.staticHp += healXpower;
-                if (EnemyHp.staticHp > EnemyHp.maxHp)
-                    EnemyHp.staticHp = EnemyHp.maxHp;
-                isSummoned = true;
+                Heal();
             }
 
+            if (increaseXdame > 0)
+            {
+                increaseDame();
+            }
+            if (damageDealtBySpell > 0)
+            {
+                dealXDamage();
+            }
             isSummoned = true;
         }
+        if (spell && isSummoned)
+        {
+            StartCoroutine(WaitSpell());
+        }
+        if (id == 4 && actualblood <= 0 && isSummoned)
+            StartCoroutine(WaitSpell());
     }
     public void BeingTarget()
     {
@@ -243,5 +300,132 @@ public class AICardToHand : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         thisCardCanBeDestroyed = true;
+    }
+    
+    IEnumerator WaitSpell()
+    {
+        yield return new WaitForSeconds(1f);
+        this.transform.SetParent(Graveyard.transform);
+        this.transform.position = new Vector3(transform.position.x + 4000, transform.position.y,
+            transform.position.z);
+        hurted = 0;
+    }
+    public void Heal()
+    {
+        if (healXpower > 0)
+        {
+            if (id == 2 || id == 3)
+                HealOne();
+            else if (id == 20 || id == 24 || id == 21 || id == 11 || id == 16 || id == 12)
+                HealAll();
+            else if (id == 10)
+            {
+                HealAll();
+                HealHero();
+            }
+        }
+    }
+
+    public void HealOne() 
+    {
+        int x = Random.Range(0, CardsInZone.eHowMany-1);
+        int i = 0;
+        if (CardsInZone.eHowMany <= 1)
+            return;
+        foreach (Transform child in battleZone.transform)
+        {
+            if (i == x)
+            {
+                if (child != transform && child.GetComponent<AICardToHand>() != null)
+                {
+                    child.GetComponent<AICardToHand>().hurted -= healXpower;
+                    break;
+                }
+                continue;
+            }
+            i++;
+        }
+    }
+
+    public void HealAll()
+    {
+        if (CardsInZone.eHowMany <= 1)
+            return;
+        foreach (Transform child in battleZone.transform)
+        {
+            if (child != transform && child.GetComponent<AICardToHand>() != null)
+                child.GetComponent<AICardToHand>().hurted -= healXpower;
+        }
+    }
+
+    public void HealHero()
+    {
+        EnemyHp.staticHp += healXpower;
+        if (id == 10)
+            EnemyHp.staticHp -= 1;
+        if (EnemyHp.staticHp > EnemyHp.maxHp)
+            EnemyHp.staticHp = EnemyHp.maxHp;
+    }
+    public void dealXDamage()
+    {
+        if (id == 5 || id == 14)
+            dealHero();
+        else if (id == 7)
+            dealOne();
+        else
+            dealAll();
+    }
+
+    public void dealHero()
+    {
+        PlayerHp.staticHp -= damageDealtBySpell;
+        if (id == 5 && Field.checkChargeAI())
+            PlayerHp.staticHp -= damageDealtBySpell;
+    }
+
+    public void dealAll()
+    {
+        foreach (Transform child in EnemyZone.transform)
+        {   
+            if (child.GetComponent<ThisCard>() != null)
+                child.GetComponent<ThisCard>().isTarget = true;
+            if (child.GetComponent<ThisCard>() != null && child.GetComponent<ThisCard>().isTarget)
+            {
+                child.GetComponent<ThisCard>().hurted += damageDealtBySpell;
+                if (id == 18 && Field.checkNTNAI())
+                    child.GetComponent<ThisCard>().hurted += 1;
+                child.GetComponent<ThisCard>().isTarget = false;
+            }
+        }
+    }
+
+    public void dealOne()
+    {
+        int x = Random.Range(0, CardsInZone.howMany);
+        int i = 0;
+        foreach (Transform child in EnemyZone.transform)
+        {
+            if (i==x)
+            {child.GetComponent<ThisCard>().isTarget = true;
+                if (child.GetComponent<ThisCard>().isTarget)
+                {
+                    child.GetComponent<ThisCard>().hurted += damageDealtBySpell;
+                    child.GetComponent<ThisCard>().isTarget = false;
+                    break;
+                }
+            }
+            i++;
+        }
+    }
+
+    public void increaseDame()
+    {
+        if (CardsInZone.eHowMany <= 1)
+            return;
+        foreach (Transform child in battleZone.transform)
+        {
+            if (child != transform && child.GetComponent<AICardToHand>() != null)
+                child.GetComponent<AICardToHand>().dameIncrease += increaseXdame;
+        }
     }
 }

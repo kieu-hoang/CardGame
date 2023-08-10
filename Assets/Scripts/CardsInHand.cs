@@ -5,10 +5,14 @@ using UnityEngine;
 public class CardsInHand : MonoBehaviour
 {
     public GameObject Hand;
+    public GameObject EnemyHand;
 
     public static int howMany;
+    public static int eHowMany;
  
     public int howManyCards;
+    public int eHowManyCards;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -21,14 +25,27 @@ public class CardsInHand : MonoBehaviour
         int x = 0;
         foreach (Transform child in Hand.transform)
         {
-            x++;
+            if (child.GetComponent<ThisCard>() != null)
+                x++;
         }
 
-        if (x != howMany)
+        if (x != howManyCards)
         {
-            howMany = x;
+            howManyCards = x;
+        }
+        howMany = howManyCards;
+        
+        int y = 0;
+        foreach (Transform child in EnemyHand.transform)
+        {
+            if (child.GetComponent<AICardToHand>() != null)
+                y++;
         }
 
-        howManyCards = howMany;
+        if (y != eHowManyCards)
+        {
+            eHowManyCards = y;
+        }
+        eHowMany = eHowManyCards;
     }
 }

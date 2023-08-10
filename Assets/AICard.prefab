@@ -1053,7 +1053,7 @@ RectTransform:
   m_GameObject: {fileID: 3955361584424567646}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4599072043522989729}
@@ -1140,10 +1140,10 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 180
-  m_PreferredHeight: 270
-  m_FlexibleWidth: 1
-  m_FlexibleHeight: 1
+  m_PreferredWidth: 205
+  m_PreferredHeight: 305
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
   m_LayoutPriority: 1
 --- !u!225 &1944869697115683538
 CanvasGroup:
@@ -1212,6 +1212,7 @@ MonoBehaviour:
   actualblood: 0
   returnXcards: 0
   Hand: {fileID: 0}
+  EnemyZone: {fileID: 0}
   z: 0
   It: {fileID: 3955361584424567646}
   numberOfCardsInDeck: 0
@@ -1224,6 +1225,15 @@ MonoBehaviour:
   isSummoned: 0
   battleZone: {fileID: 0}
   healXpower: 0
+  spell: 0
+  damageDealtBySpell: 0
+  dealDamage: 0
+  stopDealDamage: 0
+  increaseXdame: 0
+  actualDame: 0
+  dameIncrease: 0
+  attackedTarget: 0
+  attackBorder: {fileID: 8802900448025939381}
 --- !u!114 &-450028315500039705
 MonoBehaviour:
   m_ObjectHideFlags: 0

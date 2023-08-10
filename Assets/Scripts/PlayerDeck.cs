@@ -10,6 +10,7 @@ public class PlayerDeck : MonoBehaviour
     public List<Card> deck = new List<Card>();
     public Card container;
     public static List<Card> staticDeck = new List<Card>();
+    public int[] startingDeck;
 
     public int x;
     public static int deckSize;
@@ -43,24 +44,27 @@ public class PlayerDeck : MonoBehaviour
     {
         x = 0;
         deckSize = 30;
-
-        // for (int i = 1; i <= 25; i++)
-        // {
-        //     if (PlayerPrefs.GetInt("deck" + i, 0) > 0)
-        //     {
-        //         for (int j = 1; j <= PlayerPrefs.GetInt("deck" + i, 0); j++)
-        //         {
-        //             deck[x] = CardDataBase.cardList[i];
-        //             x++;
-        //         }
-        //     }
-        // }
-        // Random instead for checking
-        for (int i = 0;i < deckSize; i++)
+        for (int i = 0; i <= 25; i++)
         {
-            x = Random.Range(1, 26);
-            deck[i] = CardDataBase.cardList[x];
+            startingDeck[i] = i == 0 ? PlayerPrefs.GetInt("deck" + i, 0) : PlayerPrefs.GetInt("deck" + i, i<5 ? 2 : 1);
         }
+        for (int i = 0; i <= 25; i++)
+        {
+            if (startingDeck[i] > 0)
+            {
+                for (int j = 1; j <= startingDeck[i]; j++)
+                {
+                    deck[x] = CardDataBase.cardList[i];
+                    x++;
+                }
+            }
+        }
+        // Random instead for checking
+        // for (int i = 0;i < deckSize; i++)
+        // {
+        //     x = Random.Range(1, 26);
+        //     deck[i] = CardDataBase.cardList[x];
+        // }
         Shuffle();
         StartCoroutine(StartGame());
     }
@@ -74,11 +78,11 @@ public class PlayerDeck : MonoBehaviour
             LoseText.text = "BẠN THUA RỒI!";
         }
         staticDeck = deck;
-        if (deckSize < 30)
+        if (deckSize < 20)
         {
             cardInDeck1.SetActive (false);
         }
-        if (deckSize < 20)
+        if (deckSize < 10)
         {
             cardInDeck2.SetActive(false);
         }
@@ -93,13 +97,17 @@ public class PlayerDeck : MonoBehaviour
 
         if (ThisCard.drawX > 0)
         {
-            StartCoroutine(Draw(ThisCard.drawX));
+            for (int i = 0; i < ThisCard.drawX; i++)
+            {
+                if (CardsInHand.howMany < 7 && deckSize > 0)
+                    StartCoroutine(Draw(1));
+            }
             ThisCard.drawX = 0;
         }
 
         if (TurnSystem.startTurn == true)
         {
-            if (CardsInHand.howMany < 7)
+            if (CardsInHand.howMany < 7 && deckSize > 0)
             {
                 StartCoroutine(Draw(1));
             }
