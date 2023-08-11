@@ -41,6 +41,7 @@ public class Field : MonoBehaviour
                 if (child.GetComponent<AICardToHand>().isTarget)
                 {
                     child.GetComponent<AICardToHand>().hurted += 3;
+                    child.GetComponent<AICardToHand>().isTarget = false;
                 }
             }
             aeNhaNguyenEffect = true;
@@ -54,6 +55,7 @@ public class Field : MonoBehaviour
                 if (child.GetComponent<ThisCard>().isTarget)
                 {
                     child.GetComponent<ThisCard>().hurted += 3;
+                    child.GetComponent<ThisCard>().isTarget = false;
                 }
             }
             aeNhaNguyenEffectAI = true;
@@ -109,7 +111,7 @@ public class Field : MonoBehaviour
     {
         foreach (Transform child in playerZone.transform)
         {
-            if (child.GetComponent<AICardToHand>() != null && child.GetComponent<ThisCard>().id == id)
+            if (child.GetComponent<ThisCard>() != null && child.GetComponent<ThisCard>().id == id)
                 return true;
         }
         return false;

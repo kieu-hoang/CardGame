@@ -31,7 +31,6 @@ public class ThisCard : MonoBehaviour
     CardBack CardBackScript;
 
     public GameObject Hand;
-    public int numberOfCardsInDeck;
 
     public bool canBeSummon;
     public bool summoned;
@@ -91,13 +90,11 @@ public class ThisCard : MonoBehaviour
     public bool isTarget;
     public bool attackedTarget = false;
     public bool deathcrys;
-
+    
     void Start()
     {
         CardBackScript = GetComponent<CardBack>();
         thisCard = CardDataBase.cardList[thisId];
-
-        numberOfCardsInDeck = PlayerDeck.deckSize;
         canBeSummon = false;
         summoned = false;
 
@@ -131,14 +128,12 @@ public class ThisCard : MonoBehaviour
             if (!isTarget)
                 transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         }
+
         if (isTarget)
+        {
             transform.localScale = new Vector3(0.9f, 0.9f, 0.9f);
+        }
         id = thisCard.id;
-        // if (thisCard.id == 4)
-        // {
-        //     summoningSickness = false;
-        //     cantAttack = false;
-        // }
         cardName = thisCard.cardName;
         dame = thisCard.dame;
         
@@ -212,15 +207,6 @@ public class ThisCard : MonoBehaviour
         
         CardBackScript.UpdateCard(cardBack);
 
-        if (this.tag == "Hand Clone")
-        {
-            thisCard = PlayerDeck.staticDeck[numberOfCardsInDeck - 1];
-            numberOfCardsInDeck -= 1;
-            PlayerDeck.deckSize -= 1;
-            cardBack = false;
-            this.tag = "Untagged";
-        }
-
         if (TurnSystem.currentMana >= mana && summoned == false && beInGraveyard == false && TurnSystem.isYourTurn == true 
             && TurnSystem.protectStart == false && CardsInZone.howMany < 5)
         {
@@ -270,18 +256,6 @@ public class ThisCard : MonoBehaviour
         if (targetingEnemy)
         {
             bool flag = !(CardsInZone.eHowMany > 0);
-            
-            // foreach (Transform child in EnemyZone.transform)
-            // {
-            //     if (child.GetComponent<AICardToHand>().id == 1 || child.GetComponent<AICardToHand>().id == 13 ||
-            //         child.GetComponent<AICardToHand>().id == 19)
-            //     {
-            //         Target = null;
-            //         flag = false;
-            //         break;
-            //     }
-            // }
-
             Target = flag ? Enemy : null;
         }
         else
@@ -293,7 +267,7 @@ public class ThisCard : MonoBehaviour
             Attack();
         }
          
-        if (canBeSummon == true || (UcanReturn == true && beInGraveyard == true))
+        if (canBeSummon|| (UcanReturn && beInGraveyard))
         {
             summonBorder.SetActive(true);
         }
@@ -314,13 +288,13 @@ public class ThisCard : MonoBehaviour
         {
             UcanReturn = false;
         }
-        if (canHeal == true && summoned == true && !deathcrys)
+        if (canHeal && summoned == true && !deathcrys)
         {
             Heal();
             canHeal = false;
         }
 
-        if (canIncreaseDame == true && summoned == true && !deathcrys)
+        if (canIncreaseDame&& summoned == true && !deathcrys)
         {
             increaseDame();
             canIncreaseDame = false;
@@ -520,7 +494,7 @@ public class ThisCard : MonoBehaviour
         {
             if (id == 2 || id == 3)
                 HealOne();
-            else if (id == 20 || id == 24 || id == 21 || id == 11 || id == 16 || id == 12)
+            else if (id == 20 || id == 24 || id == 21 || id == 11 || id == 16 || id == 12 || id == 23)
                 HealAll();
             else if (id == 10)
             {
@@ -532,9 +506,13 @@ public class ThisCard : MonoBehaviour
 
     public void HealOne()
     {
-        int x = Random.Range(0, CardsInZone.howMany-1);
+        int x;
+        if (spell)
+            x = Random.Range(0, CardsInZone.howMany);
+        else
+            x = Random.Range(0, CardsInZone.howMany-1);
         int i = 0;
-        if (CardsInZone.howMany <= 1)
+        if ((CardsInZone.howMany <= 1 && !spell) || CardsInZone.howMany == 0)
             return;
         foreach (Transform child in battleZone.transform)
         {
@@ -553,7 +531,7 @@ public class ThisCard : MonoBehaviour
 
     public void HealAll()
     {
-        if (CardsInZone.howMany <= 1)
+        if ((CardsInZone.howMany <= 1 && !spell) || CardsInZone.howMany == 0)
             return;
         foreach (Transform child in battleZone.transform)
         {
@@ -611,15 +589,15 @@ public class ThisCard : MonoBehaviour
         int i = 0;
         foreach (Transform child in EnemyZone.transform)
         {
-            if (i==x)
-            {child.GetComponent<AICardToHand>().isTarget = true;
-                if (child.GetComponent<AICardToHand>().isTarget == true)
+            if (i==x && child.GetComponent<AICardToHand>().actualblood > 0)
+            {
+                child.GetComponent<AICardToHand>().isTarget = true;
+                if (child.GetComponent<AICardToHand>().isTarget)
                 {
                     child.GetComponent<AICardToHand>().hurted += damageDealtBySpell;
                     child.GetComponent<AICardToHand>().isTarget = false;
                     break;
                 }
-                
             }
             i++;
         }
@@ -628,7 +606,7 @@ public class ThisCard : MonoBehaviour
 
     public void increaseDame()
     {
-        if (CardsInZone.howMany <= 1)
+        if ((CardsInZone.howMany <= 1 && !spell) || CardsInZone.howMany == 0)
             return;
         foreach (Transform child in battleZone.transform)
         {

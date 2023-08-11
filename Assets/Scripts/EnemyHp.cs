@@ -9,6 +9,9 @@ public class EnemyHp : MonoBehaviour
     public static float staticHp;
     public float hp;
     public Text hpText;
+    public Text deckSize;
+    public Text deadNo;
+    public Text handNo;
 
     // Start is called before the first frame update
     void Start()
@@ -27,5 +30,8 @@ public class EnemyHp : MonoBehaviour
             hp = maxHp;
         }
         hpText.text = "" + hp;
+        deckSize.text = AI.deckSize + "";
+        deadNo.text = 30 - AI.deckSize - CardsInHand.eHowMany - CardsInZone.eHowMany + "";
+        handNo.text = CardsInHand.eHowMany + "";
     }
 }

@@ -117,8 +117,12 @@ public class AICardToHand : MonoBehaviour
             if (!isTarget)
                 transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         }
+
         if (isTarget)
+        {
             transform.localScale = new Vector3(0.9f, 0.9f, 0.9f);
+        }
+            
         id = thisCard.id;
         if (thisCard.id == 4)
         {
@@ -192,15 +196,7 @@ public class AICardToHand : MonoBehaviour
         }
 
         CardBackScript.UpdateCard(cardBack);
-        if (this.tag == "Clone")
-        {
-            
-            thisCard = AI.staticEnemyDeck[numberOfCardsInDeck - 1];
-            numberOfCardsInDeck -= 1;
-            AI.deckSize -= 1;
-            cardBack = false;
-            this.tag = "Untagged";
-        }
+
         if (TurnSystem.isYourTurn && transform.parent == AiZone.transform)
         {
             summoningSickness = false;
@@ -246,7 +242,7 @@ public class AICardToHand : MonoBehaviour
             hurted = 0;
         }
 
-        if (this.transform.parent == battleZone.transform && isSummoned == false && !deathcrys)
+        if (transform.parent == battleZone.transform && isSummoned == false && !deathcrys)
         {
             if (drawXcards > 0)
             {
@@ -316,7 +312,7 @@ public class AICardToHand : MonoBehaviour
         {
             if (id == 2 || id == 3)
                 HealOne();
-            else if (id == 20 || id == 24 || id == 21 || id == 11 || id == 16 || id == 12)
+            else if (id == 20 || id == 24 || id == 21 || id == 11 || id == 16 || id == 12 || id == 23)
                 HealAll();
             else if (id == 10)
             {
@@ -326,17 +322,23 @@ public class AICardToHand : MonoBehaviour
         }
     }
 
-    public void HealOne() 
+    public void HealOne()
     {
-        int x = Random.Range(0, CardsInZone.eHowMany-1);
+        int x;
+        if (spell)
+            x = Random.Range(0, CardsInZone.eHowMany);
+        else
+        {
+            x = Random.Range(0, CardsInZone.eHowMany-1);
+        } 
         int i = 0;
-        if (CardsInZone.eHowMany <= 1)
+        if ((CardsInZone.eHowMany <= 1 && !spell) || CardsInZone.eHowMany == 0)
             return;
         foreach (Transform child in battleZone.transform)
         {
             if (i == x)
             {
-                if (child != transform && child.GetComponent<AICardToHand>() != null)
+                if (child != transform && child.GetComponent<AICardToHand>() != null && child.GetComponent<AICardToHand>().actualblood > 0)
                 {
                     child.GetComponent<AICardToHand>().hurted -= healXpower;
                     break;
@@ -349,11 +351,11 @@ public class AICardToHand : MonoBehaviour
 
     public void HealAll()
     {
-        if (CardsInZone.eHowMany <= 1)
+        if ((CardsInZone.eHowMany <= 1 && !spell) || CardsInZone.eHowMany == 0)
             return;
         foreach (Transform child in battleZone.transform)
         {
-            if (child != transform && child.GetComponent<AICardToHand>() != null)
+            if (child != transform && child.GetComponent<AICardToHand>() != null && child.GetComponent<AICardToHand>().actualblood > 0)
                 child.GetComponent<AICardToHand>().hurted -= healXpower;
         }
     }
@@ -405,8 +407,9 @@ public class AICardToHand : MonoBehaviour
         int i = 0;
         foreach (Transform child in EnemyZone.transform)
         {
-            if (i==x)
-            {child.GetComponent<ThisCard>().isTarget = true;
+            if (i==x && child.GetComponent<ThisCard>().actualblood > 0)
+            {
+                child.GetComponent<ThisCard>().isTarget = true;
                 if (child.GetComponent<ThisCard>().isTarget)
                 {
                     child.GetComponent<ThisCard>().hurted += damageDealtBySpell;
@@ -420,7 +423,7 @@ public class AICardToHand : MonoBehaviour
 
     public void increaseDame()
     {
-        if (CardsInZone.eHowMany <= 1)
+        if ((CardsInZone.eHowMany <= 1 && !spell) || CardsInZone.eHowMany == 0)
             return;
         foreach (Transform child in battleZone.transform)
         {

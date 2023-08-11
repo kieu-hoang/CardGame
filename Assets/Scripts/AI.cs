@@ -58,7 +58,7 @@ public class AI : MonoBehaviour
     private const int DECKSIZE = 30;
     
     public AudioSource audioSource;
-    public AudioClip shuffle, drawAudio;
+    public AudioClip drawAudio;
 
     // Start is called before the first frame update
     private void Awake()
@@ -77,11 +77,6 @@ public class AI : MonoBehaviour
 
         x = 0;
         draw = true;
-        // for (int i = 0;i < DECKSIZE; i++)
-        // {
-        //     x = Random.Range(1, 10);
-        //     deck.Add(CardDataBase.cardList[x]);
-        // }
         if (whichEnemy == 1)
         {
             for (int i = 0; i <= 25; i++)
@@ -123,6 +118,7 @@ public class AI : MonoBehaviour
     void Update()
     {
         staticEnemyDeck = deck;
+        checkClone();
         if (deckSize < 20)
         {
             cardInDeck1.SetActive(false);
@@ -142,17 +138,25 @@ public class AI : MonoBehaviour
 
         if (AICardToHand.DrawX > 0)
         {
-            for (int i = 0; i < AICardToHand.DrawX; i++)
+            if (CardsInHand.eHowMany == 6 && deckSize > 0)
+                StartCoroutine(Draw(1));
+            else
             {
-                if (CardsInHand.eHowMany < 7 && deckSize > 0)
-                    StartCoroutine(Draw(1));
+                for (int i = 0; i < AICardToHand.DrawX; i++)
+                {
+                    if (CardsInHand.eHowMany < 7 && deckSize > 0)
+                        StartCoroutine(Draw(1));
+                }
             }
             AICardToHand.DrawX = 0;
         }
+        
         if (TurnSystem.startTurn == false && draw == false)
         {
             if (CardsInHand.eHowMany < 7 && deckSize > 0)
                 StartCoroutine(Draw(1));
+            else if (deckSize <= 0)
+                EnemyHp.staticHp -= 1;
             draw = true;
         }
         
@@ -201,29 +205,29 @@ public class AI : MonoBehaviour
         {
             drawPhase = true;
         }
-        if (drawPhase == true && summonPhase == false && attackPhase == false)
+        if (drawPhase && summonPhase == false && attackPhase == false)
         {
             StartCoroutine(WaitForSummonPhase());
         }
-        if (TurnSystem.isYourTurn == true)
+        if (TurnSystem.isYourTurn)
         {
             drawPhase = false;
             summonPhase = false;
             attackPhase = false;
             endPhase = false;
         }
-        if (summonPhase == true)
+        if (summonPhase)
         {
             int index = 0;
             for (int i = 0; i < DECKSIZE; i++)
             {
-                if (AiCanSummon[i] == true)
+                if (AiCanSummon[i])
                 {
                     cardsID[index] = cardsInHand[i].id;
                     index++;
                 }
             }
-            // // Random for checking
+            // Random for checking
             index = 0;
             foreach (Transform child in Hand.transform)
             {
@@ -234,7 +238,7 @@ public class AI : MonoBehaviour
                     TurnSystem.currentEnemyMana -= CardDataBase.cardList[summonID].mana;
                     currentMana = TurnSystem.currentEnemyMana;
                 }
-
+            
                 index++;
             }    
 
@@ -289,7 +293,7 @@ public class AI : MonoBehaviour
             // }
 
             summonPhase = false;
-            attackPhase = true;
+            StartCoroutine(StartAttackPhase());
         }
         if (attackPhase)
         {
@@ -344,8 +348,25 @@ public class AI : MonoBehaviour
         {
             AiEndPhase = true;
         }
+        
     }
-
+    public void checkClone()
+    {
+        foreach (Transform child in Hand.transform)
+        {
+            if (child.tag != "Clone") continue;
+            child.GetComponent<AICardToHand>().thisCard = staticEnemyDeck[deckSize - 1];
+            deckSize -= 1;
+            child.GetComponent<AICardToHand>().cardBack = false;
+            child.tag = "Untagged";
+        }
+    }
+    
+    IEnumerator StartAttackPhase()
+    {
+        yield return new WaitForSeconds(3f);
+        attackPhase = true;
+    }
     IEnumerator EndPhase()
     {
         yield return new WaitForSeconds(1.5f);
@@ -354,7 +375,7 @@ public class AI : MonoBehaviour
 
     public void DoEndPhase()
     {
-        for (int i = 0; i< CardsInZone.eHowMany ; i++)
+        for (int i = 0; i< deckSize ; i++)
         {
             if (canAttack[i])
             {
@@ -380,7 +401,6 @@ public class AI : MonoBehaviour
                                 {
                                     child.GetComponent<ThisCard>().isTarget = true;
                                 }
-
                                 if (!child.GetComponent<ThisCard>().isTarget) continue;
                                 child.GetComponent<ThisCard>().hurted += cardsInZone[i].actualDame;
                                 cardsInZone[i].hurted += child.GetComponent<ThisCard>().actualDame;
@@ -459,7 +479,7 @@ public class AI : MonoBehaviour
         {
             if (CardsInHand.eHowMany < 7 && deckSize > 0)
             {
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(1f);
                 audioSource.PlayOneShot(drawAudio,1f);
                 Instantiate(CardToHand, transform.position, transform.rotation);
             }
@@ -479,7 +499,8 @@ public class AI : MonoBehaviour
             if (child.GetComponent<ThisCard>().id == 1 || child.GetComponent<ThisCard>().id == 13 ||
                 child.GetComponent<ThisCard>().id == 19)
             {
-                return true;
+                if (child.GetComponent<ThisCard>().actualblood > 0)
+                    return true;
             }
         }
         return false;

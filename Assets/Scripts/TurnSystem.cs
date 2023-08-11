@@ -32,7 +32,7 @@ public class TurnSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        seconds = 60;
+        seconds = 30;
         timerStart = true;
 
         protectStart = true;
@@ -95,7 +95,7 @@ public class TurnSystem : MonoBehaviour
         currentEnemyMana = maxEnemyMana;
         AI.draw = false;
         timerStart = true;
-        seconds = 60;
+        seconds = 30;
     }
     public void EndYourOpponentTurn()
     {
@@ -108,7 +108,7 @@ public class TurnSystem : MonoBehaviour
         }
         currentMana = maxMana;
         timerStart = true;
-        seconds = 60;
+        seconds = 30;
 
         startTurn = true;
     }

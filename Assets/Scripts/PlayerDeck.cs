@@ -27,13 +27,10 @@ public class PlayerDeck : MonoBehaviour
     public GameObject[] Clones;
     public GameObject Hand;
 
-    public TMPro.TextMeshProUGUI LoseText;
-    public GameObject LoseTextGameObject;
-
     public GameObject concedeWindow;
     public string menu = "Menu";
     public AudioSource audioSource;
-    public AudioClip shuffle, draw;
+    public AudioClip shuffle, draw, theme;
     private void Awake()
     {
         Shuffle();
@@ -72,11 +69,6 @@ public class PlayerDeck : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (deckSize <= 0)
-        {
-            LoseTextGameObject.SetActive(true);
-            LoseText.text = "BẠN THUA RỒI!";
-        }
         staticDeck = deck;
         if (deckSize < 20)
         {
@@ -97,10 +89,15 @@ public class PlayerDeck : MonoBehaviour
 
         if (ThisCard.drawX > 0)
         {
-            for (int i = 0; i < ThisCard.drawX; i++)
+            if (CardsInHand.howMany == 6 && deckSize > 0)
+                StartCoroutine(Draw(1));
+            else
             {
-                if (CardsInHand.howMany < 7 && deckSize > 0)
-                    StartCoroutine(Draw(1));
+                for (int i = 0; i < ThisCard.drawX; i++)
+                {
+                    if (CardsInHand.howMany < 7 && deckSize > 0)
+                        StartCoroutine(Draw(1));
+                }
             }
             ThisCard.drawX = 0;
         }
@@ -111,8 +108,25 @@ public class PlayerDeck : MonoBehaviour
             {
                 StartCoroutine(Draw(1));
             }
+            else if (deckSize <= 0)
+            {
+                PlayerHp.staticHp -= 1;
+            }
             
             TurnSystem.startTurn = false;
+        }
+        checkClone();
+    }
+
+    public void checkClone()
+    {
+        foreach (Transform child in Hand.transform)
+        {
+            if (child.tag != "Hand Clone") continue;
+            child.GetComponent<ThisCard>().thisCard = staticDeck[deckSize - 1];
+            deckSize -= 1;
+            child.GetComponent<ThisCard>().cardBack = false;
+            child.tag = "Untagged";
         }
     }
 
@@ -131,6 +145,7 @@ public class PlayerDeck : MonoBehaviour
             audioSource.PlayOneShot(draw,1f);
             Instantiate(CardToHand, transform.position, transform.rotation); ;
         }
+        audioSource.PlayOneShot(theme,1f);
     }
 
     public void Shuffle()
@@ -156,7 +171,7 @@ public class PlayerDeck : MonoBehaviour
             Instantiate(CardToHand, transform.position, transform.rotation);
         }
     }
-
+    
     public void OpenWindow()
     {
         concedeWindow.SetActive(true);
@@ -169,13 +184,12 @@ public class PlayerDeck : MonoBehaviour
 
     public void ConcedeDefeat()
     {
-        StartCoroutine(EndGame());
+        StartCoroutine(LoseGame());
     }
 
-    IEnumerator EndGame()
+    IEnumerator LoseGame()
     {
-        LoseTextGameObject.SetActive(true);
-        LoseText.text = "BẠN THUA RỒI";
+        PlayerHp.staticHp -= 30;
         concedeWindow.SetActive(false);
         yield return new WaitForSeconds(2.5f);
         SceneManager.LoadScene(menu);

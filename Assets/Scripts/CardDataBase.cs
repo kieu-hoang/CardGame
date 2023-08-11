@@ -18,7 +18,7 @@ public class CardDataBase : MonoBehaviour
         cardList.Add (new Card(7, "Lính du kích", 3, 2, 2, "Gây 2 dame vào quân lính bất kỳ", Resources.Load<Sprite>("7"), Card.Element.NoElement, 0, 0, 0, 0, false, 2,0, false));
         cardList.Add (new Card(8, "Lính tiếp viện", 2, 3, 2,"Rút 1 lá bài trong bộ bài", Resources.Load <Sprite>("8"), Card.Element.NoElement, 1, 0, 0, 0, false, 0,0, false));
         cardList.Add (new Card(9, "Lính cổ vũ", 2, 2, 2,"Tất cả quân bài tăng 1 dame", Resources.Load <Sprite>("9"), Card.Element.NoElement, 0, 0, 0, 0, false, 0,1, false));
-        cardList.Add (new Card(10, "Thuốc cầm máu 1", 0, 0, 2,"Tăng 3 máu cho 1 quân bất kỳ ,sau đó hồi 2 máu cho hero", Resources.Load <Sprite>("10"), Card.Element.NoElement, 0, 0, 0, 3, true, 0,0, false));
+        cardList.Add (new Card(10, "Thuốc cầm máu 1", 0, 0, 2,"Tăng 3 máu cho 1 quân bất kỳ ,sau đó tăng 2 máu cho hero", Resources.Load <Sprite>("10"), Card.Element.NoElement, 0, 0, 0, 3, true, 0,0, false));
         cardList.Add (new Card(11, "Nguyễn Lữ", 5, 3, 3, "Sĩ Khí: Tăng tất cả lính có trên sân 1 dame 1 máu. Khi trên sân có 3 anh em nhà Nguyễn: gây 3 dame cho toàn bộ quân địch trên sân trong lượt đó", Resources.Load<Sprite>("11"), Card.Element.Fire, 0, 0,0, 1, false, 0,1, false));
         cardList.Add (new Card(12, "Phạm Văn Tham", 4, 3, 3,"Cố Thủ: Sau khi quân bài chết gây 1 dame toàn bộ quân địch, tăng 1 máu cho phe ta", Resources.Load <Sprite>("12"), Card.Element.NoElement, 0, 0, 0, 1, false, 1,0, true));
         cardList.Add (new Card(13, "Lính Gia Định", 3, 4, 3,"Phòng thủ : Kẻ địch buộc phải tấn công lính này trước", Resources.Load <Sprite>("13"), Card.Element.NoElement, 0, 0, 0, 0, false, 0,0, false));

@@ -20,7 +20,7 @@ public class CardsInZone : MonoBehaviour
         int x = 0;
         foreach (Transform child in Zone.transform)
         {
-            if (child.GetComponent<ThisCard>() != null)
+            if (child.GetComponent<ThisCard>() != null && child.GetComponent<ThisCard>().actualblood > 0)
                 x++;
         }
 
@@ -34,7 +34,7 @@ public class CardsInZone : MonoBehaviour
         
         foreach (Transform child in EnemyZone.transform)
         {
-            if (child.GetComponent<AICardToHand>() != null)
+            if (child.GetComponent<AICardToHand>() != null && child.GetComponent<AICardToHand>().actualblood > 0)
                 y++;
         }
 

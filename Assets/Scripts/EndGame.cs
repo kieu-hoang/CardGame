@@ -5,31 +5,35 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class EndGame : MonoBehaviour
 {
-    public TMPro.TextMeshProUGUI victoryText;
-    public GameObject textObject;
-
+    public GameObject fireworkWin;
+    public GameObject fireworkLose;
+    public GameObject imageWin;
+    public GameObject imageLose;
     public GameObject money;
 
     public bool gotMoney;
-
     public string menu;
-
     public bool protect;
 
-    public GameObject firework;
-    // Start is called before the first frame update
-    void Start()
-    {
-        textObject.SetActive(false);   
-    }
+    public AudioSource audioSource;
 
+    public AudioClip win, lose;
+
+    public bool playAudio;
+    // Start is called before the first frame update
     // Update is called once per frame
     void Update()
     {
         if (PlayerHp.staticHp <= 0)
         {
-            textObject.SetActive(true);
-            victoryText.text = "BẠN THUA RỒI!!!";
+            fireworkLose.SetActive(true);
+            imageLose.SetActive(true);
+            if (!playAudio)
+            {
+                audioSource.Stop();
+                audioSource.PlayOneShot(lose, 1f);
+                playAudio = true;
+            }
             if (protect == false)
             {
                 StartCoroutine(ReturnToMenu());
@@ -38,9 +42,14 @@ public class EndGame : MonoBehaviour
         }
         if (EnemyHp.staticHp <= 0)
         {
-            textObject.SetActive(true);
-            firework.SetActive(true);
-            victoryText.text = "CHIẾN THẮNG";
+            fireworkWin.SetActive(true);
+            imageWin.SetActive(true);
+            if (!playAudio)
+            {
+                audioSource.Stop();
+                audioSource.PlayOneShot(win, 1f);
+                playAudio = true;
+            }
             if (gotMoney == false)
             {
                 money.GetComponent<Shop>().gold += 50;
