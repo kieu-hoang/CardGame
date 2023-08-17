@@ -62,7 +62,7 @@ public class TurnSystem : MonoBehaviour
             
         }
 
-        timerText.text = seconds + "";
+        timerText.text = "Thời gian: " + seconds + "s";
 
         if (isYourTurn == false && seconds > 0 && timerStart == true)
         {

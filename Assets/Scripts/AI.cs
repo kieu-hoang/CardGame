@@ -59,6 +59,7 @@ public class AI : MonoBehaviour
     
     public AudioSource audioSource;
     public AudioClip drawAudio;
+    private int noOfCardCanSummon;
 
     // Start is called before the first frame update
     private void Awake()
@@ -151,6 +152,14 @@ public class AI : MonoBehaviour
             AICardToHand.DrawX = 0;
         }
         
+        if (TurnSystem.isYourTurn)
+        {
+            drawPhase = false;
+            summonPhase = false;
+            attackPhase = false;
+            endPhase = false;
+        }
+        
         if (TurnSystem.startTurn == false && draw == false)
         {
             if (CardsInHand.eHowMany < 7 && deckSize > 0)
@@ -161,47 +170,9 @@ public class AI : MonoBehaviour
         }
         
         currentMana = TurnSystem.currentEnemyMana;
-        if (0 == 0)
-        {
-            int j = 0;
-            howManyCards = 0;
-            foreach (Transform child in Hand.transform)
-            {
-                howManyCards++;
-            }
-            foreach (Transform child in Hand.transform)
-            {
-                cardsInHand[j] = child.GetComponent<AICardToHand>();
-                j++;
-            }
-            for (int i = 0; i < DECKSIZE; i++)
-            {
-                if (i >= howManyCards)
-                {
-                    cardsInHand[i] = aiCardToHand;
-                }
-            }
-            j = 0;
-        }
-        if (TurnSystem.isYourTurn == false)
-        {
-            for (int i=0; i< CardsInHand.eHowMany; i++)
-            {
-                if (currentMana >= cardsInHand[i].mana && CardsInZone.eHowMany < 5)
-                {
-                    AiCanSummon[i] = true;
-                }
-            }
-        }
-        else
-        {
-            for (int i=0; i < DECKSIZE; i++)
-            {
-                AiCanSummon[i] = false;
-            }
-        }
-
-        if (TurnSystem.isYourTurn == false)
+        //Update Cards in Hand
+        updateCIH();
+            if (TurnSystem.isYourTurn == false)
         {
             drawPhase = true;
         }
@@ -209,91 +180,10 @@ public class AI : MonoBehaviour
         {
             StartCoroutine(WaitForSummonPhase());
         }
-        if (TurnSystem.isYourTurn)
-        {
-            drawPhase = false;
-            summonPhase = false;
-            attackPhase = false;
-            endPhase = false;
-        }
+        
         if (summonPhase)
         {
-            int index = 0;
-            for (int i = 0; i < DECKSIZE; i++)
-            {
-                if (AiCanSummon[i])
-                {
-                    cardsID[index] = cardsInHand[i].id;
-                    index++;
-                }
-            }
-            // Random for checking
-            index = 0;
-            foreach (Transform child in Hand.transform)
-            {
-                summonID = cardsID[index];
-                if (child.GetComponent<AICardToHand>().id == summonID && CardDataBase.cardList[summonID].mana <= currentMana)
-                {
-                    child.transform.SetParent(Zone.transform);
-                    TurnSystem.currentEnemyMana -= CardDataBase.cardList[summonID].mana;
-                    currentMana = TurnSystem.currentEnemyMana;
-                }
-            
-                index++;
-            }    
-
-                // // Optimize Card Summoning
-            // int[,] L = new int[index + 1, currentMana + 1];
-            //
-            // for (int i = 0; i <= index; i++)
-            // {
-            //     L[i, 0] = 0;
-            // }
-            //
-            // for (int j = 0; j <= currentMana; j++)
-            // {
-            //     L[0, j] = 0;
-            // }
-            //
-            // for (int i = 1; i <= index; i++)
-            // {
-            //     for (int j = 1; j <= currentMana; j++)
-            //     {
-            //         if (CardDataBase.cardList[cardsID[i - 1]].mana > j)
-            //             L[i, j] = L[i - 1, j];
-            //         else
-            //             L[i, j] = Math.Max(L[i - 1, j],
-            //                 L[i - 1, j - CardDataBase.cardList[cardsID[i - 1]].mana] 
-            //                 + CardDataBase.cardList[cardsID[i - 1]].dame 
-            //                 + CardDataBase.cardList[cardsID[i - 1]].blood);
-            //     }
-            // }
-            //
-            // // Summoning Cards
-            // while (index > 0)
-            // {
-            //     if (L[index, currentMana] == L[index - 1, currentMana])
-            //     {
-            //         index--;
-            //     }
-            //     else
-            //     {
-            //         summonID = cardsID[index - 1];
-            //         foreach (Transform child in Hand.transform)
-            //         {
-            //             if (child.GetComponent<AICardToHand>().id == summonID && CardDataBase.cardList[summonID].mana <= currentMana)
-            //             {
-            //                 child.transform.SetParent(Zone.transform);
-            //                 TurnSystem.currentEnemyMana -= CardDataBase.cardList[summonID].mana;
-            //                 currentMana = TurnSystem.currentEnemyMana;
-            //             }
-            //         }
-            //         index--;
-            //     }
-            // }
-
-            summonPhase = false;
-            StartCoroutine(StartAttackPhase());
+            StartCoroutine(Summon(0));
         }
         if (attackPhase)
         {
@@ -364,13 +254,35 @@ public class AI : MonoBehaviour
     
     IEnumerator StartAttackPhase()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
         attackPhase = true;
     }
     IEnumerator EndPhase()
     {
         yield return new WaitForSeconds(1.5f);
         DoEndPhase();
+    }
+    public void updateCIH()
+    {
+        int j = 0;
+        howManyCards = 0;
+        foreach (Transform child in Hand.transform)
+        {
+            howManyCards++;
+        }
+        foreach (Transform child in Hand.transform)
+        {
+            cardsInHand[j] = child.GetComponent<AICardToHand>();
+            j++;
+        }
+        for (int i = 0; i < DECKSIZE; i++)
+        {
+            if (i >= howManyCards)
+            {
+                cardsInHand[i] = aiCardToHand;
+            }
+        }
+        j = 0;
     }
 
     public void DoEndPhase()
@@ -462,6 +374,112 @@ public class AI : MonoBehaviour
         {
             yield return new WaitForSeconds(1);
             Instantiate(CardToHand, transform.position, transform.rotation);
+        }
+    }
+
+    IEnumerator Summon(int x)
+    {
+        yield return new WaitForSeconds(1f);
+        updateCIH();
+        if (TurnSystem.isYourTurn == false)
+        {
+            for (int i=0; i< CardsInHand.eHowMany; i++)
+            {
+                if (currentMana >= cardsInHand[i].mana && CardsInZone.eHowMany < 5)
+                {
+                    AiCanSummon[i] = true;
+                }
+            }
+        }
+        else
+        {
+            for (int i=0; i < DECKSIZE; i++)
+            {
+                AiCanSummon[i] = false;
+            }
+        }
+        int index = 0;
+        noOfCardCanSummon = 0;
+        for (int i = 0; i < DECKSIZE; i++)
+        {
+            if (AiCanSummon[i])
+            {
+                cardsID[index] = cardsInHand[i].id;
+                index++;
+                noOfCardCanSummon = index;
+            }
+        }
+        // Random for checking
+        foreach (Transform child in Hand.transform)
+        {
+            summonID = cardsID[x];
+            if (child.GetComponent<AICardToHand>().id == summonID &&
+                CardDataBase.cardList[summonID].mana <= currentMana)
+            {
+                child.transform.SetParent(Zone.transform);
+                TurnSystem.currentEnemyMana -= CardDataBase.cardList[summonID].mana;
+                currentMana = TurnSystem.currentEnemyMana;
+                break;
+            }
+        }
+
+        // // Optimize Card Summoning
+        // int[,] L = new int[index + 1, currentMana + 1];
+        //
+        // for (int i = 0; i <= index; i++)
+        // {
+        //     L[i, 0] = 0;
+        // }
+        //
+        // for (int j = 0; j <= currentMana; j++)
+        // {
+        //     L[0, j] = 0;
+        // }
+        //
+        // for (int i = 1; i <= index; i++)
+        // {
+        //     for (int j = 1; j <= currentMana; j++)
+        //     {
+        //         if (CardDataBase.cardList[cardsID[i - 1]].mana > j)
+        //             L[i, j] = L[i - 1, j];
+        //         else
+        //             L[i, j] = Math.Max(L[i - 1, j],
+        //                 L[i - 1, j - CardDataBase.cardList[cardsID[i - 1]].mana] 
+        //                 + CardDataBase.cardList[cardsID[i - 1]].dame 
+        //                 + CardDataBase.cardList[cardsID[i - 1]].blood);
+        //     }
+        // }
+        //
+        // // Summoning Cards
+        // while (index > 0)
+        // {
+        //     if (L[index, currentMana] == L[index - 1, currentMana])
+        //     {
+        //         index--;
+        //     }
+        //     else
+        //     {
+        //         summonID = cardsID[index - 1];
+        //         foreach (Transform child in Hand.transform)
+        //         {
+        //             if (child.GetComponent<AICardToHand>().id == summonID && CardDataBase.cardList[summonID].mana <= currentMana)
+        //             {
+        //                 child.transform.SetParent(Zone.transform);
+        //                 TurnSystem.currentEnemyMana -= CardDataBase.cardList[summonID].mana;
+        //                 currentMana = TurnSystem.currentEnemyMana;
+        //             }
+        //         }
+        //         index--;
+        //     }
+        // }
+        if (x == noOfCardCanSummon - 1 || noOfCardCanSummon == 0)
+        {
+            summonPhase = false;
+            StartCoroutine(StartAttackPhase()); 
+        }
+        else
+        {
+            Summon(x);
         }
     }
     IEnumerator ShuffleNow()

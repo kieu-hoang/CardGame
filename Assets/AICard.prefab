@@ -74,8 +74,8 @@ MonoBehaviour:
 
     Description'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: bbbfd5aef22f1ef4ba57af73fb2d54a2, type: 2}
+  m_sharedMaterial: {fileID: -7397156548535341737, guid: bbbfd5aef22f1ef4ba57af73fb2d54a2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14.25
+  m_fontSize: 13.9
   m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -725,8 +725,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: bbbfd5aef22f1ef4ba57af73fb2d54a2, type: 2}
+  m_sharedMaterial: {fileID: -7397156548535341737, guid: bbbfd5aef22f1ef4ba57af73fb2d54a2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -750,7 +750,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 15.05
+  m_fontSize: 14.35
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1185,6 +1185,7 @@ MonoBehaviour:
     spell: 0
     damageDealtBySpell: 0
     increaseXdame: 0
+    deathcrys: 0
   thisId: 1
   id: 1
   cardName: 
@@ -1232,6 +1233,7 @@ MonoBehaviour:
   increaseXdame: 0
   actualDame: 0
   dameIncrease: 0
+  deathcrys: 0
   attackedTarget: 0
   attackBorder: {fileID: 8802900448025939381}
 --- !u!114 &-450028315500039705
