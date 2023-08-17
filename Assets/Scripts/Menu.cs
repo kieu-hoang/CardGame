@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,7 +9,7 @@ public class Menu : MonoBehaviour
 
     public string collection;
 
-    public string settings;
+    public string tutorial;
 
     public string menu;
 
@@ -45,6 +43,11 @@ public class Menu : MonoBehaviour
     {
         SceneManager.LoadScene(shop);
     }
+
+    public void LoadTutorial()
+    {
+        SceneManager.LoadScene(tutorial);
+    }    
     public void ReturnToMenu()
     {
         SceneManager.LoadScene(menu);

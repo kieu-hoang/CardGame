@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/OpenPack.unity
     guid: 6ed06ab32e5035240b114eaa87915383
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: 8006d2260f2898f4bb5dd01c5df6a57a
   m_configObjects: {}
