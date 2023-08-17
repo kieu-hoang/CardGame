@@ -67,7 +67,7 @@ public class Deck : NetworkBehaviour
             {
                 player.CmdAddCardCount(1);
                 playerHand.AddCard();
-                Player.gameManager.audioSource.PlayOneShot(Player.gameManager.draw,1f);
+                Player.gameManager.CmdPlayDraw();
             }
         }
         spawnInitialCards = false;

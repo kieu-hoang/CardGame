@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Clone
   - Hand Clone
+  - GameManager
+  - Hands
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - post
   - 
   - 
   - 

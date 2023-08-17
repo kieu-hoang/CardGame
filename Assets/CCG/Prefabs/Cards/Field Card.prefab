@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 6602948764563351905}
   - component: {fileID: 2578767993017105084}
   - component: {fileID: 7895911692240644395}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Attack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5019608, g: 0.5568038, b: 1, a: 1}
+  m_Color: {r: 0.4660377, g: 0.85200816, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -735,7 +735,7 @@ MonoBehaviour:
   shine: {fileID: 7895911692240644395}
   hoverColor: {r: 0, g: 0.85490197, b: 0.98039216, a: 0.39215687}
   readyColor: {r: 0, g: 1, b: 0.11764706, a: 0.39215687}
-  targetColor: {r: 0.98039216, g: 0, b: 0.7320016, a: 0.50980395}
+  targetColor: {r: 1, g: 0.48068666, b: 0, a: 0.60784316}
   cardHover: {fileID: 1731655614884413486}
 --- !u!222 &8867336146261718053
 CanvasRenderer:

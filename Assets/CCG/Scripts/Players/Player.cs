@@ -143,7 +143,8 @@ public class Player : Entity
             gameManager.enemyText.SetActive(true);
             started = true;
         }
-
+        if (started)
+            gameManager.menu.SetActive(false);
         if (isLocalPlayer && hasEnemy && startTheme == false)
         {
             gameManager.audioSource.PlayOneShot(gameManager.theme,1f);

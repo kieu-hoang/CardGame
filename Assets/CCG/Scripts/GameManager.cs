@@ -102,7 +102,7 @@ public class GameManager : NetworkBehaviour
     [ClientRpc]
     public void RpcAttack(GameObject attacker)
     {
-        audioSource.PlayOneShot(Player.gameManager.attack, 1f);
+        audioSource.PlayOneShot(attack, 1f);
         if (attacker.GetComponent<Entity>() is Player)
         {
             attacker.GetComponent<Player>().portrait = Resources.Load<Sprite>("target");
@@ -167,6 +167,14 @@ public class GameManager : NetworkBehaviour
         {
             seconds--;
             timerText.text = "Thời gian: " + seconds + "s";
+            timerText.color = Color.white;
+            if (seconds < 10)
+            {
+                if (seconds % 2 == 1)
+                    timerText.color = Color.red;
+                else if (seconds % 2 == 0)
+                    timerText.color = Color.yellow;
+            }
             StartCoroutine(Timer());
         }
         else if (seconds == 0 && isOurTurn)
@@ -208,5 +216,17 @@ public class GameManager : NetworkBehaviour
         {
             player.GetComponent<Player>().combat.CmdChangeHealth(-30);
         }
+    }
+    
+    [Command(ignoreAuthority = true)]
+    public void CmdPlayDraw()
+    {
+        RpcPlayDraw();
+    }
+
+    [ClientRpc]
+    public void RpcPlayDraw()
+    {
+        audioSource.PlayOneShot(draw,1f);
     }
 }

@@ -61,9 +61,8 @@ public class PlayerHand : MonoBehaviour
             for (int i = 0; i < enemyInfo.handCardCount; ++i)
             {
                 HandCard slot = handContent.GetChild(i).GetComponent<HandCard>();
-
-                slot.AddCardBack();
                 slot.cost.text = "10";
+                slot.AddCardBack();
             }
             
             if (enemyInfo.deckCount < 20)
