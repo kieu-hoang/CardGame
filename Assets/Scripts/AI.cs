@@ -60,6 +60,7 @@ public class AI : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip drawAudio;
     private int noOfCardCanSummon;
+    private int noOfCardInHand;
 
     // Start is called before the first frame update
     private void Awake()
@@ -183,7 +184,7 @@ public class AI : MonoBehaviour
         
         if (summonPhase)
         {
-            StartCoroutine(Summon(0));
+            StartCoroutine(Summon());
         }
         if (attackPhase)
         {
@@ -282,6 +283,8 @@ public class AI : MonoBehaviour
                 cardsInHand[i] = aiCardToHand;
             }
         }
+
+        noOfCardInHand = howManyCards;
         j = 0;
     }
 
@@ -377,18 +380,26 @@ public class AI : MonoBehaviour
         }
     }
 
-    IEnumerator Summon(int x)
+    IEnumerator Summon()
     {
         yield return new WaitForSeconds(1f);
         updateCIH();
         if (TurnSystem.isYourTurn == false)
         {
-            for (int i=0; i< CardsInHand.eHowMany; i++)
+            for (int i=0; i< noOfCardInHand; i++)
             {
-                if (currentMana >= cardsInHand[i].mana && CardsInZone.eHowMany < 5)
+                if (currentMana >= cardsInHand[i].mana && noOfCardInHand < 5)
                 {
                     AiCanSummon[i] = true;
                 }
+                else
+                {
+                    AiCanSummon[i] = false;
+                }
+            }
+            for (int i=noOfCardInHand; i < DECKSIZE; i++)
+            {
+                AiCanSummon[i] = false;
             }
         }
         else
@@ -400,7 +411,7 @@ public class AI : MonoBehaviour
         }
         int index = 0;
         noOfCardCanSummon = 0;
-        for (int i = 0; i < DECKSIZE; i++)
+        for (int i = 0; i < noOfCardInHand; i++)
         {
             if (AiCanSummon[i])
             {
@@ -412,7 +423,7 @@ public class AI : MonoBehaviour
         // Random for checking
         foreach (Transform child in Hand.transform)
         {
-            summonID = cardsID[x];
+            summonID = cardsID[0];
             if (child.GetComponent<AICardToHand>().id == summonID &&
                 CardDataBase.cardList[summonID].mana <= currentMana)
             {
@@ -472,14 +483,14 @@ public class AI : MonoBehaviour
         //         index--;
         //     }
         // }
-        if (x == noOfCardCanSummon - 1 || noOfCardCanSummon == 0)
+        if (x == noOfCardCanSummon - 1 || noOfCardCanSummon == 0 || currentMana == 0)
         {
             summonPhase = false;
             StartCoroutine(StartAttackPhase()); 
         }
         else
         {
-            Summon(x);
+            StartCoroutine(Summon());
         }
     }
     IEnumerator ShuffleNow()

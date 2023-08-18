@@ -91,6 +91,7 @@ public class EndGameP : MonoBehaviour
 
     public void Return()
     {
+        manager.StopButtons();
         StartCoroutine(ReturnToMenu());
     }
 }
