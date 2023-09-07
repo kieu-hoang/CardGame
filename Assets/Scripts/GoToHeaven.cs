@@ -14,7 +14,7 @@ public class GoToHeaven : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (SceneManager.GetActiveScene().name != "CardDeck")
+        if (SceneManager.GetActiveScene().name != "CardDeck" && SceneManager.GetActiveScene().name != "CardDeck1" && SceneManager.GetActiveScene().name != "CardDeck2")
         {
             x = 425;
             background = GameObject.Find("Background");
@@ -28,7 +28,7 @@ public class GoToHeaven : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SceneManager.GetActiveScene().name != "CardDeck")
+        if (SceneManager.GetActiveScene().name != "CardDeck" && SceneManager.GetActiveScene().name != "CardDeck1" && SceneManager.GetActiveScene().name != "CardDeck2")
             this.transform.position = new Vector3(transform.position.x, x += 500 * Time.deltaTime, transform.position.z);
     }
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class AI : MonoBehaviour
+public class AI1 : MonoBehaviour
 {
     public List<Card> deck = new List<Card>();
     public Card container = new Card();

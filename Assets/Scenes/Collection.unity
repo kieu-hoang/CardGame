@@ -5644,7 +5644,7 @@ MonoBehaviour:
   play: CardDeck
   deck: CreatingDeck
   collection: Collection
-  settings: 
+  tutorial: 
   menu: Menu
   shop: 
 --- !u!114 &1946893109
