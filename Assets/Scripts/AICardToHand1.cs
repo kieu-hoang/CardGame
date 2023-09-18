@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AICardToHand : MonoBehaviour
+public class AICardToHand1 : MonoBehaviour
 {
     public Card thisCard;
 
@@ -76,55 +76,55 @@ public class AICardToHand : MonoBehaviour
     void Start()
     {
         
-        CardBackScript = GetComponent<CardBack>();
-        thisCard = CardDataBase.cardList[thisId];
-        Hand = GameObject.Find("EnemyHand");
+        // CardBackScript = GetComponent<CardBack>();
+        // thisCard = CardDataBase.cardList[thisId];
+        // Hand = GameObject.Find("EnemyHand");
 
         z = 0;
         hurted = 0;
 
-        Graveyard = GameObject.Find("EGraveyard");
-        StartCoroutine(AfterVoidStart());
+        // Graveyard = GameObject.Find("EGraveyard");
+        // StartCoroutine(AfterVoidStart());
         summoningSickness = true;
         
-        AiZone = GameObject.Find("EnemyZone");
-        battleZone = GameObject.Find("EnemyZone");
-        EnemyZone = GameObject.Find("Zone");
+        // AiZone = GameObject.Find("EnemyZone");
+        // battleZone = GameObject.Find("EnemyZone");
+        // EnemyZone = GameObject.Find("Zone");
     }
 
     // Update is called once per frame
     public void Update()
     {
-        if (z == 0)
-        {
-            It.transform.SetParent(Hand.transform);
-            It.transform.localScale = Vector3.one;
-            It.transform.position = new Vector3(transform.position.x, transform.position.y, -48);
-            It.transform.eulerAngles = new Vector3(25, 0, 0);
-            z = 1;
-        }
-        if (this.transform.parent == Hand.transform)
-        {
-            cardBack = true;
-            transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
-        }
-        if (this.transform.parent == AiZone.transform)
-        {
-            cardBack = false;
-            if (!isTarget)
-                transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
-        }
-
-        if (isTarget)
-        {
-            transform.localScale = new Vector3(0.9f, 0.9f, 0.9f);
-        }
+        // if (z == 0)
+        // {
+        //     It.transform.SetParent(Hand.transform);
+        //     It.transform.localScale = Vector3.one;
+        //     It.transform.position = new Vector3(transform.position.x, transform.position.y, -48);
+        //     It.transform.eulerAngles = new Vector3(25, 0, 0);
+        //     z = 1;
+        // }
+        // if (this.transform.parent == Hand.transform)
+        // {
+        //     cardBack = true;
+        //     transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+        // }
+        // if (this.transform.parent == AiZone.transform)
+        // {
+        //     cardBack = false;
+        //     if (!isTarget)
+        //         transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+        // }
+        //
+        // if (isTarget)
+        // {
+        //     transform.localScale = new Vector3(0.9f, 0.9f, 0.9f);
+        // }
             
         id = thisCard.id;
-        if (thisCard.id == 4)
-        {
-            summoningSickness = false;
-        }
+        // if (thisCard.id == 4)
+        // {
+        //     summoningSickness = false;
+        // }
         cardName = thisCard.cardName;
         dame = thisCard.dame;
         blood = thisCard.blood;
@@ -148,123 +148,123 @@ public class AICardToHand : MonoBehaviour
         nameText.text = "" + cardName;
         dameText.text = "" + actualDame;
         bloodText.text = "" + actualblood;
-        descriptionText.text = "• " + cardDescription;
-        for (int i = 0; i < stars.Length; i++)
-        {
-            if (i < mana)
-            {
-                stars[i].SetActive(true);
-
-                RectTransform starTransform = stars[i].GetComponent<RectTransform>();
-                starTransform.localPosition = new Vector3(15 * (i - (mana - 1) / 2.0f), starTransform.localPosition.y, starTransform.localPosition.z);
-            }
-            else
-            {
-                stars[i].SetActive(false);
-            }
-        }
+        descriptionText.text = "â€¢ " + cardDescription;
+        // for (int i = 0; i < stars.Length; i++)
+        // {
+        //     if (i < mana)
+        //     {
+        //         stars[i].SetActive(true);
+        //
+        //         RectTransform starTransform = stars[i].GetComponent<RectTransform>();
+        //         starTransform.localPosition = new Vector3(15 * (i - (mana - 1) / 2.0f), starTransform.localPosition.y, starTransform.localPosition.z);
+        //     }
+        //     else
+        //     {
+        //         stars[i].SetActive(false);
+        //     }
+        // }
 
         thatImage.sprite = thisSprite;
         healXpower = thisCard.healXpower;
 
-        if (thisCard.element == Card.Element.Fire)
-        {
-            frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardFire");
-        }
-        if (thisCard.element == Card.Element.Water)
-        {
-            frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardWater");
-        }
-        if (thisCard.element == Card.Element.Metal)
-        {
-            frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardMetal");
-        }
-        if (thisCard.element == Card.Element.Wood)
-        {
-            frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardWood");
-        }
-        if (thisCard.element == Card.Element.Earth)
-        {
-            frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardEarth");
-        }
-        if (thisCard.element == Card.Element.NoElement)
-        {
-            frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardNoElement");
-        }
+        // if (thisCard.element == Card.Element.Fire)
+        // {
+        //     frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardFire");
+        // }
+        // if (thisCard.element == Card.Element.Water)
+        // {
+        //     frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardWater");
+        // }
+        // if (thisCard.element == Card.Element.Metal)
+        // {
+        //     frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardMetal");
+        // }
+        // if (thisCard.element == Card.Element.Wood)
+        // {
+        //     frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardWood");
+        // }
+        // if (thisCard.element == Card.Element.Earth)
+        // {
+        //     frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardEarth");
+        // }
+        // if (thisCard.element == Card.Element.NoElement)
+        // {
+        //     frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardNoElement");
+        // }
 
-        CardBackScript.UpdateCard(cardBack);
-        if (TurnSystem.isYourTurn && transform.parent == AiZone.transform)
-        {
-            summoningSickness = false;
-            attackedTarget = false;
-        }
-        if (TurnSystem.isYourTurn == false && summoningSickness == false)
-        {
-            canAttack = true;
-        }
-        else
-        {
-            canAttack = false;
-        }
+        // CardBackScript.UpdateCard(cardBack);
+        // if (TurnSystem.isYourTurn && transform.parent == AiZone.transform)
+        // {
+        //     summoningSickness = false;
+        //     attackedTarget = false;
+        // }
+        // if (TurnSystem.isYourTurn == false && summoningSickness == false)
+        // {
+        //     canAttack = true;
+        // }
+        // else
+        // {
+        //     canAttack = false;
+        // }
 
-        if (canAttack && transform.parent == battleZone.transform)
-        {
-            attackBorder.SetActive(true);
-        }
-        else 
-            attackBorder.SetActive(false);
+        // if (canAttack && transform.parent == battleZone.transform)
+        // {
+        //     attackBorder.SetActive(true);
+        // }
+        // else 
+        //     attackBorder.SetActive(false);
 
-        if (actualblood <= 0 && thisCardCanBeDestroyed && spell == false && id != 4)
-        {
-            if (deathcrys && !isSummoned)
-            {
-                if (healXpower > 0)
-                {
-                    Heal();
-                }
-                if (increaseXdame > 0)
-                {
-                    increaseDame();
-                }
-                if (damageDealtBySpell > 0)
-                {
-                    dealXDamage();
-                }
-                isSummoned = true;
-            }
-            this.transform.SetParent(Graveyard.transform);
-            this.transform.position = new Vector3(transform.position.x + 4000, transform.position.y,
-                transform.position.z);
-            hurted = 0;
-        }
-
-        if (transform.parent == battleZone.transform && isSummoned == false && !deathcrys)
-        {
-            if (drawXcards > 0)
-            {
-                DrawX = drawXcards;
-            }
-            if (healXpower > 0)
-            {
-                Heal();
-            }
-
-            if (increaseXdame > 0)
-            {
-                increaseDame();
-            }
-            if (damageDealtBySpell > 0)
-            {
-                dealXDamage();
-            }
-            isSummoned = true;
-        }
-        if (spell && isSummoned)
-        {
-            StartCoroutine(WaitSpell());
-        }
-        if (id == 4 && actualblood <= 0 && isSummoned)
-            StartCoroutine(WaitSpell());
+        // if (actualblood <= 0 && thisCardCanBeDestroyed && spell == false && id != 4)
+        // {
+        //     if (deathcrys && !isSummoned)
+        //     {
+        //         if (healXpower > 0)
+        //         {
+        //             Heal();
+        //         }
+        //         if (increaseXdame > 0)
+        //         {
+        //             increaseDame();
+        //         }
+        //         if (damageDealtBySpell > 0)
+        //         {
+        //             dealXDamage();
+        //         }
+        //         isSummoned = true;
+        //     }
+        //     this.transform.SetParent(Graveyard.transform);
+        //     this.transform.position = new Vector3(transform.position.x + 4000, transform.position.y,
+        //         transform.position.z);
+        //     hurted = 0;
+        // }
+        //
+        // if (transform.parent == battleZone.transform && isSummoned == false && !deathcrys)
+        // {
+        //     if (drawXcards > 0)
+        //     {
+        //         DrawX = drawXcards;
+        //     }
+        //     if (healXpower > 0)
+        //     {
+        //         Heal();
+        //     }
+        //
+        //     if (increaseXdame > 0)
+        //     {
+        //         increaseDame();
+        //     }
+        //     if (damageDealtBySpell > 0)
+        //     {
+        //         dealXDamage();
+        //     }
+        //     isSummoned = true;
+        // }
+        // if (spell && isSummoned)
+        // {
+        //     StartCoroutine(WaitSpell());
+        // }
+        // if (id == 4 && actualblood <= 0 && isSummoned)
+        //     StartCoroutine(WaitSpell());
     }
     public void BeingTarget()
     {
@@ -426,12 +426,5 @@ public class AICardToHand : MonoBehaviour
             if (child != transform && child.GetComponent<AICardToHand>() != null)
                 child.GetComponent<AICardToHand>().dameIncrease += increaseXdame;
         }
-    }
-    public AICardToHand1 ToAICardToHand1()
-    {
-        AICardToHand1 newcard = new AICardToHand1();
-        newcard.thisId = thisId;
-        thisCard = CardDataBase.cardList[thisId];
-        return newcard;
     }
 }

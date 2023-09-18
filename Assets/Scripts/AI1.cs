@@ -66,6 +66,8 @@ public class AI1 : MonoBehaviour
     private int noOfCardInZone;
 
     private int noOfCardInPlayerZone;
+
+    public GameState currentGame;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -593,5 +595,15 @@ public class AI1 : MonoBehaviour
         if (player.thisCard.element == Card.Element.Fire && enemy.thisCard.element == Card.Element.Metal)
             return true;
         return false;
+    }
+
+    public void getGameState()
+    {
+        currentGame.playerTurn = TurnSystem.isYourTurn;
+        currentGame.playerHp = PlayerHp.staticHp;
+        currentGame.aiHp = EnemyHp.staticHp;
+        currentGame.playerMana = TurnSystem.currentMana;
+        currentGame.aiMana = TurnSystem.currentEnemyMana;
+        
     }
 }

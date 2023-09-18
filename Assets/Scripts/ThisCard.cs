@@ -647,4 +647,12 @@ public class ThisCard : MonoBehaviour
             return true;
         return false;
     }
+
+    public ThisCard1 toThisCard1()
+    {
+        ThisCard1 newcard = new ThisCard1();
+        newcard.thisId = thisId;
+        thisCard = CardDataBase.cardList[thisId];
+        return newcard;
+    }
 }

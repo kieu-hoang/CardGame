@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class PlayerHp : MonoBehaviour
 {
-    public static float maxHp;
-    public static float staticHp;
-    public float hp;
+    public static int maxHp;
+    public static int staticHp;
+    public int hp;
     public Text hpText;
     public Text deckSize;
     public Text deadNo;

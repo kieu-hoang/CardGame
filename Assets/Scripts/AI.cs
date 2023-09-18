@@ -383,6 +383,12 @@ public class AI : MonoBehaviour
                         }
                     }
                 }
+
+                float time = 100f;
+                while (time > 0)
+                {
+                    time -= Time.deltaTime;
+                }
                 DoEndPhase();
             }
         }
