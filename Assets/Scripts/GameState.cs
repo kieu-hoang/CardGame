@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GameState
 {
@@ -97,19 +98,38 @@ public class GameState
             if (checkTauntAI())
             {
                 List<AICardToHand1> taunt = new List<AICardToHand1>();
-                
+                List<AICardToHand1> notTaunt = new List<AICardToHand1>();
                 for (int i = 0; i < cardsInZoneAI.Count; i++)
                 {
                     if (cardsInZoneAI[i].id == 1 || cardsInZoneAI[i].id == 13 || cardsInZoneAI[i].id == 19)
                     {
                         taunt.Add(cardsInZoneAI[i]);
                     }
+                    else
+                    {
+                        notTaunt.Add(cardsInZoneAI[i]);
+                    }
                 }
-                for (int i = 0, j=0; i < atkcard.Count; i++)
+                for (int i = 0, j=0, k=0; i < atkcard.Count; i++)
                 {
-                    validMove2.Add(new Move(false, atkcard[i].id, false, true, taunt[j].id));
-                    if (taunt[j].actualblood <= atkcard[i].actualDame)
-                        j++;
+                    if (j<taunt.Count)
+                    {
+                        validMove2.Add(new Move(true, atkcard[i].id, false, true, taunt[j].id));
+                        taunt[j].hurted += atkcard[i].actualDame;
+                        if (taunt[j].blood - taunt[j].hurted <= 0)
+                            j++;
+                    }
+                    else if (j >= taunt.Count && k < notTaunt.Count)
+                    {
+                        validMove2.Add(new Move(true, atkcard[i].id, false, true, notTaunt[k].id));
+                        notTaunt[k].hurted += atkcard[i].actualDame;
+                        if (notTaunt[k].blood - notTaunt[k].hurted <= 0)
+                            k++;
+                    }
+                    else
+                    {
+                        validMove2.Add(new Move(true, atkcard[i].id, false, true, 0));
+                    }
                 }
             }
             foreach (List<Move> res in result)
@@ -152,6 +172,7 @@ public class GameState
             if (checkTaunt())
             {
                 List<ThisCard1> taunt = new List<ThisCard1>();
+                List<ThisCard1> notTaunt = new List<ThisCard1>();
                 
                 for (int i = 0; i < cardsInZone.Count; i++)
                 {
@@ -159,11 +180,32 @@ public class GameState
                     {
                         taunt.Add(cardsInZone[i]);
                     }
+                    else
+                    {
+                        notTaunt.Add(cardsInZone[i]);
+                    }
                 }
-
-                for (int i = 0; i < atkcard.Count; i++)
+                
+                for (int i = 0, j=0, k=0; i < atkcard.Count; i++)
                 {
-                    validMove2.Add(new Move(false, atkcard[i].id, false, true, taunt[0].id));
+                    if (j<taunt.Count)
+                    {
+                        validMove2.Add(new Move(false, atkcard[i].id, false, true, taunt[j].id));
+                        taunt[j].hurted += atkcard[i].actualDame;
+                        if (taunt[j].blood - taunt[j].hurted <= 0)
+                            j++;
+                    }
+                    else if (j >= taunt.Count && k < notTaunt.Count)
+                    {
+                        validMove2.Add(new Move(false, atkcard[i].id, false, true, notTaunt[k].id));
+                        notTaunt[k].hurted += atkcard[i].actualDame;
+                        if (notTaunt[k].blood - notTaunt[k].hurted <= 0)
+                            k++;
+                    }
+                    else
+                    {
+                        validMove2.Add(new Move(false, atkcard[i].id, false, true, 0));
+                    }
                 }
             }
             foreach (List<Move> res in result)
