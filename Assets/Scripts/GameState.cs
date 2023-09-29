@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameState : MonoBehaviour
+public class GameState
 {
     public List<ThisCard1> deck = new List<ThisCard1>();
     public List<ThisCard1> cardsInHand = new List<ThisCard1>();
@@ -22,17 +22,17 @@ public class GameState : MonoBehaviour
     {
         for (int i = 0; i < newGame.deck.Count; i++)
         {
-            deck[i] = newGame.deck[i];
+            deck.Add(newGame.deck[i]);
         }
 
         for (int i = 0; i < newGame.cardsInHand.Count; i++)
         {
-            cardsInHand[i] = newGame.cardsInHand[i];
+            cardsInHand.Add(newGame.cardsInHand[i]);
         }
 
         for (int i = 0; i < newGame.cardsInZone.Count; i++)
         {
-            cardsInZone[i] = newGame.cardsInZone[i];
+            cardsInZone.Add(newGame.cardsInZone[i]);
         }
         
         playerHp = newGame.playerHp;
@@ -40,17 +40,17 @@ public class GameState : MonoBehaviour
 
         for (int i = 0; i < newGame.AIdeck.Count; i++)
         {
-            AIdeck[i] = newGame.AIdeck[i];
+            AIdeck.Add(newGame.AIdeck[i]);
         }
 
         for (int i = 0; i < newGame.cardsInHandAI.Count; i++)
         {
-            cardsInHandAI[i] = newGame.cardsInHandAI[i];
+            cardsInHandAI.Add(newGame.cardsInHandAI[i]);
         }
 
         for (int i = 0; i < newGame.cardsInZoneAI.Count; i++)
         {
-            cardsInZoneAI[i] = newGame.cardsInZoneAI[i];
+            cardsInZoneAI.Add(newGame.cardsInZoneAI[i]);
         }
         aiHp = newGame.aiHp;
         aiMana = newGame.aiMana;
@@ -58,41 +58,198 @@ public class GameState : MonoBehaviour
         playerTurn = newGame.playerTurn;
     }
 
-    public List<Move> getValidMoves()
+    public List<List<Move>> getValidMoves()
     {
+        List<List<Move>> result = new List<List<Move>>();
         List<Move> validMove = new List<Move>();
         if (playerTurn)
         {
-            for (int i = 0; i < cardsInHand.Count; i++)
-            {
-                if (cardsInHand[i].mana < playerMana)
-                {
-                    validMove.Add(new Move(true, cardsInHand[i].id, true, false, 0));
-                }
-            }
-
+            // int currentMana = playerMana;
+            // int summonedMana = 0;
+            // for (int i = 0; i < cardsInHand.Count; i++)
+            // {
+            //     if (cardsInHand[i].mana <= playerMana && summonedMana+cardsInHand[i].mana <= currentMana)
+            //     {
+            //         summonedMana += cardsInHand[i].mana;
+            //         validMove.Add(new Move(true, cardsInHand[i].id, true, false, 0));
+            //     }
+            // }
+            //
+            // for (int i = 0; i < cardsInZone.Count; i++)
+            // {
+            //     validMove.Add(new Move(true, cardsInZone[i].id, false, true, 0));
+            // }
+            FindCombinations(cardsInHand, 0, playerMana, validMove, result);
+            List<ThisCard1> atkcard = new List<ThisCard1>();
             for (int i = 0; i < cardsInZone.Count; i++)
             {
-                validMove.Add(new Move(true, cardsInHand[i].id, false, true, 0));
+                if (cardsInZone[i].canAttack)
+                    atkcard.Add(cardsInZone[i]);
+            }
+            List<Move> validMove2 = new List<Move>();
+            if (cardsInZoneAI.Count == 0)
+            {
+                for (int i = 0; i < atkcard.Count; i++)
+                {
+                    validMove2.Add(new Move(true, atkcard[i].id, false, true, 0));
+                }
+            }
+            if (checkTauntAI())
+            {
+                List<AICardToHand1> taunt = new List<AICardToHand1>();
+                
+                for (int i = 0; i < cardsInZoneAI.Count; i++)
+                {
+                    if (cardsInZoneAI[i].id == 1 || cardsInZoneAI[i].id == 13 || cardsInZoneAI[i].id == 19)
+                    {
+                        taunt.Add(cardsInZoneAI[i]);
+                    }
+                }
+                for (int i = 0, j=0; i < atkcard.Count; i++)
+                {
+                    validMove2.Add(new Move(false, atkcard[i].id, false, true, taunt[j].id));
+                    if (taunt[j].actualblood <= atkcard[i].actualDame)
+                        j++;
+                }
+            }
+            foreach (List<Move> res in result)
+            {
+                res.AddRange(validMove2);
             }
         }
         else
         {
-            for (int i = 0; i < cardsInHandAI.Count; i++)
-            {
-                if (cardsInHandAI[i].mana < aiMana)
-                {
-                    validMove.Add(new Move(false, cardsInHandAI[i].id, true, false, 0));
-                }
-            }
-
+            // int currentMana = aiMana;
+            // int summonedMana = 0;
+            // for (int i = 0; i < cardsInHandAI.Count; i++)
+            // {
+            //     if (cardsInHandAI[i].mana <= aiMana && summonedMana+cardsInHandAI[i].mana <= currentMana)
+            //     {
+            //         summonedMana += cardsInHandAI[i].mana;
+            //         validMove.Add(new Move(false, cardsInHandAI[i].id, true, false, 0));
+            //     }
+            // }
+            //
+            // for (int i = 0; i < cardsInZoneAI.Count; i++)
+            // {
+            //     validMove.Add(new Move(false, cardsInZoneAI[i].id, false, true, 0));
+            // }
+            FindCombinationsAI(cardsInHandAI, 0, aiMana, validMove, result);
+            List<AICardToHand1> atkcard = new List<AICardToHand1>();
             for (int i = 0; i < cardsInZoneAI.Count; i++)
             {
-                validMove.Add(new Move(false, cardsInHandAI[i].id, false, true, 0));
+                if (cardsInZoneAI[i].canAttack)
+                    atkcard.Add(cardsInZoneAI[i]);
+            }
+            List<Move> validMove2 = new List<Move>();
+            if (cardsInZone.Count == 0)
+            {
+                for (int i = 0; i < atkcard.Count; i++)
+                {
+                    validMove2.Add(new Move(false, atkcard[i].id, false, true, 0));
+                }
+            }
+            if (checkTaunt())
+            {
+                List<ThisCard1> taunt = new List<ThisCard1>();
+                
+                for (int i = 0; i < cardsInZone.Count; i++)
+                {
+                    if (cardsInZone[i].id == 1 || cardsInZone[i].id == 13 || cardsInZone[i].id == 19)
+                    {
+                        taunt.Add(cardsInZone[i]);
+                    }
+                }
+
+                for (int i = 0; i < atkcard.Count; i++)
+                {
+                    validMove2.Add(new Move(false, atkcard[i].id, false, true, taunt[0].id));
+                }
+            }
+            foreach (List<Move> res in result)
+            {
+                res.AddRange(validMove2);
             }
         }
+        //result.Add(validMove);
+        return result;
+    }
+    static void FindCombinations(List<ThisCard1> cardsInHand, int index, int mana, List<Move> currentCombination, List<List<Move>> result)
+    {
+        if (mana <= 0)
+        {
+            return;
+        }
+        
+        if (index == cardsInHand.Count)
+        {
+            return;
+        }
+        
+        
+        // Include the current element and explore further
+        if (mana >= cardsInHand[index].mana)
+        {
+            currentCombination.Add(new Move(true, cardsInHand[index].id, true, false, 0));
+            if (!(result.Contains(currentCombination)))
+                result.Add(currentCombination);
+            FindCombinations(cardsInHand, index + 1, mana - cardsInHand[index].mana, currentCombination, result);
+            currentCombination.RemoveAt(currentCombination.Count - 1); // Backtrack
 
-        return validMove;
+        }
+
+        // Exclude the current element and explore further
+        FindCombinations(cardsInHand, index + 1, mana, currentCombination, result);
+    }
+    
+    static void FindCombinationsAI(List<AICardToHand1> cardsInHand, int index, int mana, List<Move> currentCombination, List<List<Move>> result)
+    {
+        if (mana <= 0)
+        {
+            return;
+        }
+        
+
+        if (index == cardsInHand.Count)
+        {
+            return;
+        }
+        
+        
+        // Include the current element and explore further
+        if (mana >= cardsInHand[index].mana)
+        {
+            currentCombination.Add(new Move(false, cardsInHand[index].id, true, false, 0));
+            if (!(result.Contains(currentCombination)))
+                result.Add(currentCombination);
+            FindCombinationsAI(cardsInHand, index + 1, mana - cardsInHand[index].mana, currentCombination, result);
+            currentCombination.RemoveAt(currentCombination.Count - 1); // Backtrack
+
+        }
+
+        // Exclude the current element and explore further
+        FindCombinationsAI(cardsInHand, index + 1, mana, currentCombination, result);
+    }
+
+    public bool checkTaunt()
+    {
+        for (int i = 0; i < cardsInZone.Count; i++)
+        {
+            if (cardsInZone[i].id == 1 || cardsInZone[i].id == 13 || cardsInZone[i].id == 19)
+                return true;
+        }
+
+        return false;
+    }
+    public bool checkTauntAI()
+    {
+        for (int i = 0; i < cardsInZoneAI.Count; i++)
+        {
+            if (cardsInZoneAI[i].id == 1 || cardsInZoneAI[i].id == 13 || cardsInZoneAI[i].id == 19)
+                return true;
+        }
+
+        return false;
     }
 
     public bool checkGameOver()
@@ -178,6 +335,17 @@ public class GameState : MonoBehaviour
                 if (!cardsInHandAI[i].spell)
                 {
                     cardsInZoneAI.Add(cardsInHandAI[i]);
+                    if ((cardsInHandAI[i].id == 11 && checkPresentAI(16) && checkPresentAI(21)) ||
+                        (cardsInHandAI[i].id == 16 && checkPresentAI(11) && checkPresentAI(21)) || 
+                        (cardsInHandAI[i].id == 21 && checkPresentAI(11) && checkPresentAI(16)))
+                    {
+                        dealAllAI(3);
+                    }
+                }
+
+                if (cardsInHandAI[i].id == 4)
+                {
+                    cardsInZoneAI[cardsInZoneAI.Count - 1].canAttack = true;
                 }
 
                 cardsInHandAI[i] = cardsInHandAI[cardsInHandAI.Count - 1];
@@ -248,8 +416,17 @@ public class GameState : MonoBehaviour
                 if (!cardsInHand[i].spell)
                 {
                     cardsInZone.Add(cardsInHand[i]);
+                    if ((cardsInHand[i].id == 11 && checkPresent(16) && checkPresent(21)) ||
+                        (cardsInHand[i].id == 16 && checkPresent(11) && checkPresent(21)) || 
+                        (cardsInHand[i].id == 21 && checkPresent(11) && checkPresent(16)))
+                    {
+                        dealAll(3);
+                    }
                 }
-                
+                if (cardsInHand[i].id == 4)
+                {
+                    cardsInZone[cardsInZone.Count - 1].canAttack = true;
+                }
                 cardsInHand[i] = cardsInHand[cardsInHand.Count - 1];
                 cardsInHand.RemoveAt(cardsInHand.Count-1);
                 break;
@@ -307,6 +484,8 @@ public class GameState : MonoBehaviour
         {
             card2.hurted += 2;
         }
+        card1.Update();
+        card2.Update();
         checkBlood();
     }
 
@@ -368,11 +547,11 @@ public class GameState : MonoBehaviour
     {
         if (playerTurn)
         {
-            for (int i = 0; i < cardsInHand.Count; i++)
-            {
-                if (cardsInHand[i].mana < playerMana)
-                    return false;
-            }
+            // for (int i = 0; i < cardsInHand.Count; i++)
+            // {
+            //     if (cardsInHand[i].mana <= playerMana)
+            //         return false;
+            // }
             for (int i = 0; i < cardsInZone.Count; i++)
             {
                 if (cardsInZone[i].canAttack)
@@ -381,11 +560,11 @@ public class GameState : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < cardsInHandAI.Count; i++)
-            {
-                if (cardsInHandAI[i].mana < aiMana)
-                    return false;
-            }
+            // for (int i = 0; i < cardsInHandAI.Count; i++)
+            // {
+            //     if (cardsInHandAI[i].mana <= aiMana)
+            //         return false;
+            // }
             for (int i = 0; i < cardsInZoneAI.Count; i++)
             {
                 if (cardsInZoneAI[i].canAttack)
@@ -410,18 +589,27 @@ public class GameState : MonoBehaviour
             {
                 playerHp -= 1;
             }
+
+            for (int i = 0; i < cardsInZoneAI.Count; i++)
+            {
+                cardsInZoneAI[i].canAttack = true;
+            }
         }
         else
         {
             if (cardsInHandAI.Count < 7 && AIdeck.Count > 0)
             {
-                cardsInHandAI.Add(AIdeck[(AIdeck.Count - 1)]);
+                cardsInHandAI.Add(AIdeck[AIdeck.Count - 1]);
                 AIdeck.RemoveAt(AIdeck.Count - 1);
             }
 
             if (AIdeck.Count <= 0)
             {
                 aiHp -= 1;
+            }
+            for (int i = 0; i < cardsInZone.Count; i++)
+            {
+                cardsInZone[i].canAttack = true;
             }
         }
     }
@@ -432,6 +620,7 @@ public class GameState : MonoBehaviour
             return;
         int x = Random.Range(0, cardsInZone.Count);
         cardsInZone[x].hurted -= healXpower;
+        cardsInZone[x].Update();
     }
     
     public void HealOneAI(int healXpower)
@@ -440,6 +629,7 @@ public class GameState : MonoBehaviour
             return;
         int x = Random.Range(0, cardsInZoneAI.Count);
         cardsInZoneAI[x].hurted -= healXpower;
+        cardsInZoneAI[x].Update();
     }
 
     public void HealAll(int healXpower)
@@ -449,6 +639,7 @@ public class GameState : MonoBehaviour
         for (int i = 0; i < cardsInZone.Count; i++)
         {
             cardsInZone[i].hurted -= healXpower;
+            cardsInZone[i].Update();
         }
     }
     
@@ -459,6 +650,7 @@ public class GameState : MonoBehaviour
         for (int i = 0; i < cardsInZoneAI.Count; i++)
         {
             cardsInZoneAI[i].hurted -= healXpower;
+            cardsInZoneAI[i].Update();
         }
     }
 
@@ -511,6 +703,7 @@ public class GameState : MonoBehaviour
         for (int i = 0; i < cardsInZoneAI.Count; i++)
         {
             cardsInZoneAI[i].hurted += damageDealtBySpell;
+            cardsInZoneAI[i].Update();
         }
     }
     
@@ -519,6 +712,7 @@ public class GameState : MonoBehaviour
         for (int i = 0; i < cardsInZone.Count; i++)
         {
             cardsInZone[i].hurted += damageDealtBySpell;
+            cardsInZone[i].Update();
         }
     }
 
@@ -547,11 +741,13 @@ public class GameState : MonoBehaviour
     {
         int x = Random.Range(0, cardsInZoneAI.Count);
         cardsInZoneAI[x].hurted += damageDealtBySpell;
+        cardsInZoneAI[x].Update();
     }
     public void dealOneAI(int damageDealtBySpell)
     {
         int x = Random.Range(0, cardsInZone.Count);
         cardsInZone[x].hurted += damageDealtBySpell;
+        cardsInZone[x].Update();
     }
     public bool isMutualBirth(ThisCard1 player, AICardToHand1 enemy)
     {
@@ -766,67 +962,94 @@ public class GameState : MonoBehaviour
         }
     }
 
-    public void make_move(Move move)
+    public void make_move(List<Move> moves)
     {
         if (playerTurn)
         {
-            if (move.summon)
+            foreach (Move move in moves)
             {
-                playerSummon(move.id);
-            }
-
-            if (move.attack)
-            {
-                for (int i = 0; i < cardsInZone.Count; i++)
+                if (move.summon)
                 {
-                    if (cardsInZone[i].id == move.id)
-                    {
-                        for (int j = 0; j < cardsInZoneAI.Count; j++)
-                        {
-                            if (cardsInZoneAI[j].id == move.idAtk)
-                            {
-                                playerAttack(cardsInZone[i], cardsInZoneAI[j]);
-                                checkBlood();
-                                break;
-                            }
-                        }
+                    playerSummon(move.id);
+                }
 
-                        break;
+                if (move.attack)
+                {
+                    for (int i = 0; i < cardsInZone.Count; i++)
+                    {
+                        if (cardsInZone[i].id == move.id)
+                        {
+                            for (int j = 0; j < cardsInZoneAI.Count; j++)
+                            {
+                                if (cardsInZoneAI[j].id == move.idAtk)
+                                {
+                                    playerAttack(cardsInZone[i], cardsInZoneAI[j]);
+                                    checkBlood();
+                                    break;
+                                }
+                            }
+
+                            break;
+                        }
                     }
                 }
             }
         }
         else
         {
-            if (move.summon)
+            foreach (Move move in moves)
             {
-                aiSummon(move.id);
-            }
-
-            if (move.attack)
-            {
-                for (int i = 0; i < cardsInZoneAI.Count; i++)
+                if (move.summon)
                 {
-                    if (cardsInZoneAI[i].id == move.id)
+                    aiSummon(move.id);
+                }
+
+                if (move.attack)
+                {
+                    for (int i = 0; i < cardsInZoneAI.Count; i++)
                     {
-                        for (int j = 0; j < cardsInZone.Count; j++)
+                        if (cardsInZoneAI[i].id == move.id)
                         {
-                            if (cardsInZone[j].id == move.idAtk)
+                            for (int j = 0; j < cardsInZone.Count; j++)
                             {
-                                aiAttack(cardsInZoneAI[i], cardsInZone[j]);
-                                checkBlood();
-                                break;
+                                if (cardsInZone[j].id == move.idAtk)
+                                {
+                                    aiAttack(cardsInZoneAI[i], cardsInZone[j]);
+                                    checkBlood();
+                                    break;
+                                }
                             }
+                            break;
                         }
-                        break;
                     }
                 }
             }
         }
     }
+
+    public bool checkPresent(int id)
+    {
+        for (int i = 0; i < cardsInZone.Count; i++)
+        {
+            if (cardsInZone[i].id == id)
+                return true;
+        }
+
+        return false;
+    }
+    public bool checkPresentAI(int id)
+    {
+        for (int i = 0; i < cardsInZoneAI.Count; i++)
+        {
+            if (cardsInZoneAI[i].id == id)
+                return true;
+        }
+
+        return false;
+    }
 }
 
-public class Move : MonoBehaviour
+public class Move
 {
     bool playerTurn;
     public int id;

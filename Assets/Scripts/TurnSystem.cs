@@ -77,10 +77,15 @@ public class TurnSystem : MonoBehaviour
 
         enemyManaText.text = currentEnemyMana + "";
 
-        if (AI.AiEndPhase == true)
+        if (AI.AiEndPhase)
         {
             EndYourOpponentTurn();
             AI.AiEndPhase = false;
+        }
+        if (AI1.AiEndPhase)
+        {
+            EndYourOpponentTurn();
+            AI1.AiEndPhase = false;
         }
     }
     public void EndYourTurn()

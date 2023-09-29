@@ -17,7 +17,7 @@ public class ChooseEnemy : MonoBehaviour
     
     public void ChooseEnemy1b()
     {
-        AI.whichEnemy = 1;
+        AI1.whichEnemy = 1;
         SceneManager.LoadScene(play1b);
     }
     

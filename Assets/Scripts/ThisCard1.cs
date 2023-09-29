@@ -3,7 +3,7 @@ using System.Security.Principal;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ThisCard1 : MonoBehaviour
+public class ThisCard1
 {
     public Card thisCard;
     public int thisId;
@@ -119,7 +119,7 @@ public class ThisCard1 : MonoBehaviour
         // battleZone = GameObject.Find("Zone");
     }
 
-    void Update()
+    public void Update()
     {
         // Hand = GameObject.Find("Hand");
         // if (this.transform.parent == Hand.transform)
@@ -140,7 +140,6 @@ public class ThisCard1 : MonoBehaviour
         blood = thisCard.blood;
         mana = thisCard.mana;
         cardDescription = thisCard.cardDescription;
-        thisSprite = thisCard.thisImage;
 
         drawXcards = thisCard.drawXcards;
         addXmaxMana = thisCard.addXmaxMana;
@@ -156,9 +155,6 @@ public class ThisCard1 : MonoBehaviour
 
         actualblood = blood - hurted;
         actualDame = dame + dameIncrease;
-
-        nameText.text = "" + cardName;
-        descriptionText.text = "• " + cardDescription;
 
         // for (int i = 0; i < stars.Length; i++)
         // {
@@ -202,9 +198,6 @@ public class ThisCard1 : MonoBehaviour
         //     frame.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardNoElement");
         // }
 
-        dameText.text = "" + actualDame;
-        bloodText.text = "" + actualblood;
-        
         // CardBackScript.UpdateCard(cardBack);
 
         // if (TurnSystem.currentMana >= mana && summoned == false && beInGraveyard == false && TurnSystem.isYourTurn == true 
@@ -316,36 +309,7 @@ public class ThisCard1 : MonoBehaviour
         //     StartCoroutine(DestroySpell());
         // }
     }
-
-    IEnumerator DestroySpell()
-    {
-        yield return new WaitForSeconds(1f);
-        this.transform.SetParent(Graveyard.transform);
-        this.transform.position = new Vector3(transform.position.x + 4000, transform.position.y,
-            transform.position.z);
-        hurted = 0;
-        // canBeDestroyed = true;
-        // if (canBeDestroyed == true)
-        // {
-        //     for (int i = 0; i < 32; i++)
-        //     {
-        //         if (Graveyard.GetComponent<GraveyardScript>().graveyard[i].id == 0)
-        //         {
-        //             Graveyard.GetComponent<GraveyardScript>().graveyard[i] = CardDataBase.cardList[id];
-        //             Graveyard.GetComponent<GraveyardScript>().objectsInGraveyard[i] = this.gameObject;
-        //             canBeDestroyed = false;
-        //             summoned = false;
-        //             beInGraveyard = true;
-        //             hurted = 0;
-        //             
-        //             transform.SetParent(Graveyard.transform);
-        //             transform.position = new Vector3(transform.position.x + 4000, transform.position.y,
-        //                 transform.position.z);
-        //             break;
-        //         }
-        //     }
-        // }
-    }
+    
     public void Summon()
     {
         TurnSystem.currentMana -= mana;
@@ -417,15 +381,15 @@ public class ThisCard1 : MonoBehaviour
     {
         staticTargetingEnemy = true;
     }
-    public void StartAttack()
-    {
-        staticTargeting = true;
-        if (canAttack == true)
-        {
-            Arrow._Show = true;
-            Arrow.startPoint = transform.position;
-        }
-    }
+    // public void StartAttack()
+    // {
+    //     staticTargeting = true;
+    //     if (canAttack == true)
+    //     {
+    //         Arrow._Show = true;
+    //         Arrow.startPoint = transform.position;
+    //     }
+    // }
     public void StopAttack()
     {
         staticTargeting = false;
@@ -456,9 +420,9 @@ public class ThisCard1 : MonoBehaviour
             //     dealDamage = false;
             // }
         }
-        transform.SetParent(Graveyard.transform);
-        transform.position = new Vector3(transform.position.x + 4000, transform.position.y,
-            transform.position.z);
+        // transform.SetParent(Graveyard.transform);
+        // transform.position = new Vector3(transform.position.x + 4000, transform.position.y,
+        //     transform.position.z);
         hurted = 0;
         // canBeDestroyed = true;
         // if (canBeDestroyed)

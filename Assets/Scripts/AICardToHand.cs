@@ -431,7 +431,28 @@ public class AICardToHand : MonoBehaviour
     {
         AICardToHand1 newcard = new AICardToHand1();
         newcard.thisId = thisId;
-        thisCard = CardDataBase.cardList[thisId];
+        newcard.thisCard = CardDataBase.cardList[thisId];
+        newcard.id = id;
+        newcard.cardName = cardName;
+        newcard.dame = dame;
+        newcard.blood = blood;
+        newcard.mana = mana;
+        newcard.cardDescription = cardDescription;
+        newcard.thisSprite = thisCard.thisImage;
+
+        newcard.drawXcards = drawXcards;
+        newcard.addXmaxMana = addXmaxMana;
+
+        newcard.increaseXdame = increaseXdame;
+        newcard.deathcrys = deathcrys;
+        
+        newcard.spell = spell;
+        newcard.damageDealtBySpell = damageDealtBySpell;
+
+        newcard.returnXcards = returnXcards;
+        newcard.actualblood = newcard.blood - newcard.hurted;
+        newcard.actualDame = newcard.dame + newcard.dameIncrease;
+        newcard.healXpower = healXpower;
         return newcard;
     }
 }

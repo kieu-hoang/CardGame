@@ -4555,7 +4555,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 997415225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72711656e124e724582fefa09f8cf4af, type: 3}
+  m_Script: {fileID: 11500000, guid: 1e7a082148ca73a43ad14d4d85afb3a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   deck:
@@ -5057,71 +5057,10 @@ MonoBehaviour:
     increaseXdame: 0
     deathcrys: 0
   startingDeck: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  cardsInHand:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  cardsInZone:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   Hand: {fileID: 0}
   Zone: {fileID: 0}
   PlayerZone: {fileID: 0}
+  PlayerHand: {fileID: 0}
   Graveyard: {fileID: 0}
   x: 0
   cardInDeck1: {fileID: 1008990990}
@@ -5132,18 +5071,13 @@ MonoBehaviour:
   Clones: []
   CardBack: {fileID: 1307164451770322391, guid: 39b96e69325e14f4c91dbca32e711270, type: 3}
   currentMana: 0
-  AiCanSummon: 000000000000000000000000000000000000000000000000000000000000
   drawPhase: 0
   summonPhase: 0
   attackPhase: 0
   endPhase: 0
-  cardsID: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  aiCardToHand: {fileID: 1425834705}
-  summonID: 0
-  howManyCards: 0
-  canAttack: 000000000000000000000000000000000000000000000000000000000000
   audioSource: {fileID: 95095214}
   drawAudio: {fileID: 8300000, guid: 1111a23f7b090d0489549f4d3b604445, type: 3}
+  currentGame: {fileID: 0}
 --- !u!1001 &1008990988
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7188,17 +7122,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1803001968955466600, guid: 2b60b2e198d481842a6574db6383885d, type: 3}
   m_PrefabInstance: {fileID: 1425834703}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1425834705 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -5349925513680584306, guid: 2b60b2e198d481842a6574db6383885d, type: 3}
-  m_PrefabInstance: {fileID: 1425834703}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b7dbba4a98b6154f97d19b77ed4737c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1494110968
 GameObject:
   m_ObjectHideFlags: 0

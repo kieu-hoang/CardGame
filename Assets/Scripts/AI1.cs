@@ -11,13 +11,14 @@ public class AI1 : MonoBehaviour
     public static List<Card> staticEnemyDeck = new List<Card>();
     public int[] startingDeck;
 
-    public List<AICardToHand> cardsInHand = new List<AICardToHand>();
+    //public List<AICardToHand> cardsInHand = new List<AICardToHand>();
 
-    public List<AICardToHand> cardsInZone = new List<AICardToHand>();
+    //public List<AICardToHand> cardsInZone = new List<AICardToHand>();
     
     public GameObject Hand;
     public GameObject Zone;
     public GameObject PlayerZone;
+    public GameObject PlayerHand;
     public GameObject Graveyard;
 
     public int x;
@@ -38,22 +39,22 @@ public class AI1 : MonoBehaviour
 
     public int currentMana;
 
-    public bool[] AiCanSummon;
+    //public bool[] AiCanSummon;
 
     public bool drawPhase;
     public bool summonPhase;
     public bool attackPhase;
     public bool endPhase;
 
-    public int[] cardsID;
+    //public int[] cardsID;
     
-    public AICardToHand aiCardToHand;
+    //public AICardToHand aiCardToHand;
 
-    public int summonID;
+    //public int summonID;
 
-    public int howManyCards;
+    //public int howManyCards;
 
-    public bool[] canAttack;
+    //public bool[] canAttack;
     public static bool AiEndPhase;
     public static int whichEnemy;
     private const int DECKSIZE = 30;
@@ -67,7 +68,7 @@ public class AI1 : MonoBehaviour
 
     private int noOfCardInPlayerZone;
 
-    public GameState currentGame;
+    private GameState currentGame;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -81,7 +82,9 @@ public class AI1 : MonoBehaviour
         Hand = GameObject.Find("EnemyHand");
         Zone = GameObject.Find("EnemyZone");
         PlayerZone = GameObject.Find("Zone");
+        PlayerHand = GameObject.Find("Hand");
         Graveyard = GameObject.Find("EGraveyard");
+        currentGame = new GameState();
 
         x = 0;
         draw = true;
@@ -165,9 +168,19 @@ public class AI1 : MonoBehaviour
             summonPhase = false;
             attackPhase = false;
             endPhase = false;
+            draw = false;
         }
         
-        if (TurnSystem.startTurn == false && draw == false)
+        // if (TurnSystem.startTurn == false && draw == false)
+        // {
+        //     if (CardsInHand.eHowMany < 7 && deckSize > 0)
+        //         StartCoroutine(Draw(1));
+        //     else if (deckSize <= 0)
+        //         EnemyHp.staticHp -= 1;
+        //     draw = true;
+        // }
+        
+        if (draw == false && !TurnSystem.isYourTurn)
         {
             if (CardsInHand.eHowMany < 7 && deckSize > 0)
                 StartCoroutine(Draw(1));
@@ -178,7 +191,7 @@ public class AI1 : MonoBehaviour
         
         currentMana = TurnSystem.currentEnemyMana;
         //Update Cards in Hand
-        updateCIH();
+        // updateCIH();
         if (TurnSystem.isYourTurn == false)
         {
             drawPhase = true;
@@ -190,14 +203,19 @@ public class AI1 : MonoBehaviour
         
         if (summonPhase)
         {
-            StartCoroutine(Summon());
+            // StartCoroutine(Summon());
+            getGameState();
+            GameState gs = currentGame;
+            List<Move> nextmove = minimax(gs, true, 0, -1000, 1000).Item2;
+            make_move(nextmove);
+            endPhase = true;
         }
-        updateCIZ();
-        if (attackPhase && endPhase == false)
-        {
-            //StartCoroutine(EndPhase());
-            DoEndPhase();
-        }
+        // updateCIZ();
+        // if (attackPhase && endPhase == false)
+        // {
+        //     //StartCoroutine(EndPhase());
+        //     DoEndPhase();
+        // }
         if (endPhase)
         {
             AiEndPhase = true;
@@ -224,172 +242,172 @@ public class AI1 : MonoBehaviour
     IEnumerator EndPhase()
     {
         yield return new WaitForSeconds(1.5f);
-        DoEndPhase();
+        //DoEndPhase();
     }
-    public void updateCIH()
-    {
-        int j = 0;
-        howManyCards = 0;
-        foreach (Transform child in Hand.transform)
-        {
-            howManyCards++;
-        }
-        foreach (Transform child in Hand.transform)
-        {
-            cardsInHand[j] = child.GetComponent<AICardToHand>();
-            j++;
-        }
-        for (int i = 0; i < DECKSIZE; i++)
-        {
-            if (i >= howManyCards)
-            {
-                cardsInHand[i] = aiCardToHand;
-            }
-        }
-
-        noOfCardInHand = howManyCards;
-        j = 0;
-        int howManyCards2 = 0;
-        foreach (Transform child in Zone.transform)
-        {
-            howManyCards2++;
-        }
-
-        noOfCardInZone = howManyCards2;
-    }
+    // public void updateCIH()
+    // {
+    //     int j = 0;
+    //     howManyCards = 0;
+    //     foreach (Transform child in Hand.transform)
+    //     {
+    //         howManyCards++;
+    //     }
+    //     foreach (Transform child in Hand.transform)
+    //     {
+    //         cardsInHand[j] = child.GetComponent<AICardToHand>();
+    //         j++;
+    //     }
+    //     for (int i = 0; i < DECKSIZE; i++)
+    //     {
+    //         if (i >= howManyCards)
+    //         {
+    //             cardsInHand[i] = aiCardToHand;
+    //         }
+    //     }
+    //
+    //     noOfCardInHand = howManyCards;
+    //     j = 0;
+    //     int howManyCards2 = 0;
+    //     foreach (Transform child in Zone.transform)
+    //     {
+    //         howManyCards2++;
+    //     }
+    //
+    //     noOfCardInZone = howManyCards2;
+    // }
     
-    public void updateCIZ()
-    {
-        int j = 0;
-        howManyCards = 0;
-        foreach (Transform child in Zone.transform)
-        {
-            howManyCards++;
-        }
-        foreach (Transform child in Zone.transform)
-        {
-            
-            cardsInZone[j] = child.GetComponent<AICardToHand>();
-            j++;
-        }
-        for (int i = 0; i < DECKSIZE; i++)
-        {
-            if (i >= howManyCards)
-            {
-                cardsInZone[i] = aiCardToHand;
-            }
-        }
+    // public void updateCIZ()
+    // {
+    //     int j = 0;
+    //     howManyCards = 0;
+    //     foreach (Transform child in Zone.transform)
+    //     {
+    //         howManyCards++;
+    //     }
+    //     foreach (Transform child in Zone.transform)
+    //     {
+    //         
+    //         cardsInZone[j] = child.GetComponent<AICardToHand>();
+    //         j++;
+    //     }
+    //     for (int i = 0; i < DECKSIZE; i++)
+    //     {
+    //         if (i >= howManyCards)
+    //         {
+    //             cardsInZone[i] = aiCardToHand;
+    //         }
+    //     }
+    //
+    //     noOfCardInZone = howManyCards;
+    //     j = 0;
+    //     if (attackPhase)
+    //     {
+    //         int k = 0;
+    //         foreach (Transform child in Zone.transform)
+    //         {
+    //             canAttack[k] = child.GetComponent<AICardToHand>().canAttack;
+    //             k++;
+    //         }
+    //         for (int i = 0; i < DECKSIZE; i++)
+    //         {
+    //             if (i >= howManyCards)
+    //             {
+    //                 canAttack[i] = false;
+    //             }
+    //         }
+    //     }
+    //     int howManyCards2 = 0;
+    //     foreach (Transform child in PlayerZone.transform)
+    //     {
+    //         if (child.GetComponent<ThisCard>() != null && child.GetComponent<ThisCard>().blood - child.GetComponent<ThisCard>().hurted > 0)
+    //             howManyCards2++;
+    //     }
+    //
+    //     noOfCardInPlayerZone = howManyCards2;
+    // }
 
-        noOfCardInZone = howManyCards;
-        j = 0;
-        if (attackPhase)
-        {
-            int k = 0;
-            foreach (Transform child in Zone.transform)
-            {
-                canAttack[k] = child.GetComponent<AICardToHand>().canAttack;
-                k++;
-            }
-            for (int i = 0; i < DECKSIZE; i++)
-            {
-                if (i >= howManyCards)
-                {
-                    canAttack[i] = false;
-                }
-            }
-        }
-        int howManyCards2 = 0;
-        foreach (Transform child in PlayerZone.transform)
-        {
-            if (child.GetComponent<ThisCard>() != null && child.GetComponent<ThisCard>().blood - child.GetComponent<ThisCard>().hurted > 0)
-                howManyCards2++;
-        }
-
-        noOfCardInPlayerZone = howManyCards2;
-    }
-
-    public void DoEndPhase()
-    {
-        //yield return new WaitForSecondsRealtime(0f);
-        //updateCIZ();
-        for (int i = 0; i< deckSize ; i++)
-        {
-            howManyCards = 0;
-            foreach (Transform child in PlayerZone.transform)
-            {
-                if (child.GetComponent<ThisCard>().blood - child.GetComponent<ThisCard>().hurted > 0)
-                    howManyCards++;
-            }
-            noOfCardInPlayerZone = howManyCards;
-            if (canAttack[i])
-            {
-                if (noOfCardInPlayerZone == 0)
-                {
-                    if (!cardsInZone[i].attackedTarget)
-                    {
-                        PlayerHp.staticHp -= cardsInZone[i].actualDame;
-                        cardsInZone[i].attackedTarget = true;
-                        canAttack[i] = false;
-                    }
-                }
-                else
-                {
-                    if (checkTaunt())
-                    {
-                        foreach (Transform child in PlayerZone.transform)
-                        {
-                            if (canAttack[i] && child.GetComponent<ThisCard>().blood - child.GetComponent<ThisCard>().hurted > 0)
-                            {
-                                if (child.GetComponent<ThisCard>().id == 1 || child.GetComponent<ThisCard>().id == 13 ||
-                                    child.GetComponent<ThisCard>().id == 19)
-                                {
-                                    child.GetComponent<ThisCard>().isTarget = true;
-                                }
-                                if (!child.GetComponent<ThisCard>().isTarget) continue;
-                                child.GetComponent<ThisCard>().hurted += cardsInZone[i].actualDame;
-                                cardsInZone[i].hurted += child.GetComponent<ThisCard>().actualDame;
-                                child.GetComponent<ThisCard>().isTarget = false;
-                                canAttack[i] = false;
-                                break;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        foreach (Transform child in PlayerZone.transform)
-                        {
-                            if (canAttack[i] && child.GetComponent<ThisCard>().blood - child.GetComponent<ThisCard>().hurted > 0)
-                            {
-                                child.GetComponent<ThisCard>().isTarget = true;
-                                if (!child.GetComponent<ThisCard>().isTarget) continue;
-                                if (child.GetComponent<ThisCard>().id == 17)
-                                    child.GetComponent<ThisCard>().hurted += 1;
-                                else 
-                                    child.GetComponent<ThisCard>().hurted += cardsInZone[i].actualDame;
-                                if (cardsInZone[i].id == 17)
-                                    cardsInZone[i].hurted += 1;
-                                else
-                                    cardsInZone[i].hurted += child.GetComponent<ThisCard>().actualDame;
-                                if (isMutualBirth(cardsInZone[i].GetComponent<AICardToHand>(), child.GetComponent<ThisCard>()))
-                                {
-                                    child.GetComponent<ThisCard>().hurted -= 2;
-                                }
-                                if (isOpposition(cardsInZone[i].GetComponent<AICardToHand>(), child.GetComponent<ThisCard>()))
-                                {
-                                    child.GetComponent<ThisCard>().hurted += 2;
-                                }
-                                child.GetComponent<ThisCard>().isTarget = false;
-                                canAttack[i] = false;
-                                break;
-                            }
-                        }
-                    }
-                }
-                DoEndPhase();
-            }
-        }
-        endPhase = true;
-    }
+    // public void DoEndPhase()
+    // {
+    //     //yield return new WaitForSecondsRealtime(0f);
+    //     //updateCIZ();
+    //     for (int i = 0; i< deckSize ; i++)
+    //     {
+    //         howManyCards = 0;
+    //         foreach (Transform child in PlayerZone.transform)
+    //         {
+    //             if (child.GetComponent<ThisCard>().blood - child.GetComponent<ThisCard>().hurted > 0)
+    //                 howManyCards++;
+    //         }
+    //         noOfCardInPlayerZone = howManyCards;
+    //         if (canAttack[i])
+    //         {
+    //             if (noOfCardInPlayerZone == 0)
+    //             {
+    //                 if (!cardsInZone[i].attackedTarget)
+    //                 {
+    //                     PlayerHp.staticHp -= cardsInZone[i].actualDame;
+    //                     cardsInZone[i].attackedTarget = true;
+    //                     canAttack[i] = false;
+    //                 }
+    //             }
+    //             else
+    //             {
+    //                 if (checkTaunt())
+    //                 {
+    //                     foreach (Transform child in PlayerZone.transform)
+    //                     {
+    //                         if (canAttack[i] && child.GetComponent<ThisCard>().blood - child.GetComponent<ThisCard>().hurted > 0)
+    //                         {
+    //                             if (child.GetComponent<ThisCard>().id == 1 || child.GetComponent<ThisCard>().id == 13 ||
+    //                                 child.GetComponent<ThisCard>().id == 19)
+    //                             {
+    //                                 child.GetComponent<ThisCard>().isTarget = true;
+    //                             }
+    //                             if (!child.GetComponent<ThisCard>().isTarget) continue;
+    //                             child.GetComponent<ThisCard>().hurted += cardsInZone[i].actualDame;
+    //                             cardsInZone[i].hurted += child.GetComponent<ThisCard>().actualDame;
+    //                             child.GetComponent<ThisCard>().isTarget = false;
+    //                             canAttack[i] = false;
+    //                             break;
+    //                         }
+    //                     }
+    //                 }
+    //                 else
+    //                 {
+    //                     foreach (Transform child in PlayerZone.transform)
+    //                     {
+    //                         if (canAttack[i] && child.GetComponent<ThisCard>().blood - child.GetComponent<ThisCard>().hurted > 0)
+    //                         {
+    //                             child.GetComponent<ThisCard>().isTarget = true;
+    //                             if (!child.GetComponent<ThisCard>().isTarget) continue;
+    //                             if (child.GetComponent<ThisCard>().id == 17)
+    //                                 child.GetComponent<ThisCard>().hurted += 1;
+    //                             else 
+    //                                 child.GetComponent<ThisCard>().hurted += cardsInZone[i].actualDame;
+    //                             if (cardsInZone[i].id == 17)
+    //                                 cardsInZone[i].hurted += 1;
+    //                             else
+    //                                 cardsInZone[i].hurted += child.GetComponent<ThisCard>().actualDame;
+    //                             if (isMutualBirth(cardsInZone[i].GetComponent<AICardToHand>(), child.GetComponent<ThisCard>()))
+    //                             {
+    //                                 child.GetComponent<ThisCard>().hurted -= 2;
+    //                             }
+    //                             if (isOpposition(cardsInZone[i].GetComponent<AICardToHand>(), child.GetComponent<ThisCard>()))
+    //                             {
+    //                                 child.GetComponent<ThisCard>().hurted += 2;
+    //                             }
+    //                             child.GetComponent<ThisCard>().isTarget = false;
+    //                             canAttack[i] = false;
+    //                             break;
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //             DoEndPhase();
+    //         }
+    //     }
+    //     endPhase = true;
+    // }
     public void Shuffle()
     {
         for (int i=0;i<deckSize;i++)
@@ -410,59 +428,59 @@ public class AI1 : MonoBehaviour
         }
     }
 
-    IEnumerator Summon()
-    {
-        yield return new WaitForSecondsRealtime(1f);
-        updateCIH();
-        if (TurnSystem.isYourTurn == false)
-        {
-            for (int i=0; i< noOfCardInHand; i++)
-            {
-                if (currentMana >= cardsInHand[i].mana && noOfCardInZone < 5)
-                {
-                    AiCanSummon[i] = true;
-                }
-                else
-                {
-                    AiCanSummon[i] = false;
-                }
-            }
-            for (int i = noOfCardInHand; i < DECKSIZE; i++)
-            {
-                AiCanSummon[i] = false;
-            }
-        }
-        else
-        {
-            for (int i=0; i < DECKSIZE; i++)
-            {
-                AiCanSummon[i] = false;
-            }
-        }
-        int index = 0;
-        noOfCardCanSummon = 0;
-        for (int i = 0; i < noOfCardInHand; i++)
-        {
-            if (AiCanSummon[i])
-            {
-                cardsID[index] = cardsInHand[i].id;
-                index++;
-                noOfCardCanSummon = index;
-            }
-        }
-        // Random for checking
-        foreach (Transform child in Hand.transform)
-        {
-            summonID = cardsID[0];
-            if (child.GetComponent<AICardToHand>().id == summonID &&
-                CardDataBase.cardList[summonID].mana <= currentMana)
-            {
-                child.transform.SetParent(Zone.transform);
-                TurnSystem.currentEnemyMana -= CardDataBase.cardList[summonID].mana;
-                currentMana = TurnSystem.currentEnemyMana;
-                break;
-            }
-        }
+    // IEnumerator Summon()
+    // {
+    //     yield return new WaitForSecondsRealtime(1f);
+    //     updateCIH();
+    //     if (TurnSystem.isYourTurn == false)
+    //     {
+    //         for (int i=0; i< noOfCardInHand; i++)
+    //         {
+    //             if (currentMana >= cardsInHand[i].mana && noOfCardInZone < 5)
+    //             {
+    //                 AiCanSummon[i] = true;
+    //             }
+    //             else
+    //             {
+    //                 AiCanSummon[i] = false;
+    //             }
+    //         }
+    //         for (int i = noOfCardInHand; i < DECKSIZE; i++)
+    //         {
+    //             AiCanSummon[i] = false;
+    //         }
+    //     }
+    //     else
+    //     {
+    //         for (int i=0; i < DECKSIZE; i++)
+    //         {
+    //             AiCanSummon[i] = false;
+    //         }
+    //     }
+    //     int index = 0;
+    //     noOfCardCanSummon = 0;
+    //     for (int i = 0; i < noOfCardInHand; i++)
+    //     {
+    //         if (AiCanSummon[i])
+    //         {
+    //             cardsID[index] = cardsInHand[i].id;
+    //             index++;
+    //             noOfCardCanSummon = index;
+    //         }
+    //     }
+    //     // Random for checking
+    //     foreach (Transform child in Hand.transform)
+    //     {
+    //         summonID = cardsID[0];
+    //         if (child.GetComponent<AICardToHand>().id == summonID &&
+    //             CardDataBase.cardList[summonID].mana <= currentMana)
+    //         {
+    //             child.transform.SetParent(Zone.transform);
+    //             TurnSystem.currentEnemyMana -= CardDataBase.cardList[summonID].mana;
+    //             currentMana = TurnSystem.currentEnemyMana;
+    //             break;
+    //         }
+    //     }
 
         // // Optimize Card Summoning
         // int[,] L = new int[index + 1, currentMana + 1];
@@ -513,16 +531,16 @@ public class AI1 : MonoBehaviour
         //         index--;
         //     }
         // }
-        if (noOfCardCanSummon == 1 || noOfCardCanSummon == 0 || currentMana == 0)
-        {
-            summonPhase = false;
-            StartCoroutine(StartAttackPhase()); 
-        }
-        else
-        {
-            StartCoroutine(Summon());
-        }
-    }
+    //     if (noOfCardCanSummon == 1 || noOfCardCanSummon == 0 || currentMana == 0)
+    //     {
+    //         summonPhase = false;
+    //         StartCoroutine(StartAttackPhase()); 
+    //     }
+    //     else
+    //     {
+    //         StartCoroutine(Summon());
+    //     }
+    // }
     IEnumerator ShuffleNow()
     {
         yield return new WaitForSeconds(1);
@@ -604,6 +622,185 @@ public class AI1 : MonoBehaviour
         currentGame.aiHp = EnemyHp.staticHp;
         currentGame.playerMana = TurnSystem.currentMana;
         currentGame.aiMana = TurnSystem.currentEnemyMana;
-        
+        foreach (Transform child in PlayerHand.transform)
+        {
+            currentGame.cardsInHand.Add(child.GetComponent<ThisCard>().toThisCard1());
+        }
+        foreach (Transform child in PlayerZone.transform)
+        {
+            currentGame.cardsInZone.Add(child.GetComponent<ThisCard>().toThisCard1());
+        }
+        foreach (Transform child in Hand.transform)
+        {
+            currentGame.cardsInHandAI.Add(child.GetComponent<AICardToHand>().ToAICardToHand1());
+        }
+        foreach (Transform child in Zone.transform)
+        {
+            currentGame.cardsInZoneAI.Add(child.GetComponent<AICardToHand>().ToAICardToHand1());
+        }
+
+        for (int i = 0; i < deckSize; i++)
+        {
+            currentGame.AIdeck.Add(staticEnemyDeck[i].ToAICardToHand1());
+        }
+        for (int i = 0; i < PlayerDeck.deckSize; i++)
+        {
+            currentGame.deck.Add(PlayerDeck.staticDeck[i].toThisCard1());
+        }
+    }
+
+    public void make_move(List<Move> moves)
+    {
+        foreach (Move mo in moves)
+        {
+            if (mo.summon)
+            {
+                Summon(mo.id);
+            }
+
+            if (mo.attack)
+            {
+                if (mo.idAtk == 0)
+                {
+                    foreach (Transform child in Zone.transform)
+                    {
+                        if (child.GetComponent<AICardToHand>().id == mo.id)
+                        {
+                            PlayerHp.staticHp -= child.GetComponent<AICardToHand>().actualDame;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    Attack(mo.id, mo.idAtk);
+                }
+            }
+        }
+    }
+
+    public void Summon(int id)
+    {
+        foreach (Transform child in Hand.transform)
+        {
+            if (child.GetComponent<AICardToHand>().id == id)
+            {
+                child.transform.SetParent(Zone.transform);
+                TurnSystem.currentEnemyMana -= CardDataBase.cardList[id].mana;
+                currentMana = TurnSystem.currentEnemyMana;
+                break;
+            }
+        }
+    }
+
+    public void Attack(int id1, int id2)
+    {
+        foreach (Transform child in Zone.transform)
+        {
+            if (child.GetComponent<AICardToHand>().id == id1)
+            {
+                foreach (Transform child1 in PlayerZone.transform)
+                {
+                    if (child1.GetComponent<ThisCard>().id == id2)
+                    {
+                        if (id1 == 17)
+                        {
+                            child.GetComponent<AICardToHand>().hurted += 1;
+                        }
+                        else
+                            child.GetComponent<AICardToHand>().hurted += child1.GetComponent<ThisCard>().actualDame;
+
+                        if (id2 == 17)
+                        {
+                            child1.GetComponent<ThisCard>().hurted += 1;
+                        }
+                        else
+                        {
+                            child1.GetComponent<ThisCard>().hurted += child.GetComponent<AICardToHand>().actualDame;
+                        }
+
+                        if (isMutualBirth(child.GetComponent<AICardToHand>(), child1.GetComponent<ThisCard>()))
+                        {
+                            child1.GetComponent<ThisCard>().hurted -= 2;
+                        }
+
+                        if (isOpposition(child.GetComponent<AICardToHand>(), child1.GetComponent<ThisCard>()))
+                        {
+                            child1.GetComponent<ThisCard>().hurted += 2;
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    public Tuple<int, List<Move>> minimax(GameState gs, bool maximizing, int depth, int alpha, int beta)
+    {
+        List<Move> moves = new List<Move>();
+        if (gs.checkGameOver())
+        {
+            if (gs.playerHp <= 0)
+                return new Tuple<int, List<Move>>(1000, moves);
+            else if (gs.aiHp <= 0)
+            {
+                return new Tuple<int, List<Move>>(-1000, moves);
+            }
+        }
+        else if (depth >= 5)
+        {
+            return new Tuple<int, List<Move>>(gs.evaluate(), moves);
+        }
+
+        if (maximizing)
+        {
+            int max_eval = -1000;
+            List<Move> best_move = new List<Move>();
+            List<List<Move>> all_valid_moves = gs.getValidMoves();
+            foreach (List<Move> valid_move in all_valid_moves)
+            {
+                GameState tempGs = new GameState();
+                tempGs.copy(gs);
+                tempGs.make_move(valid_move);
+                tempGs.nextTurn();
+                int eval = minimax(tempGs, false, depth + 1, alpha, beta).Item1;
+                Debug.Log("Evaluate: " + eval);
+                if (eval > max_eval)
+                {
+                    max_eval = eval;
+                    best_move = valid_move;
+                }
+                alpha = Math.Max(alpha, max_eval);
+                if (beta <= alpha)
+                    break;
+            }
+            Debug.Log("Evaluate: " + max_eval);
+            return new Tuple<int, List<Move>>(max_eval, best_move);
+        }
+        else
+        {
+            int min_eval = 1000;
+            List<Move> best_move = new List<Move>();
+            List<List<Move>> all_valid_moves = gs.getValidMoves();
+            foreach (List<Move> valid_move in all_valid_moves)
+            {
+                GameState tempGs = new GameState();
+                tempGs.copy(gs);
+                tempGs.make_move(valid_move);
+                tempGs.nextTurn();
+                int eval = minimax(tempGs, true, depth + 1, alpha, beta).Item1;
+                Debug.Log("Evaluate: " + eval);
+                if (eval < min_eval)
+                {
+                    min_eval = eval;
+                    best_move = valid_move;
+                }
+                beta = Math.Min(beta, min_eval);
+                if (beta <= alpha)
+                    break;
+            }
+            return new Tuple<int, List<Move>>(min_eval, best_move);
+        }
     }
 }

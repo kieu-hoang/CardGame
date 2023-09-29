@@ -10,7 +10,6 @@ public class AI : MonoBehaviour
     public Card container = new Card();
     public static List<Card> staticEnemyDeck = new List<Card>();
     public int[] startingDeck;
-
     public List<AICardToHand> cardsInHand = new List<AICardToHand>();
 
     public List<AICardToHand> cardsInZone = new List<AICardToHand>();
@@ -165,7 +164,16 @@ public class AI : MonoBehaviour
             endPhase = false;
         }
         
-        if (TurnSystem.startTurn == false && draw == false)
+        // if (TurnSystem.startTurn == false && draw == false)
+        // {
+        //     if (CardsInHand.eHowMany < 7 && deckSize > 0)
+        //         StartCoroutine(Draw(1));
+        //     else if (deckSize <= 0)
+        //         EnemyHp.staticHp -= 1;
+        //     draw = true;
+        // }
+        
+        if (draw == false && !TurnSystem.isYourTurn)
         {
             if (CardsInHand.eHowMany < 7 && deckSize > 0)
                 StartCoroutine(Draw(1));

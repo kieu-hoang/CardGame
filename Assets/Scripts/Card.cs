@@ -69,4 +69,62 @@ public class Card
         increaseXdame = IncreaseXdame;
         deathcrys = Deathcrys;
     }
+    public ThisCard1 toThisCard1()
+    {
+        ThisCard1 newcard = new ThisCard1();
+        newcard.thisId = id;
+        newcard.thisCard = CardDataBase.cardList[id];
+        newcard.id = id;
+        newcard.cardName = cardName;
+        newcard.dame = dame;
+        
+        newcard.blood = blood;
+        newcard.mana = mana;
+        newcard.cardDescription = cardDescription;
+        newcard.thisSprite = thisImage;
+
+        newcard.drawXcards = drawXcards;
+        newcard.addXmaxMana = addXmaxMana;
+
+        newcard.returnXcards = returnXcards;
+        newcard.healXpower = healXpower;
+        
+        newcard.increaseXdame = increaseXdame;
+        newcard.deathcrys = deathcrys;
+
+        newcard.spell = spell;
+        newcard.damageDealtBySpell = damageDealtBySpell;
+
+        newcard.actualblood = newcard.blood - newcard.hurted;
+        newcard.actualDame = newcard.dame + newcard.dameIncrease;
+        return newcard;
+    }
+    public AICardToHand1 ToAICardToHand1()
+    {
+        AICardToHand1 newcard = new AICardToHand1();
+        newcard.thisId = id;
+        newcard.thisCard = CardDataBase.cardList[id];
+        newcard.id = id;
+        newcard.cardName = cardName;
+        newcard.dame = dame;
+        newcard.blood = blood;
+        newcard.mana = mana;
+        newcard.cardDescription = cardDescription;
+        newcard.thisSprite = thisImage;
+
+        newcard.drawXcards = drawXcards;
+        newcard.addXmaxMana = addXmaxMana;
+
+        newcard.increaseXdame = increaseXdame;
+        newcard.deathcrys = deathcrys;
+        
+        newcard.spell = spell;
+        newcard.damageDealtBySpell = damageDealtBySpell;
+
+        newcard.returnXcards = returnXcards;
+        newcard.actualblood = newcard.blood - newcard.hurted;
+        newcard.actualDame = newcard.dame + newcard.dameIncrease;
+        newcard.healXpower = healXpower;
+        return newcard;
+    }
 }

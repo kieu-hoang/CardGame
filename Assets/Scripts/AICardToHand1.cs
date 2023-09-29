@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AICardToHand1 : MonoBehaviour
+public class AICardToHand1
 {
     public Card thisCard;
 
@@ -86,7 +86,8 @@ public class AICardToHand1 : MonoBehaviour
         // Graveyard = GameObject.Find("EGraveyard");
         // StartCoroutine(AfterVoidStart());
         summoningSickness = true;
-        
+        canAttack = false;
+
         // AiZone = GameObject.Find("EnemyZone");
         // battleZone = GameObject.Find("EnemyZone");
         // EnemyZone = GameObject.Find("Zone");
@@ -144,11 +145,7 @@ public class AICardToHand1 : MonoBehaviour
         returnXcards = thisCard.returnXcards;
         actualblood = blood - hurted;
         actualDame = dame + dameIncrease;
-
-        nameText.text = "" + cardName;
-        dameText.text = "" + actualDame;
-        bloodText.text = "" + actualblood;
-        descriptionText.text = "• " + cardDescription;
+        
         // for (int i = 0; i < stars.Length; i++)
         // {
         //     if (i < mana)
@@ -163,8 +160,7 @@ public class AICardToHand1 : MonoBehaviour
         //         stars[i].SetActive(false);
         //     }
         // }
-
-        thatImage.sprite = thisSprite;
+        
         healXpower = thisCard.healXpower;
 
         // if (thisCard.element == Card.Element.Fire)
@@ -294,67 +290,59 @@ public class AICardToHand1 : MonoBehaviour
         thisCardCanBeDestroyed = true;
     }
     
-    IEnumerator WaitSpell()
-    {
-        yield return new WaitForSeconds(1f);
-        this.transform.SetParent(Graveyard.transform);
-        this.transform.position = new Vector3(transform.position.x + 4000, transform.position.y,
-            transform.position.z);
-        hurted = 0;
-    }
-    public void Heal()
-    {
-        if (healXpower > 0)
-        {
-            if (id == 2 || id == 3)
-                HealOne();
-            else if (id == 20 || id == 24 || id == 21 || id == 11 || id == 16 || id == 12 || id == 23)
-                HealAll();
-            else if (id == 10)
-            {
-                HealAll();
-                HealHero();
-            }
-        }
-    }
+    // public void Heal()
+    // {
+    //     if (healXpower > 0)
+    //     {
+    //         if (id == 2 || id == 3)
+    //             HealOne();
+    //         else if (id == 20 || id == 24 || id == 21 || id == 11 || id == 16 || id == 12 || id == 23)
+    //             HealAll();
+    //         else if (id == 10)
+    //         {
+    //             HealAll();
+    //             HealHero();
+    //         }
+    //     }
+    // }
 
-    public void HealOne()
-    {
-        int x;
-        if (spell)
-            x = Random.Range(0, CardsInZone.eHowMany);
-        else
-        {
-            x = Random.Range(0, CardsInZone.eHowMany-1);
-        } 
-        int i = 0;
-        if ((CardsInZone.eHowMany <= 1 && !spell) || CardsInZone.eHowMany == 0)
-            return;
-        foreach (Transform child in battleZone.transform)
-        {
-            if (i == x)
-            {
-                if (child != transform && child.GetComponent<AICardToHand>() != null && child.GetComponent<AICardToHand>().actualblood > 0)
-                {
-                    child.GetComponent<AICardToHand>().hurted -= healXpower;
-                    break;
-                }
-                continue;
-            }
-            i++;
-        }
-    }
+    // public void HealOne()
+    // {
+    //     int x;
+    //     if (spell)
+    //         x = Random.Range(0, CardsInZone.eHowMany);
+    //     else
+    //     {
+    //         x = Random.Range(0, CardsInZone.eHowMany-1);
+    //     } 
+    //     int i = 0;
+    //     if ((CardsInZone.eHowMany <= 1 && !spell) || CardsInZone.eHowMany == 0)
+    //         return;
+    //     foreach (Transform child in battleZone.transform)
+    //     {
+    //         if (i == x)
+    //         {
+    //             if (child != transform && child.GetComponent<AICardToHand>() != null && child.GetComponent<AICardToHand>().actualblood > 0)
+    //             {
+    //                 child.GetComponent<AICardToHand>().hurted -= healXpower;
+    //                 break;
+    //             }
+    //             continue;
+    //         }
+    //         i++;
+    //     }
+    // }
 
-    public void HealAll()
-    {
-        if ((CardsInZone.eHowMany <= 1 && !spell) || CardsInZone.eHowMany == 0)
-            return;
-        foreach (Transform child in battleZone.transform)
-        {
-            if (child != transform && child.GetComponent<AICardToHand>() != null && child.GetComponent<AICardToHand>().actualblood > 0)
-                child.GetComponent<AICardToHand>().hurted -= healXpower;
-        }
-    }
+    // public void HealAll()
+    // {
+    //     if ((CardsInZone.eHowMany <= 1 && !spell) || CardsInZone.eHowMany == 0)
+    //         return;
+    //     foreach (Transform child in battleZone.transform)
+    //     {
+    //         if (child != transform && child.GetComponent<AICardToHand>() != null && child.GetComponent<AICardToHand>().actualblood > 0)
+    //             child.GetComponent<AICardToHand>().hurted -= healXpower;
+    //     }
+    // }
 
     public void HealHero()
     {
@@ -417,14 +405,14 @@ public class AICardToHand1 : MonoBehaviour
         }
     }
 
-    public void increaseDame()
-    {
-        if ((CardsInZone.eHowMany <= 1 && !spell) || CardsInZone.eHowMany == 0)
-            return;
-        foreach (Transform child in battleZone.transform)
-        {
-            if (child != transform && child.GetComponent<AICardToHand>() != null)
-                child.GetComponent<AICardToHand>().dameIncrease += increaseXdame;
-        }
-    }
+    // public void increaseDame()
+    // {
+    //     if ((CardsInZone.eHowMany <= 1 && !spell) || CardsInZone.eHowMany == 0)
+    //         return;
+    //     foreach (Transform child in battleZone.transform)
+    //     {
+    //         if (child != transform && child.GetComponent<AICardToHand>() != null)
+    //             child.GetComponent<AICardToHand>().dameIncrease += increaseXdame;
+    //     }
+    // }
 }
