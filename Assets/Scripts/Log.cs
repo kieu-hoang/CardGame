@@ -7,36 +7,45 @@ using System.IO;
 using System.Text;
 
 
-
-public class Log : MonoBehaviour
+[System.Serializable]
+public class Log: MonoBehaviour
 {
+    public GameState gs;
     // Start is called before the first frame update
     void Start()
     {
-        try
-        {
-            //Open the File
-            StreamWriter sw = new StreamWriter("C:\\Test1.txt", true, Encoding.ASCII);
+        LoadData();
+    }
 
-            
+    public void LoadData()
+    {
+        string file = "save.txt";
+        string filePath = Path.Combine(Application.persistentDataPath, file);
+        if (!File.Exists(filePath))
+        {
+            File.WriteAllText(filePath, "");
+        }
 
-            //close the file
-            sw.Close();
-        }
-        catch(Exception e)
-        {
-            Console.WriteLine("Exception: " + e.Message);
-        }
-        finally
-        {
-            Console.WriteLine("Executing finally block.");
-        }
+        gs = JsonUtility.FromJson<GameState>(File.ReadAllText(filePath));
+    }
+
+    public void SaveData()
+    {
+        string file = "save.txt";
+        string filePath = Path.Combine(Application.persistentDataPath, file);
+        //string json = JsonUtility.ToJson(gs);
+        string json = "Hello Trung!!!";
+        File.WriteAllText(filePath, json);
+        Debug.Log("File saved, at path" + filePath);
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            SaveData();
+        }
     }
 }
 

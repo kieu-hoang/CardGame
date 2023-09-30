@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+[System.Serializable]
 public class GameState
 {
     public List<ThisCard1> deck = new List<ThisCard1>();
