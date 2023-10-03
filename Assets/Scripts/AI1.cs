@@ -622,6 +622,8 @@ public class AI1 : MonoBehaviour
         currentGame.aiHp = EnemyHp.staticHp;
         currentGame.playerMana = TurnSystem.currentMana;
         currentGame.aiMana = TurnSystem.currentEnemyMana;
+        currentGame.playerManaTurn = TurnSystem.maxMana;
+        currentGame.aiManaTurn = TurnSystem.maxEnemyMana;
         foreach (Transform child in PlayerHand.transform)
         {
             currentGame.cardsInHand.Add(child.GetComponent<ThisCard>().toThisCard1());

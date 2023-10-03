@@ -17,7 +17,9 @@ public class GameState
     public List<AICardToHand1> cardsInZoneAI = new List<AICardToHand1>();
     public int aiHp;
     public int aiMana;
-    
+
+    public int playerManaTurn;
+    public int aiManaTurn;
     public bool playerTurn;
 
     public void copy(GameState newGame)
@@ -56,7 +58,8 @@ public class GameState
         }
         aiHp = newGame.aiHp;
         aiMana = newGame.aiMana;
-
+        playerManaTurn = newGame.playerManaTurn;
+        aiManaTurn = newGame.aiManaTurn;
         playerTurn = newGame.playerTurn;
     }
 
@@ -66,21 +69,6 @@ public class GameState
         List<Move> validMove = new List<Move>();
         if (playerTurn)
         {
-            // int currentMana = playerMana;
-            // int summonedMana = 0;
-            // for (int i = 0; i < cardsInHand.Count; i++)
-            // {
-            //     if (cardsInHand[i].mana <= playerMana && summonedMana+cardsInHand[i].mana <= currentMana)
-            //     {
-            //         summonedMana += cardsInHand[i].mana;
-            //         validMove.Add(new Move(true, cardsInHand[i].id, true, false, 0));
-            //     }
-            // }
-            //
-            // for (int i = 0; i < cardsInZone.Count; i++)
-            // {
-            //     validMove.Add(new Move(true, cardsInZone[i].id, false, true, 0));
-            // }
             FindCombinations(cardsInHand, 0, playerMana, validMove, result);
             List<ThisCard1> atkcard = new List<ThisCard1>();
             for (int i = 0; i < cardsInZone.Count; i++)
@@ -140,21 +128,6 @@ public class GameState
         }
         else
         {
-            // int currentMana = aiMana;
-            // int summonedMana = 0;
-            // for (int i = 0; i < cardsInHandAI.Count; i++)
-            // {
-            //     if (cardsInHandAI[i].mana <= aiMana && summonedMana+cardsInHandAI[i].mana <= currentMana)
-            //     {
-            //         summonedMana += cardsInHandAI[i].mana;
-            //         validMove.Add(new Move(false, cardsInHandAI[i].id, true, false, 0));
-            //     }
-            // }
-            //
-            // for (int i = 0; i < cardsInZoneAI.Count; i++)
-            // {
-            //     validMove.Add(new Move(false, cardsInZoneAI[i].id, false, true, 0));
-            // }
             FindCombinationsAI(cardsInHandAI, 0, aiMana, validMove, result);
             List<AICardToHand1> atkcard = new List<AICardToHand1>();
             for (int i = 0; i < cardsInZoneAI.Count; i++)
@@ -214,11 +187,19 @@ public class GameState
                 res.AddRange(validMove2);
             }
         }
+
+        if (result.Count > 0)
+        {
+            Debug.Log(("Number of result: " + result.Count));
+            if (result[0].Count > 0)
+                Debug.Log("Result 0: " + result[0][0].id);
+        }
         //result.Add(validMove);
         return result;
     }
     static void FindCombinations(List<ThisCard1> cardsInHand, int index, int mana, List<Move> currentCombination, List<List<Move>> result)
     {
+        Debug.Log("currentCombination: " + currentCombination.Count);
         if (mana <= 0)
         {
             return;
@@ -235,7 +216,8 @@ public class GameState
         {
             currentCombination.Add(new Move(true, cardsInHand[index].id, true, false, 0));
             if (!(result.Contains(currentCombination)))
-                result.Add(currentCombination);
+                result.Add(new List<Move>(currentCombination));
+            Debug.Log("Result#: " + result.Count);
             FindCombinations(cardsInHand, index + 1, mana - cardsInHand[index].mana, currentCombination, result);
             currentCombination.RemoveAt(currentCombination.Count - 1); // Backtrack
 
@@ -264,7 +246,8 @@ public class GameState
         {
             currentCombination.Add(new Move(false, cardsInHand[index].id, true, false, 0));
             if (!(result.Contains(currentCombination)))
-                result.Add(currentCombination);
+                result.Add(new List<Move>(currentCombination));
+            Debug.Log("Result#: " + result.Count);
             FindCombinationsAI(cardsInHand, index + 1, mana - cardsInHand[index].mana, currentCombination, result);
             currentCombination.RemoveAt(currentCombination.Count - 1); // Backtrack
 
@@ -622,6 +605,10 @@ public class GameState
         playerTurn = !playerTurn;
         if (playerTurn)
         {
+            playerManaTurn += 1;
+            if (playerManaTurn > 7)
+                playerManaTurn = 7;
+            playerMana = playerManaTurn;
             if (cardsInHand.Count < 7 && deck.Count > 0)
             {
                 cardsInHand.Add(deck[deck.Count - 1]);
@@ -640,6 +627,10 @@ public class GameState
         }
         else
         {
+            aiManaTurn += 1;
+            if (aiManaTurn > 7)
+                aiManaTurn = 7;
+            aiMana = aiManaTurn;
             if (cardsInHandAI.Count < 7 && AIdeck.Count > 0)
             {
                 cardsInHandAI.Add(AIdeck[AIdeck.Count - 1]);
