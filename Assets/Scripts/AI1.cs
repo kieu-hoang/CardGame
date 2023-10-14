@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Threading;
 
 public class AI1 : MonoBehaviour
 {
@@ -69,6 +70,7 @@ public class AI1 : MonoBehaviour
     private int noOfCardInPlayerZone;
 
     private GameState currentGame;
+    
     // Start is called before the first frame update
     private void Awake()
     {
@@ -77,6 +79,7 @@ public class AI1 : MonoBehaviour
     void Start()
     {
         //StartCoroutine(WaitOneSeconds());
+        Thread mainThread = Thread.CurrentThread;
 
         //StartCoroutine(StartGame());
         Hand = GameObject.Find("EnemyHand");
@@ -624,21 +627,41 @@ public class AI1 : MonoBehaviour
         currentGame.aiMana = TurnSystem.currentEnemyMana;
         currentGame.playerManaTurn = TurnSystem.maxMana;
         currentGame.aiManaTurn = TurnSystem.maxEnemyMana;
+        currentGame.cardsInHand = new List<ThisCard1>();
+        currentGame.cardsInZone = new List<ThisCard1>();
+        currentGame.cardsInHandAI = new List<AICardToHand1>();
+        currentGame.cardsInZoneAI = new List<AICardToHand1>();
+        
         foreach (Transform child in PlayerHand.transform)
         {
-            currentGame.cardsInHand.Add(child.GetComponent<ThisCard>().toThisCard1());
+            if (child.transform)
+                currentGame.cardsInHand.Add(child.GetComponent<ThisCard>().toThisCard1());
         }
         foreach (Transform child in PlayerZone.transform)
         {
-            currentGame.cardsInZone.Add(child.GetComponent<ThisCard>().toThisCard1());
+            if (child.transform)
+                currentGame.cardsInZone.Add(child.GetComponent<ThisCard>().toThisCard1());
+            if (child.GetComponent<ThisCard>().canAttack)
+            {
+                int x = currentGame.cardsInZone.Count - 1;
+                currentGame.cardsInZone[x].canAttack = true;
+            }
         }
+        
         foreach (Transform child in Hand.transform)
         {
-            currentGame.cardsInHandAI.Add(child.GetComponent<AICardToHand>().ToAICardToHand1());
+            if (child.transform)
+                currentGame.cardsInHandAI.Add(child.GetComponent<AICardToHand>().ToAICardToHand1());
         }
         foreach (Transform child in Zone.transform)
         {
-            currentGame.cardsInZoneAI.Add(child.GetComponent<AICardToHand>().ToAICardToHand1());
+            if (child.transform)
+                currentGame.cardsInZoneAI.Add(child.GetComponent<AICardToHand>().ToAICardToHand1());
+            if (child.GetComponent<AICardToHand>().canAttack)
+            {
+                int x = currentGame.cardsInZoneAI.Count - 1;
+                currentGame.cardsInZoneAI[x].canAttack = true;
+            }
         }
 
         for (int i = 0; i < deckSize; i++)
@@ -669,6 +692,7 @@ public class AI1 : MonoBehaviour
                         if (child.GetComponent<AICardToHand>().id == mo.id)
                         {
                             PlayerHp.staticHp -= child.GetComponent<AICardToHand>().actualDame;
+                            Debug.Log("Attack PlayerHp");
                             break;
                         }
                     }
@@ -676,6 +700,7 @@ public class AI1 : MonoBehaviour
                 else
                 {
                     Attack(mo.id, mo.idAtk);
+                    Debug.Log(mo.id + " Attack " + mo.idAtk);
                 }
             }
         }
@@ -750,7 +775,7 @@ public class AI1 : MonoBehaviour
                 return new Tuple<int, List<Move>>(-1000, moves);
             }
         }
-        else if (depth >= 5)
+        else if (depth >= 2)
         {
             return new Tuple<int, List<Move>>(gs.evaluate(), moves);
         }

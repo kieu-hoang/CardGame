@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Threading;
+using UnityEditor;
 
 [System.Serializable]
 public class GameState
@@ -69,137 +71,336 @@ public class GameState
         List<Move> validMove = new List<Move>();
         if (playerTurn)
         {
-            FindCombinations(cardsInHand, 0, playerMana, validMove, result);
-            List<ThisCard1> atkcard = new List<ThisCard1>();
-            for (int i = 0; i < cardsInZone.Count; i++)
+            //Debug.Log("cardsInHand at validMove: " + cardsInHand.Count);
+            FindCombinations(cardsInHand, 0, playerMana, validMove, result, cardsInZone.Count);
+            for (int i=0; i< result.Count;i++)
             {
-                if (cardsInZone[i].canAttack)
-                    atkcard.Add(cardsInZone[i]);
-            }
-            List<Move> validMove2 = new List<Move>();
-            if (cardsInZoneAI.Count == 0)
-            {
-                for (int i = 0; i < atkcard.Count; i++)
+                int index = i;
+                Debug.Log("Result thread " + index + " before: " + result[index].Count);
+                Thread newthrd = new Thread(() =>
                 {
-                    validMove2.Add(new Move(true, atkcard[i].id, false, true, 0));
-                }
-            }
-            if (checkTauntAI())
-            {
-                List<AICardToHand1> taunt = new List<AICardToHand1>();
-                List<AICardToHand1> notTaunt = new List<AICardToHand1>();
-                for (int i = 0; i < cardsInZoneAI.Count; i++)
-                {
-                    if (cardsInZoneAI[i].id == 1 || cardsInZoneAI[i].id == 13 || cardsInZoneAI[i].id == 19)
+                    GameState nw = new GameState();
+                    nw.copy(this);
+                    nw.make_move(result[index]);
+                    List<ThisCard1> atkcard = new List<ThisCard1>();
+                    for (int i = 0; i < nw.cardsInZone.Count; i++)
                     {
-                        taunt.Add(cardsInZoneAI[i]);
+                        if (nw.cardsInZone[i].canAttack)
+                        {
+                            Debug.Log("cardsInZone[] " + i + ": " + nw.cardsInZone[i].id);
+                            atkcard.Add(nw.cardsInZone[i]);
+                        }
+                    }
+                    Debug.Log("atkCount: " + atkcard.Count);
+                    List<Move> validMove2 = new List<Move>();
+                    List<AICardToHand1> taunt = new List<AICardToHand1>();
+                    List<AICardToHand1> notTaunt = new List<AICardToHand1>();
+                    for (int i = 0; i < nw.cardsInZoneAI.Count; i++)
+                    {
+                        if (nw.cardsInZoneAI[i].id == 1 || nw.cardsInZoneAI[i].id == 13 || nw.cardsInZoneAI[i].id == 19)
+                        {
+                            taunt.Add(nw.cardsInZoneAI[i]);
+                        }
+                        else
+                        {
+                            notTaunt.Add(nw.cardsInZoneAI[i]);
+                        }
+                    }
+                    if (checkTauntAI())
+                    {
+                        for (int i = 0, j=0, k=0; i < atkcard.Count; i++)
+                        {
+                            if (j<taunt.Count)
+                            {
+                                validMove2.Add(new Move(true, atkcard[i].id, false, true, taunt[j].id));
+                                taunt[j].hurted += atkcard[i].actualDame;
+                                if (taunt[j].blood - taunt[j].hurted <= 0)
+                                    j++;
+                            }
+                            else if (j >= taunt.Count && k < notTaunt.Count)
+                            {
+                                validMove2.Add(new Move(true, atkcard[i].id, false, true, notTaunt[k].id));
+                                notTaunt[k].hurted += atkcard[i].actualDame;
+                                if (notTaunt[k].blood - notTaunt[k].hurted <= 0)
+                                    k++;
+                            }
+                            else
+                            {
+                                validMove2.Add(new Move(true, atkcard[i].id, false, true, 0));
+                            }
+                        }
                     }
                     else
                     {
-                        notTaunt.Add(cardsInZoneAI[i]);
+                        for (int i = 0,k=0; i < atkcard.Count; i++)
+                        {
+                            if (k < notTaunt.Count)
+                            {
+                                validMove2.Add(new Move(true, atkcard[i].id, false, true, notTaunt[k].id));
+                                notTaunt[k].hurted += atkcard[i].actualDame;
+                                if (notTaunt[k].blood - notTaunt[k].hurted <= 0)
+                                    k++;
+                            }
+                            else
+                            {
+                                validMove2.Add(new Move(true, atkcard[i].id, false, true, 0));
+                            }
+                        }
                     }
-                }
-                for (int i = 0, j=0, k=0; i < atkcard.Count; i++)
-                {
-                    if (j<taunt.Count)
-                    {
-                        validMove2.Add(new Move(true, atkcard[i].id, false, true, taunt[j].id));
-                        taunt[j].hurted += atkcard[i].actualDame;
-                        if (taunt[j].blood - taunt[j].hurted <= 0)
-                            j++;
-                    }
-                    else if (j >= taunt.Count && k < notTaunt.Count)
-                    {
-                        validMove2.Add(new Move(true, atkcard[i].id, false, true, notTaunt[k].id));
-                        notTaunt[k].hurted += atkcard[i].actualDame;
-                        if (notTaunt[k].blood - notTaunt[k].hurted <= 0)
-                            k++;
-                    }
-                    else
-                    {
-                        validMove2.Add(new Move(true, atkcard[i].id, false, true, 0));
-                    }
-                }
+                    result[index].AddRange(validMove2);
+                });
+                newthrd.Start();
+                Debug.Log("Thread " + index + " Result increase to: " + result[index].Count);
             }
-            foreach (List<Move> res in result)
-            {
-                res.AddRange(validMove2);
-            }
+            // List<ThisCard1> atkcard = new List<ThisCard1>();
+            // for (int i = 0; i < cardsInZone.Count; i++)
+            // {
+            //     if (cardsInZone[i].canAttack)
+            //     {
+            //         Debug.Log("cardsInZone[] " + i + ": " + cardsInZone[i].id);
+            //         atkcard.Add(cardsInZone[i]);
+            //     }
+            // }
+            // Debug.Log("atkCount: " + atkcard.Count);
+            // List<Move> validMove2 = new List<Move>();
+            // List<AICardToHand1> taunt = new List<AICardToHand1>();
+            // List<AICardToHand1> notTaunt = new List<AICardToHand1>();
+            // for (int i = 0; i < cardsInZoneAI.Count; i++)
+            // {
+            //     if (cardsInZoneAI[i].id == 1 || cardsInZoneAI[i].id == 13 || cardsInZoneAI[i].id == 19)
+            //     {
+            //         taunt.Add(cardsInZoneAI[i]);
+            //     }
+            //     else
+            //     {
+            //         notTaunt.Add(cardsInZoneAI[i]);
+            //     }
+            // }
+            // if (checkTauntAI())
+            // {
+            //     for (int i = 0, j=0, k=0; i < atkcard.Count; i++)
+            //     {
+            //         if (j<taunt.Count)
+            //         {
+            //             validMove2.Add(new Move(true, atkcard[i].id, false, true, taunt[j].id));
+            //             taunt[j].hurted += atkcard[i].actualDame;
+            //             if (taunt[j].blood - taunt[j].hurted <= 0)
+            //                 j++;
+            //         }
+            //         else if (j >= taunt.Count && k < notTaunt.Count)
+            //         {
+            //             validMove2.Add(new Move(true, atkcard[i].id, false, true, notTaunt[k].id));
+            //             notTaunt[k].hurted += atkcard[i].actualDame;
+            //             if (notTaunt[k].blood - notTaunt[k].hurted <= 0)
+            //                 k++;
+            //         }
+            //         else
+            //         {
+            //             validMove2.Add(new Move(true, atkcard[i].id, false, true, 0));
+            //         }
+            //     }
+            // }
+            // else
+            // {
+            //     for (int i = 0,k=0; i < atkcard.Count; i++)
+            //     {
+            //         if (k < notTaunt.Count)
+            //         {
+            //             validMove2.Add(new Move(true, atkcard[i].id, false, true, notTaunt[k].id));
+            //             notTaunt[k].hurted += atkcard[i].actualDame;
+            //             if (notTaunt[k].blood - notTaunt[k].hurted <= 0)
+            //                 k++;
+            //         }
+            //         else
+            //         {
+            //             validMove2.Add(new Move(true, atkcard[i].id, false, true, 0));
+            //         }
+            //     }
+            // }
+            // foreach (List<Move> res in result)
+            // {
+            //     //.Log(("res Count: " + res.Count));
+            //     //Debug.Log("validMove2 Count: " + validMove2.Count);
+            //     //Debug.Log("res2 Count: " + res.Count);
+            //     res.AddRange(validMove2);
+            // }
         }
         else
         {
-            FindCombinationsAI(cardsInHandAI, 0, aiMana, validMove, result);
-            List<AICardToHand1> atkcard = new List<AICardToHand1>();
-            for (int i = 0; i < cardsInZoneAI.Count; i++)
+            FindCombinationsAI(cardsInHandAI, 0, aiMana, validMove, result, cardsInZoneAI.Count);
+            for (int i=0; i< result.Count;i++)
             {
-                if (cardsInZoneAI[i].canAttack)
-                    atkcard.Add(cardsInZoneAI[i]);
-            }
-            List<Move> validMove2 = new List<Move>();
-            if (cardsInZone.Count == 0)
-            {
-                for (int i = 0; i < atkcard.Count; i++)
+                int index = i;
+                Debug.Log("Result thread " + index + " before: " + result[index].Count);
+                Thread newthrd = new Thread(() =>
                 {
-                    validMove2.Add(new Move(false, atkcard[i].id, false, true, 0));
-                }
-            }
-            if (checkTaunt())
-            {
-                List<ThisCard1> taunt = new List<ThisCard1>();
-                List<ThisCard1> notTaunt = new List<ThisCard1>();
-                
-                for (int i = 0; i < cardsInZone.Count; i++)
-                {
-                    if (cardsInZone[i].id == 1 || cardsInZone[i].id == 13 || cardsInZone[i].id == 19)
+                    GameState nw = new GameState();
+                    nw.copy(this);
+                    nw.make_move(result[index]);
+                    List<AICardToHand1> atkcard = new List<AICardToHand1>();
+                    for (int i = 0; i < nw.cardsInZoneAI.Count; i++)
                     {
-                        taunt.Add(cardsInZone[i]);
+                        if (nw.cardsInZoneAI[i].canAttack)
+                        {
+                            Debug.Log("nw.cardsInZoneAI[] " + i + ": " + nw.cardsInZoneAI[i].id);
+                            atkcard.Add(nw.cardsInZoneAI[i]);
+                        }
+                    }
+                    Debug.Log("atkCount: " + atkcard.Count);
+                    List<Move> validMove2 = new List<Move>();
+                    List<ThisCard1> taunt = new List<ThisCard1>();
+                    List<ThisCard1> notTaunt = new List<ThisCard1>();
+            
+                    for (int i = 0; i < nw.cardsInZone.Count; i++)
+                    {
+                        if (nw.cardsInZone[i].id == 1 || nw.cardsInZone[i].id == 13 || nw.cardsInZone[i].id == 19)
+                        {
+                            taunt.Add(nw.cardsInZone[i]);
+                        }
+                        else
+                        {
+                            notTaunt.Add(nw.cardsInZone[i]);
+                        }
+                    }
+                    if (checkTaunt())
+                    {
+                        for (int i = 0, j=0, k=0; i < atkcard.Count; i++)
+                        {
+                            if (j<taunt.Count)
+                            {
+                                validMove2.Add(new Move(false, atkcard[i].id, false, true, taunt[j].id));
+                                taunt[j].hurted += atkcard[i].actualDame;
+                                if (taunt[j].blood - taunt[j].hurted <= 0)
+                                    j++;
+                            }
+                            else if (j >= taunt.Count && k < notTaunt.Count)
+                            {
+                                validMove2.Add(new Move(false, atkcard[i].id, false, true, notTaunt[k].id));
+                                notTaunt[k].hurted += atkcard[i].actualDame;
+                                if (notTaunt[k].blood - notTaunt[k].hurted <= 0)
+                                    k++;
+                            }
+                            else
+                            {
+                                validMove2.Add(new Move(false, atkcard[i].id, false, true, 0));
+                            }
+                        }
                     }
                     else
                     {
-                        notTaunt.Add(cardsInZone[i]);
+                        for (int i = 0,k=0; i < atkcard.Count; i++)
+                        {
+                            if (k < notTaunt.Count)
+                            {
+                                validMove2.Add(new Move(false, atkcard[i].id, false, true, notTaunt[k].id));
+                                notTaunt[k].hurted += atkcard[i].actualDame;
+                                if (notTaunt[k].blood - notTaunt[k].hurted <= 0)
+                                    k++;
+                            }
+                            else
+                            {
+                                validMove2.Add(new Move(false, atkcard[i].id, false, true, 0));
+                            }
+                        }
                     }
-                }
-                
-                for (int i = 0, j=0, k=0; i < atkcard.Count; i++)
-                {
-                    if (j<taunt.Count)
-                    {
-                        validMove2.Add(new Move(false, atkcard[i].id, false, true, taunt[j].id));
-                        taunt[j].hurted += atkcard[i].actualDame;
-                        if (taunt[j].blood - taunt[j].hurted <= 0)
-                            j++;
-                    }
-                    else if (j >= taunt.Count && k < notTaunt.Count)
-                    {
-                        validMove2.Add(new Move(false, atkcard[i].id, false, true, notTaunt[k].id));
-                        notTaunt[k].hurted += atkcard[i].actualDame;
-                        if (notTaunt[k].blood - notTaunt[k].hurted <= 0)
-                            k++;
-                    }
-                    else
-                    {
-                        validMove2.Add(new Move(false, atkcard[i].id, false, true, 0));
-                    }
-                }
+                    result[index].AddRange(validMove2);
+                });
+                newthrd.Start();
+                Debug.Log("Thread " + index + " Result increase to: " + result[index].Count);
             }
-            foreach (List<Move> res in result)
-            {
-                res.AddRange(validMove2);
-            }
+        //     List<AICardToHand1> atkcard = new List<AICardToHand1>();
+        //     for (int i = 0; i < cardsInZoneAI.Count; i++)
+        //     {
+        //         if (cardsInZoneAI[i].canAttack)
+        //         {
+        //             Debug.Log("cardsInZoneAI[] " + i + ": " + cardsInZoneAI[i].id);
+        //             atkcard.Add(cardsInZoneAI[i]);
+        //         }
+        //     }
+        //     Debug.Log("atkCount: " + atkcard.Count);
+        //     List<Move> validMove2 = new List<Move>();
+        //     List<ThisCard1> taunt = new List<ThisCard1>();
+        //     List<ThisCard1> notTaunt = new List<ThisCard1>();
+        //         
+        //     for (int i = 0; i < cardsInZone.Count; i++)
+        //     {
+        //         if (cardsInZone[i].id == 1 || cardsInZone[i].id == 13 || cardsInZone[i].id == 19)
+        //         {
+        //             taunt.Add(cardsInZone[i]);
+        //         }
+        //         else
+        //         {
+        //             notTaunt.Add(cardsInZone[i]);
+        //         }
+        //     }
+        //     if (checkTaunt())
+        //     {
+        //         for (int i = 0, j=0, k=0; i < atkcard.Count; i++)
+        //         {
+        //             if (j<taunt.Count)
+        //             {
+        //                 validMove2.Add(new Move(false, atkcard[i].id, false, true, taunt[j].id));
+        //                 taunt[j].hurted += atkcard[i].actualDame;
+        //                 if (taunt[j].blood - taunt[j].hurted <= 0)
+        //                     j++;
+        //             }
+        //             else if (j >= taunt.Count && k < notTaunt.Count)
+        //             {
+        //                 validMove2.Add(new Move(false, atkcard[i].id, false, true, notTaunt[k].id));
+        //                 notTaunt[k].hurted += atkcard[i].actualDame;
+        //                 if (notTaunt[k].blood - notTaunt[k].hurted <= 0)
+        //                     k++;
+        //             }
+        //             else
+        //             {
+        //                 validMove2.Add(new Move(false, atkcard[i].id, false, true, 0));
+        //             }
+        //         }
+        //     }
+        //     else
+        //     {
+        //         for (int i = 0,k=0; i < atkcard.Count; i++)
+        //         {
+        //             if (k < notTaunt.Count)
+        //             {
+        //                 validMove2.Add(new Move(false, atkcard[i].id, false, true, notTaunt[k].id));
+        //                 notTaunt[k].hurted += atkcard[i].actualDame;
+        //                 if (notTaunt[k].blood - notTaunt[k].hurted <= 0)
+        //                     k++;
+        //             }
+        //             else
+        //             {
+        //                 validMove2.Add(new Move(false, atkcard[i].id, false, true, 0));
+        //             }
+        //         }
+        //     }
+        //     Debug.Log("validMove2 Count: " + validMove2.Count);
+        //     for (int i = 0; i < validMove2.Count; i++)
+        //     {
+        //         Debug.Log("validMove2id " + i + " " + validMove2[i].id);
+        //     }
+        //     foreach (List<Move> res in result)
+        //     {
+        //         //Debug.Log(("res Count: " + res.Count));
+        //         
+        //         res.AddRange(validMove2);
+        //         // Debug.Log("res2 Count: " + res.Count);
+        //     }
         }
 
-        if (result.Count > 0)
-        {
-            Debug.Log(("Number of result: " + result.Count));
-            if (result[0].Count > 0)
-                Debug.Log("Result 0: " + result[0][0].id);
-        }
+        // if (result.Count > 0)
+        // {
+        //     // Debug.Log(("Number of result: " + result.Count));
+        //     // if (result[0].Count > 0)
+        //     //     Debug.Log("Result 0: " + result[0][0].id);
+        // }
         //result.Add(validMove);
         return result;
     }
-    static void FindCombinations(List<ThisCard1> cardsInHand, int index, int mana, List<Move> currentCombination, List<List<Move>> result)
+    static void FindCombinations(List<ThisCard1> cardsInHand, int index, int mana, List<Move> currentCombination, List<List<Move>> result, int count)
     {
-        Debug.Log("currentCombination: " + currentCombination.Count);
+        // Debug.Log("currentCombination at first: " + currentCombination.Count);
+        // Debug.Log("cardsInHand at first: " + cardsInHand.Count);
         if (mana <= 0)
         {
             return;
@@ -212,49 +413,49 @@ public class GameState
         
         
         // Include the current element and explore further
-        if (mana >= cardsInHand[index].mana)
+        if (mana >= cardsInHand[index].mana && currentCombination.Count + count < 5)
         {
             currentCombination.Add(new Move(true, cardsInHand[index].id, true, false, 0));
             if (!(result.Contains(currentCombination)))
                 result.Add(new List<Move>(currentCombination));
             Debug.Log("Result#: " + result.Count);
-            FindCombinations(cardsInHand, index + 1, mana - cardsInHand[index].mana, currentCombination, result);
+            FindCombinations(cardsInHand, index + 1, mana - cardsInHand[index].mana, currentCombination, result, count);
             currentCombination.RemoveAt(currentCombination.Count - 1); // Backtrack
 
         }
 
         // Exclude the current element and explore further
-        FindCombinations(cardsInHand, index + 1, mana, currentCombination, result);
+        FindCombinations(cardsInHand, index + 1, mana, currentCombination, result, count);
     }
     
-    static void FindCombinationsAI(List<AICardToHand1> cardsInHand, int index, int mana, List<Move> currentCombination, List<List<Move>> result)
+    static void FindCombinationsAI(List<AICardToHand1> cardsInHand, int index, int mana, List<Move> currentCombination, List<List<Move>> result, int count)
     {
+        // Debug.Log("currentCombinationAI at first: " + currentCombination.Count);
+        // Debug.Log("cardsInHandAI at first: " + cardsInHand.Count);
+        // Debug.Log("manaAI: " + mana);
         if (mana <= 0)
         {
             return;
         }
-        
 
         if (index == cardsInHand.Count)
         {
             return;
         }
         
-        
         // Include the current element and explore further
-        if (mana >= cardsInHand[index].mana)
+        if (mana >= cardsInHand[index].mana && currentCombination.Count + count < 5)
         {
             currentCombination.Add(new Move(false, cardsInHand[index].id, true, false, 0));
             if (!(result.Contains(currentCombination)))
                 result.Add(new List<Move>(currentCombination));
             Debug.Log("Result#: " + result.Count);
-            FindCombinationsAI(cardsInHand, index + 1, mana - cardsInHand[index].mana, currentCombination, result);
+            FindCombinationsAI(cardsInHand, index + 1, mana - cardsInHand[index].mana, currentCombination, result, count);
             currentCombination.RemoveAt(currentCombination.Count - 1); // Backtrack
-
         }
 
         // Exclude the current element and explore further
-        FindCombinationsAI(cardsInHand, index + 1, mana, currentCombination, result);
+        FindCombinationsAI(cardsInHand, index + 1, mana, currentCombination, result, count);
     }
 
     public bool checkTaunt()
@@ -314,8 +515,9 @@ public class GameState
                     {
                         if (cardsInHandAI.Count < 7 && AIdeck.Count > 0)
                         {
-                            cardsInHandAI.Add(AIdeck[AIdeck.Count - 1]);
-                            AIdeck.RemoveAt(AIdeck.Count - 1);
+                            int inx = AIdeck.Count - 1;
+                            cardsInHandAI.Add(AIdeck[inx]);
+                            AIdeck.RemoveAt(inx);
                         }
                     }
                 }
@@ -371,11 +573,12 @@ public class GameState
 
                 if (cardsInHandAI[i].id == 4)
                 {
-                    cardsInZoneAI[cardsInZoneAI.Count - 1].canAttack = true;
+                    int x = cardsInZoneAI.Count - 1;
+                    cardsInZoneAI[x].canAttack = true;
                 }
-
-                cardsInHandAI[i] = cardsInHandAI[cardsInHandAI.Count - 1];
-                cardsInHandAI.RemoveAt(cardsInHandAI.Count-1);
+                int index = cardsInHandAI.Count - 1;
+                cardsInHandAI[i] = cardsInHandAI[index];
+                cardsInHandAI.RemoveAt(index);
                 break;
             }
         }
@@ -395,7 +598,8 @@ public class GameState
                     {
                         if (cardsInHand.Count < 7 && deck.Count > 0)
                         {
-                            cardsInHand.Add(deck[deck.Count - 1]);
+                            int indx = deck.Count - 1;
+                            cardsInHand.Add(deck[indx]);
                             deck.RemoveAt(deck.Count - 1);
                         }
                     }
@@ -451,10 +655,13 @@ public class GameState
                 }
                 if (cardsInHand[i].id == 4)
                 {
-                    cardsInZone[cardsInZone.Count - 1].canAttack = true;
+                    int ind = cardsInZone.Count - 1;
+                    cardsInZone[ind].canAttack = true;
                 }
-                cardsInHand[i] = cardsInHand[cardsInHand.Count - 1];
-                cardsInHand.RemoveAt(cardsInHand.Count-1);
+
+                int idx = cardsInHand.Count - 1;
+                cardsInHand[i] = cardsInHand[idx];
+                cardsInHand.RemoveAt(idx);
                 break;
             }
         }
@@ -652,18 +859,22 @@ public class GameState
     {
         if (cardsInZone.Count == 0)
             return;
-        int x = Random.Range(0, cardsInZone.Count);
-        cardsInZone[x].hurted -= healXpower;
-        cardsInZone[x].Update();
+        // int x = Random.Range(0, cardsInZone.Count);
+        // cardsInZone[x].hurted -= healXpower;
+        // cardsInZone[x].Update();
+        cardsInZone[0].hurted -= healXpower;
+        cardsInZone[0].Update();
     }
     
     public void HealOneAI(int healXpower)
     {
         if (cardsInZoneAI.Count == 0)
             return;
-        int x = Random.Range(0, cardsInZoneAI.Count);
-        cardsInZoneAI[x].hurted -= healXpower;
-        cardsInZoneAI[x].Update();
+        // int x = Random.Range(0, cardsInZoneAI.Count);
+        // cardsInZoneAI[x].hurted -= healXpower;
+        // cardsInZoneAI[x].Update();
+        cardsInZoneAI[0].hurted -= healXpower;
+        cardsInZoneAI[0].Update();
     }
 
     public void HealAll(int healXpower)
@@ -773,15 +984,25 @@ public class GameState
     
     public void dealOne(int damageDealtBySpell)
     {
-        int x = Random.Range(0, cardsInZoneAI.Count);
-        cardsInZoneAI[x].hurted += damageDealtBySpell;
-        cardsInZoneAI[x].Update();
+        if (cardsInZoneAI.Count > 0)
+        {
+            // int x = Random.Range(0, cardsInZoneAI.Count);
+            // cardsInZoneAI[x].hurted += damageDealtBySpell;
+            // cardsInZoneAI[x].Update();
+            cardsInZoneAI[0].hurted += damageDealtBySpell;
+            cardsInZoneAI[0].Update();
+        }
     }
     public void dealOneAI(int damageDealtBySpell)
     {
-        int x = Random.Range(0, cardsInZone.Count);
-        cardsInZone[x].hurted += damageDealtBySpell;
-        cardsInZone[x].Update();
+        if (cardsInZone.Count > 0)
+        {
+            // int x = Random.Range(0, cardsInZone.Count);
+            // cardsInZone[x].hurted += damageDealtBySpell;
+            // cardsInZone[x].Update();
+            cardsInZone[0].hurted += damageDealtBySpell;
+            cardsInZone[0].Update();
+        }
     }
     public bool isMutualBirth(ThisCard1 player, AICardToHand1 enemy)
     {

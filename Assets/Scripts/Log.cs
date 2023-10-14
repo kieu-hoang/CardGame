@@ -11,6 +11,8 @@ using System.Text;
 public class Log: MonoBehaviour
 {
     public GameState gs;
+    public static string file = "save.txt";
+    public string filePath = Path.Combine(Application.persistentDataPath, file);
     // Start is called before the first frame update
     void Start()
     {
@@ -19,8 +21,8 @@ public class Log: MonoBehaviour
 
     public void LoadData()
     {
-        string file = "save.txt";
-        string filePath = Path.Combine(Application.persistentDataPath, file);
+        // string file = "save.txt";
+        // string filePath = Path.Combine(Application.persistentDataPath, file);
         if (!File.Exists(filePath))
         {
             File.WriteAllText(filePath, "");
@@ -31,12 +33,17 @@ public class Log: MonoBehaviour
 
     public void SaveData()
     {
-        string file = "save.txt";
-        string filePath = Path.Combine(Application.persistentDataPath, file);
+        // string file = "save.txt";
+        // string filePath = Path.Combine(Application.persistentDataPath, file);
         //string json = JsonUtility.ToJson(gs);
         string json = "Hello Trung!!!";
         File.WriteAllText(filePath, json);
         Debug.Log("File saved, at path" + filePath);
+    }
+
+    public void SaveData(string a)
+    {
+        File.WriteAllText(filePath, a);
     }
 
     // Update is called once per frame
@@ -45,6 +52,7 @@ public class Log: MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space))
         {
             SaveData();
+            
         }
     }
 }
