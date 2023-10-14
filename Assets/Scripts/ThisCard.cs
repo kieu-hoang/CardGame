@@ -404,6 +404,7 @@ public class ThisCard : MonoBehaviour
                         cantAttack = true;
                         Arrow._Hide = true;
                         child.GetComponent<AICardToHand>().isTarget = false;
+                        break;
                     }
                 }
             }

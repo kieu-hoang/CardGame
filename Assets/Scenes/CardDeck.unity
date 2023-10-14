@@ -157,7 +157,10 @@ MonoBehaviour:
     playerMana: 0
     aiHp: 0
     aiMana: 0
+    playerManaTurn: 0
+    aiManaTurn: 0
     playerTurn: 0
+  filePath: 
 --- !u!4 &49907530
 Transform:
   m_ObjectHideFlags: 0
@@ -1459,6 +1462,7 @@ MonoBehaviour:
   deckSize: {fileID: 1655459007}
   deadNo: {fileID: 1655459006}
   handNo: {fileID: 1655459005}
+  edeck: {fileID: 997415225}
 --- !u!114 &343177985
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -12,10 +12,12 @@ public class Log: MonoBehaviour
 {
     public GameState gs;
     public static string file = "save.txt";
-    public string filePath = Path.Combine(Application.persistentDataPath, file);
+
+    public string filePath;
     // Start is called before the first frame update
     void Start()
     {
+        filePath = Path.Combine(Application.persistentDataPath, file);
         LoadData();
     }
 
@@ -28,7 +30,7 @@ public class Log: MonoBehaviour
             File.WriteAllText(filePath, "");
         }
 
-        gs = JsonUtility.FromJson<GameState>(File.ReadAllText(filePath));
+        //gs = JsonUtility.FromJson<GameState>(File.ReadAllText(filePath));
     }
 
     public void SaveData()

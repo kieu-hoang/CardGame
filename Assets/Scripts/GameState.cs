@@ -69,14 +69,17 @@ public class GameState
     {
         List<List<Move>> result = new List<List<Move>>();
         List<Move> validMove = new List<Move>();
+        // result.Add(new List<Move>());
+        Debug.Log("result at first: " + result.Count);
         if (playerTurn)
         {
-            //Debug.Log("cardsInHand at validMove: " + cardsInHand.Count);
+            // Debug.Log("cardsInHand at validMove: " + cardsInHand.Count);
+            // Debug.Log("cardsInZone at validMove: " + cardsInZone.Count);
             FindCombinations(cardsInHand, 0, playerMana, validMove, result, cardsInZone.Count);
-            for (int i=0; i< result.Count;i++)
+            for (int i=0; i < result.Count;i++)
             {
                 int index = i;
-                Debug.Log("Result thread " + index + " before: " + result[index].Count);
+                // Debug.Log("Result thread " + index + " before: " + result[index].Count);
                 Thread newthrd = new Thread(() =>
                 {
                     GameState nw = new GameState();
@@ -87,11 +90,11 @@ public class GameState
                     {
                         if (nw.cardsInZone[i].canAttack)
                         {
-                            Debug.Log("cardsInZone[] " + i + ": " + nw.cardsInZone[i].id);
+                            // Debug.Log("cardsInZone[] " + i + ": " + nw.cardsInZone[i].id);
                             atkcard.Add(nw.cardsInZone[i]);
                         }
                     }
-                    Debug.Log("atkCount: " + atkcard.Count);
+                    // Debug.Log("atkCount: " + atkcard.Count);
                     List<Move> validMove2 = new List<Move>();
                     List<AICardToHand1> taunt = new List<AICardToHand1>();
                     List<AICardToHand1> notTaunt = new List<AICardToHand1>();
@@ -150,7 +153,7 @@ public class GameState
                     result[index].AddRange(validMove2);
                 });
                 newthrd.Start();
-                Debug.Log("Thread " + index + " Result increase to: " + result[index].Count);
+                // Debug.Log("Thread " + index + " Result increase to: " + result[index].Count);
             }
             // List<ThisCard1> atkcard = new List<ThisCard1>();
             // for (int i = 0; i < cardsInZone.Count; i++)
@@ -227,11 +230,14 @@ public class GameState
         }
         else
         {
+            Debug.Log("cardsInHandAI at validMove: " + cardsInHandAI.Count);
+            Debug.Log("cardsInZoneAI at validMove: " + cardsInZoneAI.Count);
             FindCombinationsAI(cardsInHandAI, 0, aiMana, validMove, result, cardsInZoneAI.Count);
+            Debug.Log("Result After Summon: " + result.Count);
             for (int i=0; i< result.Count;i++)
             {
                 int index = i;
-                Debug.Log("Result thread " + index + " before: " + result[index].Count);
+                // Debug.Log("Result thread " + index + " before: " + result[index].Count);
                 Thread newthrd = new Thread(() =>
                 {
                     GameState nw = new GameState();
@@ -242,11 +248,11 @@ public class GameState
                     {
                         if (nw.cardsInZoneAI[i].canAttack)
                         {
-                            Debug.Log("nw.cardsInZoneAI[] " + i + ": " + nw.cardsInZoneAI[i].id);
+                            // Debug.Log("nw.cardsInZoneAI[] " + i + ": " + nw.cardsInZoneAI[i].id);
                             atkcard.Add(nw.cardsInZoneAI[i]);
                         }
                     }
-                    Debug.Log("atkCount: " + atkcard.Count);
+                    // Debug.Log("atkCount: " + atkcard.Count);
                     List<Move> validMove2 = new List<Move>();
                     List<ThisCard1> taunt = new List<ThisCard1>();
                     List<ThisCard1> notTaunt = new List<ThisCard1>();
@@ -306,7 +312,7 @@ public class GameState
                     result[index].AddRange(validMove2);
                 });
                 newthrd.Start();
-                Debug.Log("Thread " + index + " Result increase to: " + result[index].Count);
+                // Debug.Log("Thread " + index + " Result increase to: " + result[index].Count);
             }
         //     List<AICardToHand1> atkcard = new List<AICardToHand1>();
         //     for (int i = 0; i < cardsInZoneAI.Count; i++)
@@ -395,6 +401,8 @@ public class GameState
         //     //     Debug.Log("Result 0: " + result[0][0].id);
         // }
         //result.Add(validMove);
+        result.Add(new List<Move>());
+        Debug.Log("Result after: " + result.Count);
         return result;
     }
     static void FindCombinations(List<ThisCard1> cardsInHand, int index, int mana, List<Move> currentCombination, List<List<Move>> result, int count)
@@ -411,14 +419,13 @@ public class GameState
             return;
         }
         
-        
         // Include the current element and explore further
         if (mana >= cardsInHand[index].mana && currentCombination.Count + count < 5)
         {
             currentCombination.Add(new Move(true, cardsInHand[index].id, true, false, 0));
             if (!(result.Contains(currentCombination)))
                 result.Add(new List<Move>(currentCombination));
-            Debug.Log("Result#: " + result.Count);
+            // Debug.Log("Result#: " + result.Count);
             FindCombinations(cardsInHand, index + 1, mana - cardsInHand[index].mana, currentCombination, result, count);
             currentCombination.RemoveAt(currentCombination.Count - 1); // Backtrack
 
@@ -449,7 +456,7 @@ public class GameState
             currentCombination.Add(new Move(false, cardsInHand[index].id, true, false, 0));
             if (!(result.Contains(currentCombination)))
                 result.Add(new List<Move>(currentCombination));
-            Debug.Log("Result#: " + result.Count);
+            // Debug.Log("Result#: " + result.Count);
             FindCombinationsAI(cardsInHand, index + 1, mana - cardsInHand[index].mana, currentCombination, result, count);
             currentCombination.RemoveAt(currentCombination.Count - 1); // Backtrack
         }
@@ -582,6 +589,8 @@ public class GameState
                 break;
             }
         }
+
+        checkBlood();
     }
 
     public void playerSummon(int id)
@@ -665,6 +674,7 @@ public class GameState
                 break;
             }
         }
+        checkBlood();
     }
 
     public void aiAtk(int id1, int id2)
@@ -1073,6 +1083,7 @@ public class GameState
     {
         for (int i = 0; i < cardsInZone.Count; i++)
         {
+            cardsInZone[i].Update();
             if (cardsInZone[i].actualblood <= 0 && i != cardsInZone.Count-1)
             {
                 if (cardsInZone[i].deathcrys)
@@ -1145,6 +1156,7 @@ public class GameState
         }
         for (int i = 0; i < cardsInZoneAI.Count; i++)
         {
+            cardsInZoneAI[i].Update();
             if (cardsInZoneAI[i].actualblood <= 0 && i != cardsInZoneAI.Count-1)
             {
                 if (cardsInZoneAI[i].deathcrys)
@@ -1219,6 +1231,8 @@ public class GameState
 
     public void make_move(List<Move> moves)
     {
+        if (moves.Count == 0)
+            return;
         if (playerTurn)
         {
             foreach (Move move in moves)

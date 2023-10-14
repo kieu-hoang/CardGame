@@ -1410,6 +1410,7 @@ MonoBehaviour:
   deckSize: {fileID: 1655459007}
   deadNo: {fileID: 1655459006}
   handNo: {fileID: 1655459005}
+  edeck: {fileID: 997415225}
 --- !u!114 &343177985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5077,7 +5078,6 @@ MonoBehaviour:
   endPhase: 0
   audioSource: {fileID: 95095214}
   drawAudio: {fileID: 8300000, guid: 1111a23f7b090d0489549f4d3b604445, type: 3}
-  currentGame: {fileID: 0}
 --- !u!1001 &1008990988
 PrefabInstance:
   m_ObjectHideFlags: 0

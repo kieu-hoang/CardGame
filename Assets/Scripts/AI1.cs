@@ -150,18 +150,18 @@ public class AI1 : MonoBehaviour
             cardInDeck4.SetActive(false);
         }
 
-        if (AICardToHand.DrawX > 0)
+        if (AICardToHand.DrawX == 1)
         {
-            if (CardsInHand.eHowMany == 6 && deckSize > 0)
+            if (CardsInHand.eHowMany <= 6 && deckSize > 0)
                 StartCoroutine(Draw(1));
-            else
-            {
-                for (int i = 0; i < AICardToHand.DrawX; i++)
-                {
-                    if (CardsInHand.eHowMany < 7 && deckSize > 0)
-                        StartCoroutine(Draw(1));
-                }
-            }
+            AICardToHand.DrawX = 0;
+        }
+        else if (AICardToHand.DrawX == 2)
+        {
+            if (CardsInHand.eHowMany <= 5 && deckSize > 0)
+                StartCoroutine(Draw(2));
+            else if (CardsInHand.eHowMany <= 6 && deckSize > 0)
+                StartCoroutine(Draw(1));
             AICardToHand.DrawX = 0;
         }
         
@@ -692,7 +692,7 @@ public class AI1 : MonoBehaviour
                         if (child.GetComponent<AICardToHand>().id == mo.id)
                         {
                             PlayerHp.staticHp -= child.GetComponent<AICardToHand>().actualDame;
-                            Debug.Log("Attack PlayerHp");
+                            // Debug.Log("Attack PlayerHp");
                             break;
                         }
                     }
@@ -700,7 +700,7 @@ public class AI1 : MonoBehaviour
                 else
                 {
                     Attack(mo.id, mo.idAtk);
-                    Debug.Log(mo.id + " Attack " + mo.idAtk);
+                    // Debug.Log(mo.id + " Attack " + mo.idAtk);
                 }
             }
         }
@@ -792,7 +792,7 @@ public class AI1 : MonoBehaviour
                 tempGs.make_move(valid_move);
                 tempGs.nextTurn();
                 int eval = minimax(tempGs, false, depth + 1, alpha, beta).Item1;
-                Debug.Log("Evaluate: " + eval);
+                // Debug.Log("Evaluate: " + eval);
                 if (eval > max_eval)
                 {
                     max_eval = eval;
@@ -802,7 +802,7 @@ public class AI1 : MonoBehaviour
                 if (beta <= alpha)
                     break;
             }
-            Debug.Log("Evaluate: " + max_eval);
+            Debug.Log("Evaluate max: " + max_eval);
             return new Tuple<int, List<Move>>(max_eval, best_move);
         }
         else
@@ -817,7 +817,7 @@ public class AI1 : MonoBehaviour
                 tempGs.make_move(valid_move);
                 tempGs.nextTurn();
                 int eval = minimax(tempGs, true, depth + 1, alpha, beta).Item1;
-                Debug.Log("Evaluate: " + eval);
+                // Debug.Log("Evaluate: " + eval);
                 if (eval < min_eval)
                 {
                     min_eval = eval;
@@ -827,6 +827,7 @@ public class AI1 : MonoBehaviour
                 if (beta <= alpha)
                     break;
             }
+            Debug.Log("Evaluate min: " + min_eval);
             return new Tuple<int, List<Move>>(min_eval, best_move);
         }
     }
