@@ -453,6 +453,8 @@ public class AICardToHand : MonoBehaviour
         newcard.actualblood = newcard.blood - newcard.hurted;
         newcard.actualDame = newcard.dame + newcard.dameIncrease;
         newcard.healXpower = healXpower;
+        newcard.isSummoned = isSummoned;
+        newcard.canAttack = canAttack;
         return newcard;
     }
 }

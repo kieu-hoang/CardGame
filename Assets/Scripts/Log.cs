@@ -11,25 +11,26 @@ using System.Text;
 public class Log: MonoBehaviour
 {
     public GameState gs;
-    public static string file = "save.txt";
+    public static string file;
 
-    public string filePath;
+    public static string filePath;
     // Start is called before the first frame update
     void Start()
     {
+        string name = DateTime.Now.ToString("yyyyMMddThhmmss");
+        file = name + ".txt";
         filePath = Path.Combine(Application.persistentDataPath, file);
         LoadData();
     }
 
     public void LoadData()
     {
-        // string file = "save.txt";
+        //string file = "save.txt";
         // string filePath = Path.Combine(Application.persistentDataPath, file);
         if (!File.Exists(filePath))
         {
             File.WriteAllText(filePath, "");
         }
-
         //gs = JsonUtility.FromJson<GameState>(File.ReadAllText(filePath));
     }
 
@@ -43,7 +44,7 @@ public class Log: MonoBehaviour
         Debug.Log("File saved, at path" + filePath);
     }
 
-    public void SaveData(string a)
+    public static void SaveData(string a)
     {
         File.WriteAllText(filePath, a);
     }
@@ -54,7 +55,6 @@ public class Log: MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space))
         {
             SaveData();
-            
         }
     }
 }

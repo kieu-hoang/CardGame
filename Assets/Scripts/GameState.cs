@@ -1316,6 +1316,21 @@ public class GameState
 
         return false;
     }
+    public string toString()
+    {
+        string result = "";
+        for (int i = 0; i < 30; i++)
+        {
+            if (!deck[i])
+            {
+                result = result + \n;
+            }
+            else
+            {
+                result = result + deck[i].ToString();
+            }
+        }
+    }
 }
 
 public class Move

@@ -262,33 +262,33 @@ public class AICardToHand1
         // if (id == 4 && actualblood <= 0 && isSummoned)
         //     StartCoroutine(WaitSpell());
     }
-    public void BeingTarget()
-    {
-        
-        if (id == 1 || id == 13 || id == 19)
-            isTarget = true;
-        else
-        {
-            foreach (Transform child in battleZone.transform)
-            {
-                if (child.GetComponent<AICardToHand>().id == 1 || child.GetComponent<AICardToHand>().id == 13 || child.GetComponent<AICardToHand>().id == 19)
-                {
-                    isTarget = false;
-                    return;
-                }
-            }
-            isTarget = true;
-        }
-    }
-    public void DontBeingTarget()
-    {
-        isTarget = false;
-    }
-    IEnumerator AfterVoidStart()
-    {
-        yield return new WaitForSeconds(1);
-        thisCardCanBeDestroyed = true;
-    }
+    // public void BeingTarget()
+    // {
+    //     
+    //     if (id == 1 || id == 13 || id == 19)
+    //         isTarget = true;
+    //     else
+    //     {
+    //         foreach (Transform child in battleZone.transform)
+    //         {
+    //             if (child.GetComponent<AICardToHand>().id == 1 || child.GetComponent<AICardToHand>().id == 13 || child.GetComponent<AICardToHand>().id == 19)
+    //             {
+    //                 isTarget = false;
+    //                 return;
+    //             }
+    //         }
+    //         isTarget = true;
+    //     }
+    // }
+    // public void DontBeingTarget()
+    // {
+    //     isTarget = false;
+    // }
+    // IEnumerator AfterVoidStart()
+    // {
+    //     yield return new WaitForSeconds(1);
+    //     thisCardCanBeDestroyed = true;
+    // }
     
     // public void Heal()
     // {
@@ -344,66 +344,66 @@ public class AICardToHand1
     //     }
     // }
 
-    public void HealHero()
-    {
-        EnemyHp.staticHp += healXpower;
-        if (id == 10)
-            EnemyHp.staticHp -= 1;
-        if (EnemyHp.staticHp > EnemyHp.maxHp)
-            EnemyHp.staticHp = EnemyHp.maxHp;
-    }
-    public void dealXDamage()
-    {
-        if (id == 5 || id == 14)
-            dealHero();
-        else if (id == 7)
-            dealOne();
-        else
-            dealAll();
-    }
-
-    public void dealHero()
-    {
-        PlayerHp.staticHp -= damageDealtBySpell;
-        if (id == 5 && Field.checkChargeAI())
-            PlayerHp.staticHp -= damageDealtBySpell;
-    }
-
-    public void dealAll()
-    {
-        foreach (Transform child in EnemyZone.transform)
-        {   
-            if (child.GetComponent<ThisCard>() != null)
-                child.GetComponent<ThisCard>().isTarget = true;
-            if (child.GetComponent<ThisCard>() != null && child.GetComponent<ThisCard>().isTarget)
-            {
-                child.GetComponent<ThisCard>().hurted += damageDealtBySpell;
-                if (id == 18 && Field.checkNTNAI())
-                    child.GetComponent<ThisCard>().hurted += 1;
-                child.GetComponent<ThisCard>().isTarget = false;
-            }
-        }
-    }
-
-    public void dealOne()
-    {
-        int x = Random.Range(0, CardsInZone.howMany);
-        int i = 0;
-        foreach (Transform child in EnemyZone.transform)
-        {
-            if (i==x && child.GetComponent<ThisCard>().actualblood > 0)
-            {
-                child.GetComponent<ThisCard>().isTarget = true;
-                if (child.GetComponent<ThisCard>().isTarget)
-                {
-                    child.GetComponent<ThisCard>().hurted += damageDealtBySpell;
-                    child.GetComponent<ThisCard>().isTarget = false;
-                    break;
-                }
-            }
-            i++;
-        }
-    }
+    // public void HealHero()
+    // {
+    //     EnemyHp.staticHp += healXpower;
+    //     if (id == 10)
+    //         EnemyHp.staticHp -= 1;
+    //     if (EnemyHp.staticHp > EnemyHp.maxHp)
+    //         EnemyHp.staticHp = EnemyHp.maxHp;
+    // }
+    // public void dealXDamage()
+    // {
+    //     if (id == 5 || id == 14)
+    //         dealHero();
+    //     else if (id == 7)
+    //         dealOne();
+    //     else
+    //         dealAll();
+    // }
+    //
+    // public void dealHero()
+    // {
+    //     PlayerHp.staticHp -= damageDealtBySpell;
+    //     if (id == 5 && Field.checkChargeAI())
+    //         PlayerHp.staticHp -= damageDealtBySpell;
+    // }
+    //
+    // public void dealAll()
+    // {
+    //     foreach (Transform child in EnemyZone.transform)
+    //     {   
+    //         if (child.GetComponent<ThisCard>() != null)
+    //             child.GetComponent<ThisCard>().isTarget = true;
+    //         if (child.GetComponent<ThisCard>() != null && child.GetComponent<ThisCard>().isTarget)
+    //         {
+    //             child.GetComponent<ThisCard>().hurted += damageDealtBySpell;
+    //             if (id == 18 && Field.checkNTNAI())
+    //                 child.GetComponent<ThisCard>().hurted += 1;
+    //             child.GetComponent<ThisCard>().isTarget = false;
+    //         }
+    //     }
+    // }
+    //
+    // public void dealOne()
+    // {
+    //     int x = Random.Range(0, CardsInZone.howMany);
+    //     int i = 0;
+    //     foreach (Transform child in EnemyZone.transform)
+    //     {
+    //         if (i==x && child.GetComponent<ThisCard>().actualblood > 0)
+    //         {
+    //             child.GetComponent<ThisCard>().isTarget = true;
+    //             if (child.GetComponent<ThisCard>().isTarget)
+    //             {
+    //                 child.GetComponent<ThisCard>().hurted += damageDealtBySpell;
+    //                 child.GetComponent<ThisCard>().isTarget = false;
+    //                 break;
+    //             }
+    //         }
+    //         i++;
+    //     }
+    // }
 
     // public void increaseDame()
     // {
@@ -415,4 +415,11 @@ public class AICardToHand1
     //             child.GetComponent<AICardToHand>().dameIncrease += increaseXdame;
     //     }
     // }
+    public string toString()
+    {
+        string spellString = spell ? "1" : "0";
+        string deathCryString = deathcrys ? "1" : "0";
+        return id + " " + actualDame + " " + actualblood + " " + mana + " " + drawXcards + " " + healXpower + " " +
+               spellString + " " + damageDealtBySpell + " " + increaseXdame + " " + deathCryString + " ";
+    }
 }

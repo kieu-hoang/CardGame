@@ -222,6 +222,7 @@ public class ThisCard : MonoBehaviour
 
         if (summoned == false && this.transform.parent == battleZone.transform)
         {
+            //AI.currentGame;
             Summon();
         } 
         if (TurnSystem.isYourTurn == false && summoned == true)
@@ -353,7 +354,6 @@ public class ThisCard : MonoBehaviour
 
         MaxMana(addXmaxMana);
         drawX = drawXcards;
-
     }
 
     public void MaxMana(int x)
@@ -677,6 +677,8 @@ public class ThisCard : MonoBehaviour
 
         newcard.actualblood = newcard.blood - newcard.hurted;
         newcard.actualDame = newcard.dame + newcard.dameIncrease;
+        newcard.summoned = summoned;
+        newcard.canAttack = canAttack;
         return newcard;
     }
 }

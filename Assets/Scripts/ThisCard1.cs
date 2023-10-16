@@ -611,4 +611,12 @@ public class ThisCard1
             return true;
         return false;
     }
+
+    public string toString()
+    {
+        string spellString = spell ? "1" : "0";
+        string deathCryString = deathcrys ? "1" : "0";
+        return id + " " + actualDame + " " + actualblood + " " + mana + " " + drawXcards + " " + healXpower + " " +
+               spellString + " " + damageDealtBySpell + " " + increaseXdame + " " + deathCryString + " ";
+    }
 }
