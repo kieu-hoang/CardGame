@@ -224,6 +224,8 @@ public class ThisCard : MonoBehaviour
         {
             //AI.currentGame;
             Summon();
+            if (AI.currentGame != null)
+                Log.SaveData("1 " + id + " 1" + " 0" + " 0" +"\n");
         } 
         if (TurnSystem.isYourTurn == false && summoned == true)
         {
@@ -372,6 +374,8 @@ public class ThisCard : MonoBehaviour
             {
                 if (Target == Enemy && attackedTarget == false)
                 {
+                    if (AI.currentGame != null)
+                        Log.SaveData("1 " + id + " 0" + " 1" + " 0" + "\n");
                     EnemyHp.staticHp -= actualDame;
                     targeting = false;
                     attackedTarget = true;
@@ -385,6 +389,8 @@ public class ThisCard : MonoBehaviour
                 {
                     if (child.GetComponent<AICardToHand>().isTarget)
                     {
+                        if (AI.currentGame != null)
+                            Log.SaveData("1 " + id + " 0" + " 1 " + child.GetComponent<AICardToHand>().id + "\n");
                         if (child.GetComponent<AICardToHand>().id == 17)
                             child.GetComponent<AICardToHand>().hurted += 1;
                         else

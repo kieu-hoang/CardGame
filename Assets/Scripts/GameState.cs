@@ -1318,18 +1318,95 @@ public class GameState
     }
     public string toString()
     {
-        string result = "";
+        string result = "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" + "\n";
         for (int i = 0; i < 30; i++)
         {
-            if (!deck[i])
+            if (i >= PlayerDeck.deckSize)
             {
-                result = result + \n;
+                result += "\n";
             }
             else
             {
-                result = result + deck[i].ToString();
+                result += deck[i].toString();
+                result += "\n";
             }
         }
+
+        for (int i = 0; i < 7; i++)
+        {
+            if (i >= cardsInHand.Count)
+            {
+                result += "\n";
+            }
+            else
+            {
+                result += cardsInHand[i].toString();
+                result += "\n";
+            }
+        }
+        
+        for (int i = 0; i < 5; i++)
+        {
+            if (i >= cardsInZone.Count)
+            {
+                result += "\n";
+            }
+            else
+            {
+                result += cardsInZone[i].toString();
+                result += "\n";
+            }
+        }
+
+        result += playerHp + "\n";
+        result += playerManaTurn + "\n";
+        result += playerMana + "\n";
+        string playerT = playerTurn ? "1" : "0";
+        result += playerT + "\n";
+        result += aiHp + "\n";
+        result += aiManaTurn + "\n";
+        result += aiMana + "\n";
+        
+        for (int i = 0; i < 5; i++)
+        {
+            if (i >= cardsInZoneAI.Count)
+            {
+                result += "\n";
+            }
+            else
+            {
+                result += cardsInZoneAI[i].toString();
+                result += "\n";
+            }
+        }
+        
+        for (int i = 0; i < 7; i++)
+        {
+            if (i >= cardsInHandAI.Count)
+            {
+                result += "\n";
+            }
+            else
+            {
+                result += cardsInHandAI[i].toString();
+                result += "\n";
+            }
+        }
+        
+        for (int i = 0; i < 30; i++)
+        {
+            if (i >= AI.deckSize)
+            {
+                result += "\n";
+            }
+            else
+            {
+                result += AIdeck[i].toString();
+                result += "\n";
+            }
+        }
+        result += "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" + "\n";
+        return result;
     }
 }
 

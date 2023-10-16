@@ -112,6 +112,12 @@ public class PlayerDeck : MonoBehaviour
             {
                 PlayerHp.staticHp -= 1;
             }
+            checkClone();
+            if (AI.currentGame != null)
+            {
+                AI.getGameState();
+                Log.SaveData(AI.currentGame.toString());
+            }
             
             TurnSystem.startTurn = false;
         }

@@ -15,10 +15,10 @@ public class AI : MonoBehaviour
 
     public List<AICardToHand> cardsInZone = new List<AICardToHand>();
     
-    public GameObject Hand;
-    public GameObject Zone;
-    public GameObject PlayerZone;
-    public GameObject PlayerHand;
+    public static GameObject Hand;
+    public static GameObject Zone;
+    public static GameObject PlayerZone;
+    public static GameObject PlayerHand;
     public GameObject Graveyard;
 
     public int x;
@@ -67,7 +67,7 @@ public class AI : MonoBehaviour
     private int noOfCardInZone;
 
     private int noOfCardInPlayerZone;
-    public GameState currentGame;
+    public static GameState currentGame;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -167,7 +167,6 @@ public class AI : MonoBehaviour
             summonPhase = false;
             attackPhase = false;
             endPhase = false;
-            getGameState();
         }
         
         // if (TurnSystem.startTurn == false && draw == false)
@@ -181,6 +180,7 @@ public class AI : MonoBehaviour
         
         if (draw == false && !TurnSystem.isYourTurn)
         {
+            getGameState();
             if (CardsInHand.eHowMany < 7 && deckSize > 0)
                 StartCoroutine(Draw(1));
             else if (deckSize <= 0)
@@ -622,7 +622,7 @@ public class AI : MonoBehaviour
             return true;
         return false;
     }
-    public void getGameState()
+    public static void getGameState()
     {
         currentGame.playerTurn = TurnSystem.isYourTurn;
         currentGame.playerHp = PlayerHp.staticHp;
@@ -638,33 +638,37 @@ public class AI : MonoBehaviour
         
         foreach (Transform child in PlayerHand.transform)
         {
-            if (child.transform)
+            if (child.GetComponent<ThisCard>() != null)
                 currentGame.cardsInHand.Add(child.GetComponent<ThisCard>().toThisCard1());
         }
         foreach (Transform child in PlayerZone.transform)
         {
-            if (child.transform)
-                currentGame.cardsInZone.Add(child.GetComponent<ThisCard>().toThisCard1());
-            if (child.GetComponent<ThisCard>().canAttack)
+            if (child.GetComponent<ThisCard>() != null)
             {
-                int x = currentGame.cardsInZone.Count - 1;
-                currentGame.cardsInZone[x].canAttack = true;
+                currentGame.cardsInZone.Add(child.GetComponent<ThisCard>().toThisCard1());
+                if (child.GetComponent<ThisCard>().canAttack)
+                {
+                    int x = currentGame.cardsInZone.Count - 1;
+                    currentGame.cardsInZone[x].canAttack = true;
+                }
             }
         }
         
         foreach (Transform child in Hand.transform)
         {
-            if (child.transform)
+            if (child.GetComponent<AICardToHand>() != null)
                 currentGame.cardsInHandAI.Add(child.GetComponent<AICardToHand>().ToAICardToHand1());
         }
         foreach (Transform child in Zone.transform)
         {
-            if (child.transform)
-                currentGame.cardsInZoneAI.Add(child.GetComponent<AICardToHand>().ToAICardToHand1());
-            if (child.GetComponent<AICardToHand>().canAttack)
+            if (child.GetComponent<AICardToHand>() != null)
             {
-                int x = currentGame.cardsInZoneAI.Count - 1;
-                currentGame.cardsInZoneAI[x].canAttack = true;
+                currentGame.cardsInZoneAI.Add(child.GetComponent<AICardToHand>().ToAICardToHand1());
+                if (child.GetComponent<AICardToHand>().canAttack)
+                {
+                    int x = currentGame.cardsInZoneAI.Count - 1;
+                    currentGame.cardsInZoneAI[x].canAttack = true;
+                }
             }
         }
 

@@ -18,6 +18,7 @@ public class Log: MonoBehaviour
     void Start()
     {
         string name = DateTime.Now.ToString("yyyyMMddThhmmss");
+        gs = AI.currentGame;
         file = name + ".txt";
         filePath = Path.Combine(Application.persistentDataPath, file);
         LoadData();
@@ -46,16 +47,16 @@ public class Log: MonoBehaviour
 
     public static void SaveData(string a)
     {
-        File.WriteAllText(filePath, a);
+        File.AppendAllText(filePath, a);
     }
 
     // Update is called once per frame
-    private void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            SaveData();
-        }
-    }
+    // private void Update()
+    // {
+    //     if (Input.GetKeyUp(KeyCode.Space))
+    //     {
+    //         SaveData();
+    //     }
+    // }
 }
 
