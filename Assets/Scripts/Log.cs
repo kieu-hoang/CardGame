@@ -31,6 +31,7 @@ public class Log: MonoBehaviour
         if (!File.Exists(filePath))
         {
             File.WriteAllText(filePath, "");
+            Debug.Log("File saved, at path" + filePath);
         }
         //gs = JsonUtility.FromJson<GameState>(File.ReadAllText(filePath));
     }

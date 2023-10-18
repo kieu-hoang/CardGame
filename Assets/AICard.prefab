@@ -1216,7 +1216,6 @@ MonoBehaviour:
   EnemyZone: {fileID: 0}
   z: 0
   It: {fileID: 3955361584424567646}
-  numberOfCardsInDeck: 0
   isTarget: 0
   Graveyard: {fileID: 0}
   thisCardCanBeDestroyed: 0
