@@ -68,10 +68,13 @@ public class AI : MonoBehaviour
 
     private int noOfCardInPlayerZone;
     public static GameState currentGame;
+
+    public static bool started;
     // Start is called before the first frame update
     private void Awake()
     {
         deckSize = 30;
+        started = false;
     }
     void Start()
     {
@@ -121,7 +124,8 @@ public class AI : MonoBehaviour
         }
         Shuffle();
         StartCoroutine(StartGame());
-
+        staticEnemyDeck = deck;
+        
     }
 
     // Update is called once per frame
@@ -129,6 +133,12 @@ public class AI : MonoBehaviour
     {
         staticEnemyDeck = deck;
         checkClone();
+        // if (started)
+        // {
+        //     getGameState();
+        //     Log.SaveData(currentGame.toString());
+        //     started = false;
+        // }
         if (deckSize < 20)
         {
             cardInDeck1.SetActive(false);
@@ -180,11 +190,15 @@ public class AI : MonoBehaviour
         
         if (draw == false && !TurnSystem.isYourTurn)
         {
-            getGameState();
             if (CardsInHand.eHowMany < 7 && deckSize > 0)
                 StartCoroutine(Draw(1));
             else if (deckSize <= 0)
                 EnemyHp.staticHp -= 1;
+            if (currentGame != null)
+            {
+                getGameState();
+                Log.SaveData(currentGame.toString());
+            }
             draw = true;
         }
         
@@ -339,6 +353,7 @@ public class AI : MonoBehaviour
                 {
                     if (!cardsInZone[i].attackedTarget)
                     {
+                        Log.SaveData("0 " + cardsInZone[i].id + " 0" + " 1" + " 0" + "\n");
                         PlayerHp.staticHp -= cardsInZone[i].actualDame;
                         cardsInZone[i].attackedTarget = true;
                         canAttack[i] = false;
@@ -362,6 +377,7 @@ public class AI : MonoBehaviour
                                 cardsInZone[i].hurted += child.GetComponent<ThisCard>().actualDame;
                                 child.GetComponent<ThisCard>().isTarget = false;
                                 canAttack[i] = false;
+                                Log.SaveData("1 " + cardsInZone[i].id + " 0" + " 1 " + child.GetComponent<ThisCard>().id + "\n");
                                 break;
                             }
                         }
@@ -391,6 +407,7 @@ public class AI : MonoBehaviour
                                     child.GetComponent<ThisCard>().hurted += 2;
                                 }
                                 child.GetComponent<ThisCard>().isTarget = false;
+                                Log.SaveData("1 " + cardsInZone[i].id + " 0" + " 1 " + child.GetComponent<ThisCard>().id + "\n");
                                 canAttack[i] = false;
                                 break;
                             }
@@ -423,9 +440,11 @@ public class AI : MonoBehaviour
     {
         for (int i=0;i<= 2; i++)
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1f);
             Instantiate(CardToHand, transform.position, transform.rotation);
         }
+        checkClone();
+        started = true;
     }
 
     IEnumerator Summon()
@@ -482,6 +501,7 @@ public class AI : MonoBehaviour
                 if (child.GetComponent<AICardToHand>().id == summonID &&
                     CardDataBase.cardList[summonID].mana <= currentMana)
                 {
+                    Log.SaveData("0 " + summonID + " 1" + " 0" + " 0" +"\n");
                     child.transform.SetParent(Zone.transform);
                     TurnSystem.currentEnemyMana -= CardDataBase.cardList[summonID].mana;
                     currentMana = TurnSystem.currentEnemyMana;

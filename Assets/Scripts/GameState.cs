@@ -1318,7 +1318,7 @@ public class GameState
     }
     public string toString()
     {
-        string result = "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" + "\n";
+        string result = "" + "\n";
         for (int i = 0; i < 30; i++)
         {
             if (i >= PlayerDeck.deckSize)
@@ -1405,7 +1405,7 @@ public class GameState
                 result += "\n";
             }
         }
-        result += "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" + "\n";
+        //result += "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" + "\n";
         return result;
     }
 }

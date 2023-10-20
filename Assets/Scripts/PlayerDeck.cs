@@ -31,6 +31,8 @@ public class PlayerDeck : MonoBehaviour
     public string menu = "Menu";
     public AudioSource audioSource;
     public AudioClip shuffle, draw, theme;
+    private bool finish;
+    private bool started;
     private void Awake()
     {
         Shuffle();
@@ -39,6 +41,8 @@ public class PlayerDeck : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        finish = false;
+        started = false;
         x = 0;
         deckSize = 30;
         for (int i = 0; i <= 25; i++)
@@ -86,7 +90,13 @@ public class PlayerDeck : MonoBehaviour
         {
             cardInDeck4.SetActive(false);
         }
-
+        
+        if (started && AI.currentGame != null && AI.started)
+        {
+            AI.getGameState();
+            Log.SaveData(AI.currentGame.toString());
+            started = false;
+        }
         if (ThisCard.drawX > 0)
         {
             if (CardsInHand.howMany == 6 && deckSize > 0)
@@ -102,9 +112,9 @@ public class PlayerDeck : MonoBehaviour
             ThisCard.drawX = 0;
         }
 
-        if (TurnSystem.startTurn == true)
+        if (TurnSystem.startTurn && PlayerHp.staticHp > 0)
         {
-            if (CardsInHand.howMany < 7 && deckSize > 0)
+            if (CardsInHand.howMany < 7 && deckSize > 0 )
             {
                 StartCoroutine(Draw(1));
             }
@@ -122,6 +132,16 @@ public class PlayerDeck : MonoBehaviour
             TurnSystem.startTurn = false;
         }
         checkClone();
+        if (AI.currentGame != null && PlayerHp.staticHp <= 0 && finish == false)
+        {
+            Log.SaveData("\n 0 Win");
+            finish = true;
+        }
+        else if (AI.currentGame != null && EnemyHp.staticHp <= 0 && finish == false)
+        {
+            Log.SaveData("\n 1 Win");
+            finish = true;
+        }
     }
 
     public void checkClone()
@@ -147,11 +167,13 @@ public class PlayerDeck : MonoBehaviour
     {
         for (int i = 0; i <= 2; i++)
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1f);
             audioSource.PlayOneShot(draw,1f);
             Instantiate(CardToHand, transform.position, transform.rotation); ;
         }
         audioSource.PlayOneShot(theme,1f);
+        checkClone();
+        started = true;
     }
 
     public void Shuffle()
