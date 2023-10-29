@@ -1144,8 +1144,8 @@ MonoBehaviour:
     damageDealtBySpell: 0
     increaseXdame: 0
     deathcrys: 0
-  thisId: 1
-  id: 1
+  thisId: 2
+  id: 2
   cardName: 
   dame: 1
   blood: 3

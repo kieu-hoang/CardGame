@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using System.Threading;
@@ -69,7 +70,7 @@ public class AI1 : MonoBehaviour
 
     private int noOfCardInPlayerZone;
 
-    private GameState currentGame;
+    public static GameState currentGame;
     
     // Start is called before the first frame update
     private void Awake()
@@ -208,8 +209,15 @@ public class AI1 : MonoBehaviour
         {
             // StartCoroutine(Summon());
             getGameState();
-            GameState gs = currentGame;
-            List<Move> nextmove = minimax(gs, true, 0, -1000, 1000).Item2;
+            for (int i = 0; i < currentGame.cardsInZoneAI.Count; i++)
+            {
+                Debug.Log("currentGame.cardsInZoneAI: " + currentGame.cardsInZoneAI[i].id);
+            }
+            List<Move> nextmove = minimax(currentGame, true, 0, -1000, 1000).Item2;
+            for (int i = 0; i < nextmove.Count; i++)
+            {
+                Debug.Log("Move " + i + " " + nextmove[i].id + " " + nextmove[i].summon + " " + nextmove[i].attack + " " + nextmove[i].idAtk);
+            }
             make_move(nextmove);
             endPhase = true;
         }
@@ -802,7 +810,7 @@ public class AI1 : MonoBehaviour
                 if (beta <= alpha)
                     break;
             }
-            Debug.Log("Evaluate max: " + max_eval);
+            // Debug.Log("Evaluate max: " + max_eval);
             return new Tuple<int, List<Move>>(max_eval, best_move);
         }
         else
@@ -827,7 +835,7 @@ public class AI1 : MonoBehaviour
                 if (beta <= alpha)
                     break;
             }
-            Debug.Log("Evaluate min: " + min_eval);
+            // Debug.Log("Evaluate min: " + min_eval);
             return new Tuple<int, List<Move>>(min_eval, best_move);
         }
     }

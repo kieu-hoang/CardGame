@@ -91,7 +91,7 @@ public class PlayerDeck : MonoBehaviour
             cardInDeck4.SetActive(false);
         }
         
-        if (started && AI.currentGame != null && AI.started)
+        if (AI.currentGame != null && started && AI.started)
         {
             AI.getGameState();
             Log.SaveData(AI.currentGame.toString());

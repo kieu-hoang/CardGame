@@ -408,6 +408,10 @@ public class ThisCard : MonoBehaviour
                             child.GetComponent<AICardToHand>().hurted += 2;
                         }
                         cantAttack = true;
+                        if (id == 4)
+                        {
+                            attackedTarget = true;
+                        }
                         Arrow._Hide = true;
                         child.GetComponent<AICardToHand>().isTarget = false;
                         break;
@@ -518,21 +522,21 @@ public class ThisCard : MonoBehaviour
             x = Random.Range(0, CardsInZone.howMany);
         else
             x = Random.Range(0, CardsInZone.howMany-1);
-        int i = 0;
+        // int i = 0;
         if ((CardsInZone.howMany <= 1 && !spell) || CardsInZone.howMany == 0)
             return;
         foreach (Transform child in battleZone.transform)
         {
-            if (i == x)
+            // if (i == x) // heal quân ð?u tiên
             {
                 if (child != transform && child.GetComponent<ThisCard>() != null)
                 {
                     child.GetComponent<ThisCard>().hurted -= healXpower;
                     break;
                 }
-                continue;
+                // continue;
             }
-            i++;
+            // i++;
         }
     }
 
@@ -592,11 +596,25 @@ public class ThisCard : MonoBehaviour
 
     public void dealOne()
     {
-        int x = Random.Range(0, CardsInZone.eHowMany);
-        int i = 0;
+        // int x = Random.Range(0, CardsInZone.eHowMany);
+        // int i = 0;
+        // foreach (Transform child in EnemyZone.transform)
+        // {
+        //     if (i==x && child.GetComponent<AICardToHand>().actualblood > 0)
+        //     {
+        //         child.GetComponent<AICardToHand>().isTarget = true;
+        //         if (child.GetComponent<AICardToHand>().isTarget)
+        //         {
+        //             child.GetComponent<AICardToHand>().hurted += damageDealtBySpell;
+        //             child.GetComponent<AICardToHand>().isTarget = false;
+        //             break;
+        //         }
+        //     }
+        //     i++;
+        // }
         foreach (Transform child in EnemyZone.transform)
         {
-            if (i==x && child.GetComponent<AICardToHand>().actualblood > 0)
+            if (child.GetComponent<AICardToHand>().actualblood > 0)
             {
                 child.GetComponent<AICardToHand>().isTarget = true;
                 if (child.GetComponent<AICardToHand>().isTarget)
@@ -606,7 +624,6 @@ public class ThisCard : MonoBehaviour
                     break;
                 }
             }
-            i++;
         }
         stopDealDamage = true;
     }
@@ -658,8 +675,8 @@ public class ThisCard : MonoBehaviour
     public ThisCard1 toThisCard1()
     {
         ThisCard1 newcard = new ThisCard1();
-        newcard.thisId = thisId;
-        newcard.thisCard = CardDataBase.cardList[thisId];
+        newcard.thisId = id;
+        newcard.thisCard = CardDataBase.cardList[id];
         newcard.id = id;
         newcard.cardName = cardName;
         newcard.dame = dame;

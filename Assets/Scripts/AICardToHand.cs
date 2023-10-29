@@ -320,28 +320,36 @@ public class AICardToHand : MonoBehaviour
 
     public void HealOne()
     {
-        int x;
-        if (spell)
-            x = Random.Range(0, CardsInZone.eHowMany);
-        else
-        {
-            x = Random.Range(0, CardsInZone.eHowMany-1);
-        } 
-        int i = 0;
-        if ((CardsInZone.eHowMany <= 1 && !spell) || CardsInZone.eHowMany == 0)
-            return;
+        // int x;
+        // if (spell)
+        //     x = Random.Range(0, CardsInZone.eHowMany);
+        // else
+        // {
+        //     x = Random.Range(0, CardsInZone.eHowMany-1);
+        // } 
+        // int i = 0;
+        // if ((CardsInZone.eHowMany <= 1 && !spell) || CardsInZone.eHowMany == 0)
+        //     return;
+        // foreach (Transform child in battleZone.transform)
+        // {
+        //     if (i == x)
+        //     {
+        //         if (child != transform && child.GetComponent<AICardToHand>() != null && child.GetComponent<AICardToHand>().actualblood > 0)
+        //         {
+        //             child.GetComponent<AICardToHand>().hurted -= healXpower;
+        //             break;
+        //         }
+        //         continue;
+        //     }
+        //     i++;
+        // }
         foreach (Transform child in battleZone.transform)
         {
-            if (i == x)
+            if (child != transform && child.GetComponent<AICardToHand>() != null && child.GetComponent<AICardToHand>().actualblood > 0)
             {
-                if (child != transform && child.GetComponent<AICardToHand>() != null && child.GetComponent<AICardToHand>().actualblood > 0)
-                {
-                    child.GetComponent<AICardToHand>().hurted -= healXpower;
-                    break;
-                }
-                continue;
+                child.GetComponent<AICardToHand>().hurted -= healXpower;
+                break;
             }
-            i++;
         }
     }
 
@@ -399,11 +407,25 @@ public class AICardToHand : MonoBehaviour
 
     public void dealOne()
     {
-        int x = Random.Range(0, CardsInZone.howMany);
-        int i = 0;
+        // int x = Random.Range(0, CardsInZone.howMany);
+        // int i = 0;
+        // foreach (Transform child in EnemyZone.transform)
+        // {
+        //     if (i==x && child.GetComponent<ThisCard>().actualblood > 0)
+        //     {
+        //         child.GetComponent<ThisCard>().isTarget = true;
+        //         if (child.GetComponent<ThisCard>().isTarget)
+        //         {
+        //             child.GetComponent<ThisCard>().hurted += damageDealtBySpell;
+        //             child.GetComponent<ThisCard>().isTarget = false;
+        //             break;
+        //         }
+        //     }
+        //     i++;
+        // }
         foreach (Transform child in EnemyZone.transform)
         {
-            if (i==x && child.GetComponent<ThisCard>().actualblood > 0)
+            if (child.GetComponent<ThisCard>().actualblood > 0)
             {
                 child.GetComponent<ThisCard>().isTarget = true;
                 if (child.GetComponent<ThisCard>().isTarget)
@@ -413,7 +435,6 @@ public class AICardToHand : MonoBehaviour
                     break;
                 }
             }
-            i++;
         }
     }
 
@@ -430,8 +451,8 @@ public class AICardToHand : MonoBehaviour
     public AICardToHand1 ToAICardToHand1()
     {
         AICardToHand1 newcard = new AICardToHand1();
-        newcard.thisId = thisId;
-        newcard.thisCard = CardDataBase.cardList[thisId];
+        newcard.thisId = id;
+        newcard.thisCard = CardDataBase.cardList[id];
         newcard.id = id;
         newcard.cardName = cardName;
         newcard.dame = dame;
