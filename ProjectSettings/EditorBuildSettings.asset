@@ -19,6 +19,9 @@ EditorBuildSettings:
     guid: be8b318388dad6d4ea1fc9380b47e1aa
   - enabled: 1
     path: Assets/Scenes/CardDeck2.unity
+    guid: b21f89c916baa6442b3094e75edf8e35
+  - enabled: 1
+    path: Assets/Scenes/CardDeck3.unity
     guid: 98ae915306ecb1d48bae135362742c6d
   - enabled: 1
     path: Assets/CCG/Scenes/Game.unity

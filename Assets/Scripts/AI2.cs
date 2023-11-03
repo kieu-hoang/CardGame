@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AI : MonoBehaviour
+public class AI2 : MonoBehaviour
 {
     public List<Card> deck = new List<Card>();
     public Card container = new Card();
-    public static List<Card> staticEnemyDeck = new List<Card>();
+    public static List<Card> staticEDeck = new List<Card>();
     public int[] startingDeck;
     public List<AICardToHand> cardsInHand = new List<AICardToHand>();
 
@@ -14,8 +14,8 @@ public class AI : MonoBehaviour
     
     public static GameObject Hand;
     public static GameObject Zone;
-    public static GameObject PlayerZone;
-    public static GameObject PlayerHand;
+    public static GameObject MinimaxZone;
+    public static GameObject MinimaxHand;
     public GameObject Graveyard;
 
     public int x;
@@ -45,7 +45,7 @@ public class AI : MonoBehaviour
 
     public int[] cardsID;
     
-    public AICardToHand aiCardToHand;
+    public AICardToHand ThisCard;
 
     public int summonID;
 
@@ -53,7 +53,6 @@ public class AI : MonoBehaviour
 
     public bool[] canAttack;
     public static bool AiEndPhase;
-    public static int whichEnemy;
     private const int DECKSIZE = 30;
     
     public AudioSource audioSource;
@@ -63,7 +62,7 @@ public class AI : MonoBehaviour
 
     private int noOfCardInZone;
 
-    private int noOfCardInPlayerZone;
+    private int noOfCardInMinimaxZone;
     public static GameState currentGame;
 
     public static bool started;
@@ -78,57 +77,40 @@ public class AI : MonoBehaviour
         //StartCoroutine(WaitOneSeconds());
 
         //StartCoroutine(StartGame());
-        Hand = GameObject.Find("EnemyHand");
-        Zone = GameObject.Find("EnemyZone");
-        PlayerZone = GameObject.Find("Zone");
-        PlayerHand = GameObject.Find("Hand");
-        Graveyard = GameObject.Find("EGraveyard");
+        Hand = GameObject.Find("Hand");
+        Zone = GameObject.Find("Zone");
+        MinimaxZone = GameObject.Find("EnemyZone");
+        MinimaxHand = GameObject.Find("EnemyHand");
+        Graveyard = GameObject.Find("Graveyard");
         currentGame = new GameState();
 
         x = 0;
         draw = true;
-        if (whichEnemy == 1)
+        for (int i = 0; i <= 25; i++)
         {
-            for (int i = 0; i <= 25; i++)
-            {
-                startingDeck[i] = i == 0 ? PlayerPrefs.GetInt("deck" + i, 0) : PlayerPrefs.GetInt("deck" + i, i<5 ? 2 : 1);
-            }
-            for (int i = 0; i <= 25; i++)
-            {
-                if (startingDeck[i] > 0)
-                {
-                    for (int j = 1; j <= startingDeck[i]; j++)
-                    {
-                        deck[x] = CardDataBase.cardList[i];
-                        x++;
-                    }
-                }
-            }
+            startingDeck[i] = i == 0 ? PlayerPrefs.GetInt("deck" + i, 0) : PlayerPrefs.GetInt("deck" + i, i<5 ? 2 : 1);
         }
-        if (whichEnemy == 2)
+        for (int i = 0; i <= 25; i++)
         {
-            for (int i = 0; i < DECKSIZE; i++)
+            if (startingDeck[i] > 0)
             {
-                if (i <= 19)
+                for (int j = 1; j <= startingDeck[i]; j++)
                 {
-                    deck.Add(CardDataBase.cardList[1]);
-                }
-                else
-                {
-                    deck.Add(CardDataBase.cardList[4]);
+                    deck[x] = CardDataBase.cardList[i];
+                    x++;
                 }
             }
         }
         Shuffle();
         StartCoroutine(StartGame());
-        staticEnemyDeck = deck;
+        staticEDeck = deck;
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        staticEnemyDeck = deck;
+        staticEDeck = deck;
         checkClone();
         // if (started)
         // {
@@ -190,7 +172,7 @@ public class AI : MonoBehaviour
             if (CardsInHand.eHowMany < 7 && deckSize > 0)
                 StartCoroutine(Draw(1));
             else if (deckSize <= 0)
-                EnemyHp.staticHp -= 1;
+                PlayerHp.staticHp -= 1;
             if (currentGame != null)
             {
                 getGameState();
@@ -232,7 +214,7 @@ public class AI : MonoBehaviour
         foreach (Transform child in Hand.transform)
         {
             if (child.tag != "Clone") continue;
-            child.GetComponent<AICardToHand>().thisCard = staticEnemyDeck[deckSize - 1];
+            child.GetComponent<AICardToHand>().thisCard = staticEDeck[deckSize - 1];
             deckSize -= 1;
             child.GetComponent<AICardToHand>().cardBack = false;
             child.tag = "Untagged";
@@ -266,7 +248,7 @@ public class AI : MonoBehaviour
         {
             if (i >= howManyCards)
             {
-                cardsInHand[i] = aiCardToHand;
+                cardsInHand[i] = ThisCard;
             }
         }
 
@@ -299,7 +281,7 @@ public class AI : MonoBehaviour
         {
             if (i >= howManyCards)
             {
-                cardsInZone[i] = aiCardToHand;
+                cardsInZone[i] = ThisCard;
             }
         }
 
@@ -322,13 +304,13 @@ public class AI : MonoBehaviour
             }
         }
         int howManyCards2 = 0;
-        foreach (Transform child in PlayerZone.transform)
+        foreach (Transform child in MinimaxZone.transform)
         {
-            if (child.GetComponent<ThisCard>() != null && child.GetComponent<ThisCard>().blood - child.GetComponent<ThisCard>().hurted > 0)
+            if (child.GetComponent<AICardToHand>() != null && child.GetComponent<AICardToHand>().blood - child.GetComponent<AICardToHand>().hurted > 0)
                 howManyCards2++;
         }
 
-        noOfCardInPlayerZone = howManyCards2;
+        noOfCardInMinimaxZone = howManyCards2;
     }
 
     public void DoEndPhase()
@@ -338,15 +320,15 @@ public class AI : MonoBehaviour
         for (int i = 0; i< noOfCardInZone ; i++)
         {
             howManyCards = 0;
-            foreach (Transform child in PlayerZone.transform)
+            foreach (Transform child in MinimaxZone.transform)
             {
-                if (child.GetComponent<ThisCard>().blood - child.GetComponent<ThisCard>().hurted > 0)
+                if (child.GetComponent<AICardToHand>().blood - child.GetComponent<AICardToHand>().hurted > 0)
                     howManyCards++;
             }
-            noOfCardInPlayerZone = howManyCards;
+            noOfCardInMinimaxZone = howManyCards;
             if (canAttack[i])
             {
-                if (noOfCardInPlayerZone == 0)
+                if (noOfCardInMinimaxZone == 0)
                 {
                     if (!cardsInZone[i].attackedTarget)
                     {
@@ -360,51 +342,51 @@ public class AI : MonoBehaviour
                 {
                     if (checkTaunt())
                     {
-                        foreach (Transform child in PlayerZone.transform)
+                        foreach (Transform child in MinimaxZone.transform)
                         {
-                            if (canAttack[i] && child.GetComponent<ThisCard>().blood - child.GetComponent<ThisCard>().hurted > 0)
+                            if (canAttack[i] && child.GetComponent<AICardToHand>().blood - child.GetComponent<AICardToHand>().hurted > 0)
                             {
-                                if (child.GetComponent<ThisCard>().id == 1 || child.GetComponent<ThisCard>().id == 13 ||
-                                    child.GetComponent<ThisCard>().id == 19)
+                                if (child.GetComponent<AICardToHand>().id == 1 || child.GetComponent<AICardToHand>().id == 13 ||
+                                    child.GetComponent<AICardToHand>().id == 19)
                                 {
-                                    child.GetComponent<ThisCard>().isTarget = true;
+                                    child.GetComponent<AICardToHand>().isTarget = true;
                                 }
-                                if (!child.GetComponent<ThisCard>().isTarget) continue;
-                                child.GetComponent<ThisCard>().hurted += cardsInZone[i].actualDame;
-                                cardsInZone[i].hurted += child.GetComponent<ThisCard>().actualDame;
-                                child.GetComponent<ThisCard>().isTarget = false;
+                                if (!child.GetComponent<AICardToHand>().isTarget) continue;
+                                child.GetComponent<AICardToHand>().hurted += cardsInZone[i].actualDame;
+                                cardsInZone[i].hurted += child.GetComponent<AICardToHand>().actualDame;
+                                child.GetComponent<AICardToHand>().isTarget = false;
                                 canAttack[i] = false;
-                                Log.SaveData("1 " + cardsInZone[i].id + " 0" + " 1 " + child.GetComponent<ThisCard>().id + "\n");
+                                Log.SaveData("1 " + cardsInZone[i].id + " 0" + " 1 " + child.GetComponent<AICardToHand>().id + "\n");
                                 break;
                             }
                         }
                     }
                     else
                     {
-                        foreach (Transform child in PlayerZone.transform)
+                        foreach (Transform child in MinimaxZone.transform)
                         {
-                            if (canAttack[i] && child.GetComponent<ThisCard>().blood - child.GetComponent<ThisCard>().hurted > 0)
+                            if (canAttack[i] && child.GetComponent<AICardToHand>().blood - child.GetComponent<AICardToHand>().hurted > 0)
                             {
-                                child.GetComponent<ThisCard>().isTarget = true;
-                                if (!child.GetComponent<ThisCard>().isTarget) continue;
-                                if (child.GetComponent<ThisCard>().id == 17)
-                                    child.GetComponent<ThisCard>().hurted += 1;
+                                child.GetComponent<AICardToHand>().isTarget = true;
+                                if (!child.GetComponent<AICardToHand>().isTarget) continue;
+                                if (child.GetComponent<AICardToHand>().id == 17)
+                                    child.GetComponent<AICardToHand>().hurted += 1;
                                 else 
-                                    child.GetComponent<ThisCard>().hurted += cardsInZone[i].actualDame;
+                                    child.GetComponent<AICardToHand>().hurted += cardsInZone[i].actualDame;
                                 if (cardsInZone[i].id == 17)
                                     cardsInZone[i].hurted += 1;
                                 else
-                                    cardsInZone[i].hurted += child.GetComponent<ThisCard>().actualDame;
-                                if (isMutualBirth(cardsInZone[i].GetComponent<AICardToHand>(), child.GetComponent<ThisCard>()))
+                                    cardsInZone[i].hurted += child.GetComponent<AICardToHand>().actualDame;
+                                if (isMutualBirth(cardsInZone[i].GetComponent<AICardToHand>(), child.GetComponent<AICardToHand>()))
                                 {
-                                    child.GetComponent<ThisCard>().hurted -= 2;
+                                    child.GetComponent<AICardToHand>().hurted -= 2;
                                 }
-                                if (isOpposition(cardsInZone[i].GetComponent<AICardToHand>(), child.GetComponent<ThisCard>()))
+                                if (isOpposition(cardsInZone[i].GetComponent<AICardToHand>(), child.GetComponent<AICardToHand>()))
                                 {
-                                    child.GetComponent<ThisCard>().hurted += 2;
+                                    child.GetComponent<AICardToHand>().hurted += 2;
                                 }
-                                child.GetComponent<ThisCard>().isTarget = false;
-                                Log.SaveData("1 " + cardsInZone[i].id + " 0" + " 1 " + child.GetComponent<ThisCard>().id + "\n");
+                                child.GetComponent<AICardToHand>().isTarget = false;
+                                Log.SaveData("1 " + cardsInZone[i].id + " 0" + " 1 " + child.GetComponent<AICardToHand>().id + "\n");
                                 canAttack[i] = false;
                                 break;
                             }
@@ -546,18 +528,18 @@ public class AI : MonoBehaviour
 
     public bool checkTaunt()
     {
-        foreach (Transform child in PlayerZone.transform)
+        foreach (Transform child in MinimaxZone.transform)
         {
-            if (child.GetComponent<ThisCard>().id == 1 || child.GetComponent<ThisCard>().id == 13 ||
-                child.GetComponent<ThisCard>().id == 19)
+            if (child.GetComponent<AICardToHand>().id == 1 || child.GetComponent<AICardToHand>().id == 13 ||
+                child.GetComponent<AICardToHand>().id == 19)
             {
-                if (child.GetComponent<ThisCard>().blood - child.GetComponent<ThisCard>().hurted > 0)
+                if (child.GetComponent<AICardToHand>().blood - child.GetComponent<AICardToHand>().hurted > 0)
                     return true;
             }
         }
         return false;
     }
-    public bool isMutualBirth(AICardToHand player, ThisCard enemy)
+    public bool isMutualBirth(AICardToHand player, AICardToHand enemy)
     {
         if (player.thisCard.element == Card.Element.NoElement  || enemy.thisCard.element == Card.Element.NoElement)
             return false;
@@ -573,7 +555,7 @@ public class AI : MonoBehaviour
             return true;
         return false;
     }
-    public bool isOpposition(AICardToHand player, ThisCard enemy)
+    public bool isOpposition(AICardToHand player, AICardToHand enemy)
     {
         if (player.thisCard.element == Card.Element.NoElement  || enemy.thisCard.element == Card.Element.NoElement)
             return false;
@@ -603,12 +585,12 @@ public class AI : MonoBehaviour
         currentGame.cardsInHandAI = new List<AICardToHand1>();
         currentGame.cardsInZoneAI = new List<AICardToHand1>();
         
-        foreach (Transform child in PlayerHand.transform)
+        foreach (Transform child in MinimaxHand.transform)
         {
             if (child.GetComponent<ThisCard>() != null)
                 currentGame.cardsInHand.Add(child.GetComponent<ThisCard>().toThisCard1());
         }
-        foreach (Transform child in PlayerZone.transform)
+        foreach (Transform child in MinimaxZone.transform)
         {
             if (child.GetComponent<ThisCard>() != null)
             {
@@ -641,7 +623,7 @@ public class AI : MonoBehaviour
 
         for (int i = 0; i < deckSize; i++)
         {
-            currentGame.AIdeck.Add(staticEnemyDeck[i].ToAICardToHand1());
+            currentGame.AIdeck.Add(staticEDeck[i].ToAICardToHand1());
         }
         for (int i = 0; i < PlayerDeck.deckSize; i++)
         {

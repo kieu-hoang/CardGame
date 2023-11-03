@@ -469,6 +469,7 @@ public class AICardToHand : MonoBehaviour
         
         newcard.spell = spell;
         newcard.damageDealtBySpell = damageDealtBySpell;
+        newcard.hurted = hurted;
 
         newcard.returnXcards = returnXcards;
         newcard.actualblood = newcard.blood - newcard.hurted;

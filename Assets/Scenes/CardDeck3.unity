@@ -1216,7 +1216,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3436605412060251527, guid: 6c33aeeaa941c864991e836fea0003c0, type: 3}
       propertyPath: m_Text
-      value: Minimax
+      value: AI
       objectReference: {fileID: 0}
     - target: {fileID: 3436605412127903568, guid: 6c33aeeaa941c864991e836fea0003c0, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -2895,7 +2895,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 691494916}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cbff64d33c2c1847aa345973f2231bc, type: 3}
+  m_Script: {fileID: 11500000, guid: 66cbd3a1f14c664459e381fd80621a5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   deck:
@@ -3381,11 +3381,11 @@ MonoBehaviour:
     deathcrys: 0
   container:
     id: 0
-    cardName: 
+    cardName: None
     dame: 0
     blood: 0
     mana: 0
-    cardDescription: 
+    cardDescription: None
     drawXcards: 0
     addXmaxMana: 0
     thisImage: {fileID: 0}
@@ -3397,30 +3397,22 @@ MonoBehaviour:
     increaseXdame: 0
     deathcrys: 0
   startingDeck: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  cardsInHand: []
-  cardsInZone: []
-  Graveyard: {fileID: 1663841460}
   x: 0
   cardInDeck1: {fileID: 247594694}
   cardInDeck2: {fileID: 1246742996}
   cardInDeck3: {fileID: 1160355387}
   cardInDeck4: {fileID: 1375848603}
-  CardToHand: {fileID: 3955361584424567646, guid: 2b60b2e198d481842a6574db6383885d, type: 3}
+  CardBack: {fileID: 3955361584424567646, guid: cc32b9e44d2b4884da9cd472dd935fdf, type: 3}
+  CardToHand: {fileID: 3955361584424567646, guid: a9dcfab0434fde44bbcdbc777032d912, type: 3}
+  Deck: {fileID: 691494916}
   Clones: []
-  CardBack: {fileID: 1307164451770322391, guid: 39b96e69325e14f4c91dbca32e711270, type: 3}
-  currentMana: 0
-  AiCanSummon: 
-  drawPhase: 0
-  summonPhase: 0
-  attackPhase: 0
-  endPhase: 0
-  cardsID: 
-  ThisCard: {fileID: 1425834705}
-  summonID: 0
-  howManyCards: 0
-  canAttack: 
+  Hand: {fileID: 2021139877}
+  concedeWindow: {fileID: 1402955431}
+  menu: Menu
   audioSource: {fileID: 95095214}
-  drawAudio: {fileID: 8300000, guid: 1111a23f7b090d0489549f4d3b604445, type: 3}
+  shuffle: {fileID: 8300000, guid: 4a664db8d96e868448578ad1a1c93b06, type: 3}
+  draw: {fileID: 8300000, guid: 1111a23f7b090d0489549f4d3b604445, type: 3}
+  theme: {fileID: 8300000, guid: d337b8c5f12c3f240b0d032ca00fd853, type: 3}
 --- !u!1 &700032700
 GameObject:
   m_ObjectHideFlags: 0
@@ -4564,7 +4556,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 997415225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e7a082148ca73a43ad14d4d85afb3a4, type: 3}
+  m_Script: {fileID: 11500000, guid: 72711656e124e724582fefa09f8cf4af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   deck:
@@ -5066,11 +5058,72 @@ MonoBehaviour:
     increaseXdame: 0
     deathcrys: 0
   startingDeck: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  Hand: {fileID: 1932003825}
-  Zone: {fileID: 650362168}
-  PlayerZone: {fileID: 2000234862}
-  PlayerHand: {fileID: 2021139877}
-  Graveyard: {fileID: 1107041112}
+  cardsInHand:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  cardsInZone:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  Hand: {fileID: 0}
+  Zone: {fileID: 0}
+  PlayerZone: {fileID: 0}
+  Graveyard: {fileID: 0}
   x: 0
   cardInDeck1: {fileID: 1008990990}
   cardInDeck2: {fileID: 1502672469}
@@ -5080,10 +5133,16 @@ MonoBehaviour:
   Clones: []
   CardBack: {fileID: 1307164451770322391, guid: 39b96e69325e14f4c91dbca32e711270, type: 3}
   currentMana: 0
+  AiCanSummon: 000000000000000000000000000000000000000000000000000000000000
   drawPhase: 0
   summonPhase: 0
   attackPhase: 0
   endPhase: 0
+  cardsID: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  aiCardToHand: {fileID: 1425834705}
+  summonID: 0
+  howManyCards: 0
+  canAttack: 000000000000000000000000000000000000000000000000000000000000
   audioSource: {fileID: 95095214}
   drawAudio: {fileID: 8300000, guid: 1111a23f7b090d0489549f4d3b604445, type: 3}
 --- !u!1001 &1008990988
@@ -7609,7 +7668,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 691494921}
         m_TargetAssemblyTypeName: PlayerDeck, Assembly-CSharp
         m_MethodName: CloseWindow
         m_Mode: 1
@@ -7743,7 +7802,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 691494921}
         m_TargetAssemblyTypeName: PlayerDeck, Assembly-CSharp
         m_MethodName: ConcedeDefeat
         m_Mode: 1
@@ -9190,7 +9249,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 691494921}
         m_TargetAssemblyTypeName: PlayerDeck, Assembly-CSharp
         m_MethodName: OpenWindow
         m_Mode: 1
@@ -9257,7 +9316,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3436605412060251527, guid: 6c33aeeaa941c864991e836fea0003c0, type: 3}
       propertyPath: m_Text
-      value: "K\u1ECBch b\u1EA3n"
+      value: "B\u1EA1n"
       objectReference: {fileID: 0}
     - target: {fileID: 3436605412127903568, guid: 6c33aeeaa941c864991e836fea0003c0, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -9975,6 +10034,7 @@ GameObject:
   - component: {fileID: 2000234867}
   - component: {fileID: 2000234866}
   - component: {fileID: 2000234865}
+  - component: {fileID: 2000234864}
   - component: {fileID: 2000234868}
   m_Layer: 5
   m_Name: Zone
@@ -10003,6 +10063,18 @@ RectTransform:
   m_AnchoredPosition: {x: -2.5, y: -135}
   m_SizeDelta: {x: 1225, y: 270}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2000234864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000234862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db51f7756fd6c6d408765a379af17d1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2000234865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10187,6 +10259,7 @@ GameObject:
   - component: {fileID: 2021139881}
   - component: {fileID: 2021139880}
   - component: {fileID: 2021139879}
+  - component: {fileID: 2021139882}
   m_Layer: 5
   m_Name: Hand
   m_TagString: Untagged
@@ -10278,6 +10351,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2021139877}
   m_CullTransparentMesh: 1
+--- !u!114 &2021139882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2021139877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db51f7756fd6c6d408765a379af17d1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2060861475
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -697,6 +697,7 @@ public class ThisCard : MonoBehaviour
 
         newcard.spell = spell;
         newcard.damageDealtBySpell = damageDealtBySpell;
+        newcard.hurted = hurted;
 
         newcard.actualblood = newcard.blood - newcard.hurted;
         newcard.actualDame = newcard.dame + newcard.dameIncrease;
