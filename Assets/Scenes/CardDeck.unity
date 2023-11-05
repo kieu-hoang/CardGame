@@ -160,7 +160,6 @@ MonoBehaviour:
     playerManaTurn: 0
     aiManaTurn: 0
     playerTurn: 0
-  filePath: 
 --- !u!4 &49907530
 Transform:
   m_ObjectHideFlags: 0
@@ -5172,9 +5171,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  Hand: {fileID: 0}
-  Zone: {fileID: 0}
-  PlayerZone: {fileID: 0}
   Graveyard: {fileID: 0}
   x: 0
   cardInDeck1: {fileID: 1008990990}

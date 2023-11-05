@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AI : MonoBehaviour
+public class AI : MonoBehaviour //Kich ban
 {
     public List<Card> deck = new List<Card>();
     public Card container = new Card();

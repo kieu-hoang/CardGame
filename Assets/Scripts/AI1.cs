@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System.Threading;
 
-public class AI1 : MonoBehaviour
+public class AI1 : MonoBehaviour //Minimax
 {
     public List<Card> deck = new List<Card>();
     public Card container = new Card();
