@@ -172,23 +172,26 @@ public class GameState
                         notTaunt.Add(nw.cardsInZoneAI[i]);
                     }
                 }
+
+                int tauntCount = taunt.Count;
+                int notTauntCount = notTaunt.Count;
                 for (int i = 0, j=0, k=0; i < atkcard.Count; i++)
                 {
-                    if (j<taunt.Count)
+                    if (j<tauntCount)
                     {
                         validMove2.Add(new Move(true, atkcard[i].id, false, true, taunt[j].id));
                         playerAttack(atkcard[i], taunt[j]);
                         if (taunt[j].blood - taunt[j].hurted <= 0)
                             j++;
                     }
-                    else if (j >= taunt.Count && k < notTaunt.Count)
+                    else if (j >= tauntCount && k < notTauntCount)
                     {
                         validMove2.Add(new Move(true, atkcard[i].id, false, true, notTaunt[k].id));
                         playerAttack(atkcard[i], notTaunt[k]);
                         if (notTaunt[k].blood - notTaunt[k].hurted <= 0)
                             k++;
                     }
-                    else if (k >= notTaunt.Count)
+                    else if (j >= tauntCount && k >= notTauntCount)
                     {
                         validMove2.Add(new Move(true, atkcard[i].id, false, true, 0));
                     }
@@ -313,26 +316,25 @@ public class GameState
                         // Debug.Log("nottaunt id: " + notTaunt[notTaunt.Count-1].id);
                     }
                 }
-                Debug.Log("taunt Count: " + taunt.Count);
-                Debug.Log("nw.cardsInZone.Count: " + nw.cardsInZone.Count);
-                Debug.Log("notTaunt Count: " + notTaunt.Count);
-                for (int i = 0, j=0, k=0; i < atkcard.Count; i++)
+                int tauntCount = taunt.Count;
+                int notTauntCount = notTaunt.Count;
+                for (int i = 0, j = 0, k = 0; i < atkcard.Count; i++)
                 {
-                    if (j<taunt.Count)
+                    if (j < tauntCount)
                     {
                         validMove2.Add(new Move(false, atkcard[i].id, false, true, taunt[j].id));
                         aiAttack(atkcard[i], taunt[j]);
                         if (taunt[j].blood - taunt[j].hurted <= 0)
                             j++;
                     }
-                    else if (j >= taunt.Count && k < notTaunt.Count)
+                    else if (j >= tauntCount && k < notTauntCount)
                     {
                         validMove2.Add(new Move(false, atkcard[i].id, false, true, notTaunt[k].id));
                         aiAttack(atkcard[i], notTaunt[k]);
                         if (notTaunt[k].blood - notTaunt[k].hurted <= 0)
                             k++;
                     }
-                    else if (k >= notTaunt.Count)
+                    else if (j >=tauntCount && k >= notTauntCount)
                     {
                         validMove2.Add(new Move(false, atkcard[i].id, false, true, 0));
                     }

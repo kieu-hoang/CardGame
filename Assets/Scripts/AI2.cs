@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AI2 : MonoBehaviour
+public class AI2 : MonoBehaviour //lỗi, thay bằng AIa vva2AI1a --> chỉnh sau
 {
     public List<Card> deck = new List<Card>();
     public Card container = new Card();

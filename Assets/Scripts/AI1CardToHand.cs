@@ -193,12 +193,12 @@ public class AI1CardToHand : MonoBehaviour
         }
 
         CardBackScript.UpdateCard(cardBack);
-        if (TurnSystem.isYourTurn && transform.parent == AiZone.transform)
+        if (TurnSystem1.isYourTurn && transform.parent == AiZone.transform)
         {
             summoningSickness = false;
             attackedTarget = false;
         }
-        if (TurnSystem.isYourTurn == false && summoningSickness == false)
+        if (TurnSystem1.isYourTurn == false && summoningSickness == false)
         {
             canAttack = true;
         }
@@ -355,7 +355,7 @@ public class AI1CardToHand : MonoBehaviour
 
     public void HealAll()
     {
-        if ((CardsInZone.eHowMany <= 1 && !spell) || CardsInZone.eHowMany == 0)
+        if ((CardsInZone.eHowMany1 <= 1 && !spell) || CardsInZone.eHowMany1 == 0)
             return;
         foreach (Transform child in battleZone.transform)
         {
@@ -366,11 +366,11 @@ public class AI1CardToHand : MonoBehaviour
 
     public void HealHero()
     {
-        EnemyHp.staticHp += healXpower;
+        KbHp.staticHp += healXpower;
         if (id == 10)
-            EnemyHp.staticHp -= 1;
-        if (EnemyHp.staticHp > EnemyHp.maxHp)
-            EnemyHp.staticHp = EnemyHp.maxHp;
+            KbHp.staticHp -= 1;
+        if (KbHp.staticHp > KbHp.maxHp)
+            KbHp.staticHp = KbHp.maxHp;
     }
     public void dealXDamage()
     {
@@ -384,23 +384,23 @@ public class AI1CardToHand : MonoBehaviour
 
     public void dealHero()
     {
-        PlayerHp.staticHp -= damageDealtBySpell;
-        if (id == 5 && Field.checkChargeAI())
-            PlayerHp.staticHp -= damageDealtBySpell;
+        MinimaxHp.staticHp -= damageDealtBySpell;
+        if (id == 5 && Field1.checkChargeAI())
+            MinimaxHp.staticHp -= damageDealtBySpell;
     }
 
     public void dealAll()
     {
         foreach (Transform child in EnemyZone.transform)
         {   
-            if (child.GetComponent<AI1CardToHand>() != null)
-                child.GetComponent<AI1CardToHand>().isTarget = true;
-            if (child.GetComponent<AI1CardToHand>() != null && child.GetComponent<AI1CardToHand>().isTarget)
+            if (child.GetComponent<AI2CardToHand>() != null)
+                child.GetComponent<AI2CardToHand>().isTarget = true;
+            if (child.GetComponent<AI2CardToHand>() != null && child.GetComponent<AI2CardToHand>().isTarget)
             {
-                child.GetComponent<AI1CardToHand>().hurted += damageDealtBySpell;
-                if (id == 18 && Field.checkNTNAI())
-                    child.GetComponent<AI1CardToHand>().hurted += 1;
-                child.GetComponent<AI1CardToHand>().isTarget = false;
+                child.GetComponent<AI2CardToHand>().hurted += damageDealtBySpell;
+                if (id == 18 && Field1.checkNTNAI())
+                    child.GetComponent<AI2CardToHand>().hurted += 1;
+                child.GetComponent<AI2CardToHand>().isTarget = false;
             }
         }
     }
@@ -425,13 +425,13 @@ public class AI1CardToHand : MonoBehaviour
         // }
         foreach (Transform child in EnemyZone.transform)
         {
-            if (child.GetComponent<AI1CardToHand>().actualblood > 0)
+            if (child.GetComponent<AI2CardToHand>()!= null && child.GetComponent<AI2CardToHand>().actualblood > 0)
             {
-                child.GetComponent<AI1CardToHand>().isTarget = true;
-                if (child.GetComponent<AI1CardToHand>().isTarget)
+                child.GetComponent<AI2CardToHand>().isTarget = true;
+                if (child.GetComponent<AI2CardToHand>().isTarget)
                 {
-                    child.GetComponent<AI1CardToHand>().hurted += damageDealtBySpell;
-                    child.GetComponent<AI1CardToHand>().isTarget = false;
+                    child.GetComponent<AI2CardToHand>().hurted += damageDealtBySpell;
+                    child.GetComponent<AI2CardToHand>().isTarget = false;
                     break;
                 }
             }
@@ -440,13 +440,46 @@ public class AI1CardToHand : MonoBehaviour
 
     public void increaseDame()
     {
-        if ((CardsInZone.eHowMany <= 1 && !spell) || CardsInZone.eHowMany == 0)
+        if ((CardsInZone.eHowMany1 <= 1 && !spell) || CardsInZone.eHowMany1 == 0)
             return;
         foreach (Transform child in battleZone.transform)
         {
             if (child != transform && child.GetComponent<AI1CardToHand>() != null)
                 child.GetComponent<AI1CardToHand>().dameIncrease += increaseXdame;
         }
+    }
+    public AICardToHand1 toAICardToHand1()
+    {
+        AICardToHand1 newcard = new AICardToHand1();
+        newcard.thisId = id;
+        newcard.thisCard = CardDataBase.cardList[id];
+        newcard.id = id;
+        newcard.cardName = cardName;
+        newcard.dame = dame;
+        
+        newcard.blood = blood;
+        newcard.mana = mana;
+        newcard.cardDescription = cardDescription;
+        newcard.thisSprite = thisCard.thisImage;
+
+        newcard.drawXcards = drawXcards;
+        newcard.addXmaxMana = addXmaxMana;
+
+        newcard.returnXcards = returnXcards;
+        newcard.healXpower = healXpower;
+        
+        newcard.increaseXdame = increaseXdame;
+        newcard.deathcrys = deathcrys;
+
+        newcard.spell = spell;
+        newcard.damageDealtBySpell = damageDealtBySpell;
+        newcard.hurted = hurted;
+
+        newcard.actualblood = newcard.blood - newcard.hurted;
+        newcard.actualDame = newcard.dame + newcard.dameIncrease;
+        newcard.isSummoned = isSummoned;
+        newcard.canAttack = canAttack;
+        return newcard;
     }
 }
 

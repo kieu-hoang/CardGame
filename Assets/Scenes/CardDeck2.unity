@@ -1216,7 +1216,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3436605412060251527, guid: 6c33aeeaa941c864991e836fea0003c0, type: 3}
       propertyPath: m_Text
-      value: Minimax
+      value: "K\u1ECBch b\u1EA3n"
       objectReference: {fileID: 0}
     - target: {fileID: 3436605412127903568, guid: 6c33aeeaa941c864991e836fea0003c0, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1402,7 +1402,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 343177983}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86874920e75611942b47b5f13d2f3808, type: 3}
+  m_Script: {fileID: 11500000, guid: 804a6f824b916eb43a1d86f89214231f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 0
@@ -1410,7 +1410,6 @@ MonoBehaviour:
   deckSize: {fileID: 1655459007}
   deadNo: {fileID: 1655459006}
   handNo: {fileID: 1655459005}
-  edeck: {fileID: 997415225}
 --- !u!1001 &474534420
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2850,7 +2849,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 691494916}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cbff64d33c2c1847aa345973f2231bc, type: 3}
+  m_Script: {fileID: 11500000, guid: 8e889430790ea284482df2abc918e292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   deck:
@@ -3352,88 +3351,24 @@ MonoBehaviour:
     increaseXdame: 0
     deathcrys: 0
   startingDeck: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  cardsInHand:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  cardsInZone:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  Hand: {fileID: 2021139877}
+  Zone: {fileID: 2000234862}
+  KbZone: {fileID: 650362168}
+  KbHand: {fileID: 1932003825}
   Graveyard: {fileID: 1663841460}
   x: 0
   cardInDeck1: {fileID: 247594694}
   cardInDeck2: {fileID: 1246742996}
   cardInDeck3: {fileID: 1160355387}
   cardInDeck4: {fileID: 1375848603}
-  CardToHand: {fileID: 3955361584424567646, guid: 2b60b2e198d481842a6574db6383885d, type: 3}
+  CardToHand: {fileID: 3955361584424567646, guid: 838c740c1c407e04d8e08856e1b0e2ff, type: 3}
   Clones: []
   CardBack: {fileID: 1307164451770322391, guid: 39b96e69325e14f4c91dbca32e711270, type: 3}
   currentMana: 0
-  AiCanSummon: 
   drawPhase: 0
   summonPhase: 0
   attackPhase: 0
   endPhase: 0
-  cardsID: 
-  ThisCard: {fileID: 1425834705}
-  summonID: 0
-  howManyCards: 0
-  canAttack: 
   audioSource: {fileID: 95095214}
   drawAudio: {fileID: 8300000, guid: 1111a23f7b090d0489549f4d3b604445, type: 3}
 --- !u!1 &700032700
@@ -4205,15 +4140,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 857503326}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb448bbda2d807a459f6073ed0d2da72, type: 3}
+  m_Script: {fileID: 11500000, guid: 1983c9ca285539441bc719f63d6a08dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fireworkWin: {fileID: 966277727}
   fireworkLose: {fileID: 700032700}
   imageWin: {fileID: 1638278643}
   imageLose: {fileID: 1550869204}
-  money: {fileID: 1319381959}
-  gotMoney: 0
   menu: Menu
   protect: 0
   audioSource: {fileID: 95095214}
@@ -4398,6 +4331,8 @@ MonoBehaviour:
   EnemyZone: {fileID: 650362168}
   howManyCards: 0
   eHowManyCards: 0
+  howManyCards1: 0
+  eHowManyCards1: 0
 --- !u!4 &948284318
 Transform:
   m_ObjectHideFlags: 0
@@ -4411,7 +4346,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &966277727
 GameObject:
@@ -4579,7 +4514,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 997415225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e7a082148ca73a43ad14d4d85afb3a4, type: 3}
+  m_Script: {fileID: 11500000, guid: ae72f619241456840952da7c9c633b23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   deck:
@@ -5081,24 +5016,88 @@ MonoBehaviour:
     increaseXdame: 0
     deathcrys: 0
   startingDeck: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  Hand: {fileID: 1932003825}
-  Zone: {fileID: 650362168}
-  PlayerZone: {fileID: 2000234862}
-  PlayerHand: {fileID: 2021139877}
+  cardsInHand:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  cardsInZone:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   Graveyard: {fileID: 1107041112}
   x: 0
   cardInDeck1: {fileID: 1008990990}
   cardInDeck2: {fileID: 1502672469}
   cardInDeck3: {fileID: 303843672}
   cardInDeck4: {fileID: 818426059}
-  CardToHand: {fileID: 3955361584424567646, guid: 2b60b2e198d481842a6574db6383885d, type: 3}
+  CardToHand: {fileID: 3955361584424567646, guid: 692cd03d38117aa4184393e494b44a1a, type: 3}
   Clones: []
   CardBack: {fileID: 1307164451770322391, guid: 39b96e69325e14f4c91dbca32e711270, type: 3}
   currentMana: 0
+  AiCanSummon: 000000000000000000000000000000000000000000000000000000000000
   drawPhase: 0
   summonPhase: 0
   attackPhase: 0
   endPhase: 0
+  cardsID: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  aiCardToHand: {fileID: 1425834706}
+  summonID: 0
+  howManyCards: 0
+  canAttack: 000000000000000000000000000000000000000000000000000000000000
   audioSource: {fileID: 95095214}
   drawAudio: {fileID: 8300000, guid: 1111a23f7b090d0489549f4d3b604445, type: 3}
 --- !u!1001 &1008990988
@@ -6164,57 +6163,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3955361584424567646, guid: 2d619350c9104e34cbf3e7560218507c, type: 3}
   m_PrefabInstance: {fileID: 727811606}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1167362017
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1167362018}
-  - component: {fileID: 1167362019}
-  m_Layer: 0
-  m_Name: Arrow
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1167362018
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1167362017}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1006.4969, y: 570.51276, z: -16.293255}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1167362019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1167362017}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 461dde39b27b44b49aa36e333059e47e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  points: []
-  point: {fileID: 7679600956601153513, guid: b585d2a5c4234e84db6abecea46df6db, type: 3}
-  arrow: {fileID: 5512938789720475101, guid: 69d234e3b5234d04eb69c1ebeb3b1561, type: 3}
-  numberOfPoints: 10
-  distance: 0
-  direction: {x: 0, y: 0}
-  force: 50
 --- !u!1 &1205502413
 GameObject:
   m_ObjectHideFlags: 0
@@ -6224,7 +6172,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1205502415}
-  - component: {fileID: 1205502414}
+  - component: {fileID: 1205502416}
   m_Layer: 0
   m_Name: TurnSystem
   m_TagString: Untagged
@@ -6232,28 +6180,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1205502414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1205502413}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59acb0efb03a1ae499f224bde5721c82, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  yourTurn: 0
-  yourOpponentTurn: 0
-  manaText: {fileID: 1774865133}
-  button: {fileID: 1233316289}
-  random: 0
-  turnEnd: 0
-  timerText: {fileID: 1896842914}
-  seconds: 0
-  timerStart: 0
-  enemyManaText: {fileID: 343177981}
 --- !u!4 &1205502415
 Transform:
   m_ObjectHideFlags: 0
@@ -6269,6 +6195,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1205502416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1205502413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b39c8a3ead9fa624cbde843600b6a871, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  yourTurn: 0
+  yourOpponentTurn: 0
+  manaText: {fileID: 1774865133}
+  random: 0
+  turnEnd: 0
+  timerText: {fileID: 1896842914}
+  seconds: 0
+  timerStart: 0
+  enemyManaText: {fileID: 343177981}
 --- !u!1 &1233316289
 GameObject:
   m_ObjectHideFlags: 0
@@ -6353,7 +6300,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1205502414}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TurnSystem, Assembly-CSharp
         m_MethodName: EndYourTurn
         m_Mode: 1
@@ -6436,6 +6383,8 @@ MonoBehaviour:
   EnemyHand: {fileID: 1932003825}
   howManyCards: 0
   eHowManyCards: 0
+  howManyCards1: 0
+  eHowManyCards1: 0
 --- !u!4 &1245695470
 Transform:
   m_ObjectHideFlags: 0
@@ -6630,59 +6579,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!1 &1319381959
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1319381961}
-  - component: {fileID: 1319381960}
-  m_Layer: 0
-  m_Name: Money System
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1319381960
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1319381959}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: feb7ad340651bf245bc1512f92faf99f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  goldText: {fileID: 0}
-  gold: 0
-  shouldOpen: 0
-  showedNumber: 0
-  increaser: 0
-  shouldOpenText: {fileID: 0}
-  morePacksWindow: {fileID: 0}
-  playDuel: 1
-  paid: 0
---- !u!4 &1319381961
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1319381959}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 766.4428, y: 563.1769, z: -11.4365635}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1342521256
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7138,24 +7034,194 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -5349925513680584306, guid: 2b60b2e198d481842a6574db6383885d, type: 3}
+    - {fileID: -450028315500039705, guid: 2b60b2e198d481842a6574db6383885d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2b60b2e198d481842a6574db6383885d, type: 3}
 --- !u!224 &1425834704 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1803001968955466600, guid: 2b60b2e198d481842a6574db6383885d, type: 3}
   m_PrefabInstance: {fileID: 1425834703}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1425834705 stripped
+--- !u!1 &1425834705 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3955361584424567646, guid: 2b60b2e198d481842a6574db6383885d, type: 3}
+  m_PrefabInstance: {fileID: 1425834703}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1425834706
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -5349925513680584306, guid: 2b60b2e198d481842a6574db6383885d, type: 3}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425834705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d085ac7de242aa54ab0a2d019fc9328a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisCard:
+    id: 0
+    cardName: 
+    dame: 0
+    blood: 0
+    mana: 0
+    cardDescription: 
+    drawXcards: 0
+    addXmaxMana: 0
+    thisImage: {fileID: 0}
+    element: 0
+    returnXcards: 0
+    healXpower: 0
+    spell: 0
+    damageDealtBySpell: 0
+    increaseXdame: 0
+    deathcrys: 0
+  thisId: 2
+  id: 2
+  cardName: 
+  dame: 1
+  blood: 3
+  mana: 1
+  cardDescription: 
+  nameText: {fileID: 1425834716}
+  dameText: {fileID: 1425834714}
+  bloodText: {fileID: 1425834713}
+  descriptionText: {fileID: 1425834707}
+  stars:
+  - {fileID: 1425834712}
+  - {fileID: 1425834711}
+  - {fileID: 1425834710}
+  - {fileID: 1425834709}
+  - {fileID: 1425834708}
+  thisSprite: {fileID: 0}
+  thatImage: {fileID: 1425834715}
+  frame: {fileID: 1425834717}
+  cardBack: 0
+  drawXcards: 0
+  addXmaxMana: 0
+  hurted: 0
+  actualblood: 0
+  returnXcards: 0
+  Hand: {fileID: 0}
+  EnemyZone: {fileID: 0}
+  z: 0
+  It: {fileID: 1425834705}
+  isTarget: 0
+  Graveyard: {fileID: 0}
+  thisCardCanBeDestroyed: 0
+  AiZone: {fileID: 0}
+  canAttack: 0
+  summoningSickness: 0
+  isSummoned: 0
+  battleZone: {fileID: 0}
+  healXpower: 0
+  spell: 0
+  damageDealtBySpell: 0
+  dealDamage: 0
+  stopDealDamage: 0
+  increaseXdame: 0
+  actualDame: 0
+  dameIncrease: 0
+  deathcrys: 0
+  attackedTarget: 0
+  attackBorder: {fileID: 1425834718}
+--- !u!114 &1425834707 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4754321637522939934, guid: 2b60b2e198d481842a6574db6383885d, type: 3}
   m_PrefabInstance: {fileID: 1425834703}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b7dbba4a98b6154f97d19b77ed4737c, type: 3}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1425834708 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1883399590276913145, guid: 2b60b2e198d481842a6574db6383885d, type: 3}
+  m_PrefabInstance: {fileID: 1425834703}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1425834709 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3584783154837250255, guid: 2b60b2e198d481842a6574db6383885d, type: 3}
+  m_PrefabInstance: {fileID: 1425834703}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1425834710 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3933461948453234278, guid: 2b60b2e198d481842a6574db6383885d, type: 3}
+  m_PrefabInstance: {fileID: 1425834703}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1425834711 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1437619436445145966, guid: 2b60b2e198d481842a6574db6383885d, type: 3}
+  m_PrefabInstance: {fileID: 1425834703}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1425834712 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4603594071263400957, guid: 2b60b2e198d481842a6574db6383885d, type: 3}
+  m_PrefabInstance: {fileID: 1425834703}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1425834713 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8297218749395641746, guid: 2b60b2e198d481842a6574db6383885d, type: 3}
+  m_PrefabInstance: {fileID: 1425834703}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1425834714 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7539667922528164225, guid: 2b60b2e198d481842a6574db6383885d, type: 3}
+  m_PrefabInstance: {fileID: 1425834703}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1425834715 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 663111951475567906, guid: 2b60b2e198d481842a6574db6383885d, type: 3}
+  m_PrefabInstance: {fileID: 1425834703}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1425834716 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5064140210868433233, guid: 2b60b2e198d481842a6574db6383885d, type: 3}
+  m_PrefabInstance: {fileID: 1425834703}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1425834717 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7926466089176147316, guid: 2b60b2e198d481842a6574db6383885d, type: 3}
+  m_PrefabInstance: {fileID: 1425834703}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1425834718 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8802900448025939381, guid: 2b60b2e198d481842a6574db6383885d, type: 3}
+  m_PrefabInstance: {fileID: 1425834703}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1494110968
 GameObject:
   m_ObjectHideFlags: 0
@@ -9272,7 +9338,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3436605412060251527, guid: 6c33aeeaa941c864991e836fea0003c0, type: 3}
       propertyPath: m_Text
-      value: "K\u1ECBch b\u1EA3n"
+      value: Minimax
       objectReference: {fileID: 0}
     - target: {fileID: 3436605412127903568, guid: 6c33aeeaa941c864991e836fea0003c0, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -9625,7 +9691,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1774865135}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1245ccdba2545684883f1c2a262fef82, type: 3}
+  m_Script: {fileID: 11500000, guid: d541378e7a8d22449ad22fb44f84a871, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 0
@@ -10091,7 +10157,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2000234862}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0353326a9a5613458927a40d246a171, type: 3}
+  m_Script: {fileID: 11500000, guid: 48ec4b8fa7e741c49808002c854c7ab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   aeNhaNguyenEffect: 0

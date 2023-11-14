@@ -78,7 +78,7 @@ public class AI2CardToHand : MonoBehaviour
         
         CardBackScript = GetComponent<CardBack>();
         thisCard = CardDataBase.cardList[thisId];
-        Hand = GameObject.Find("EnemyHand");
+        Hand = GameObject.Find("Hand");
 
         z = 0;
         hurted = 0;
@@ -87,9 +87,9 @@ public class AI2CardToHand : MonoBehaviour
         StartCoroutine(AfterVoidStart());
         summoningSickness = true;
         
-        AiZone = GameObject.Find("EnemyZone");
-        battleZone = GameObject.Find("EnemyZone");
-        EnemyZone = GameObject.Find("Zone");
+        AiZone = GameObject.Find("Zone");
+        battleZone = GameObject.Find("Zone");
+        EnemyZone = GameObject.Find("EnemyZone");
     }
 
     // Update is called once per frame
@@ -193,12 +193,12 @@ public class AI2CardToHand : MonoBehaviour
         }
 
         CardBackScript.UpdateCard(cardBack);
-        if (TurnSystem.isYourTurn && transform.parent == AiZone.transform)
+        if (!TurnSystem1.isYourTurn && transform.parent == AiZone.transform)
         {
             summoningSickness = false;
             attackedTarget = false;
         }
-        if (TurnSystem.isYourTurn == false && summoningSickness == false)
+        if (TurnSystem1.isYourTurn && summoningSickness == false)
         {
             canAttack = true;
         }
@@ -355,7 +355,7 @@ public class AI2CardToHand : MonoBehaviour
 
     public void HealAll()
     {
-        if ((CardsInZone.eHowMany <= 1 && !spell) || CardsInZone.eHowMany == 0)
+        if ((CardsInZone.howMany1 <= 1 && !spell) || CardsInZone.howMany1 == 0)
             return;
         foreach (Transform child in battleZone.transform)
         {
@@ -366,11 +366,11 @@ public class AI2CardToHand : MonoBehaviour
 
     public void HealHero()
     {
-        EnemyHp.staticHp += healXpower;
+        MinimaxHp.staticHp += healXpower;
         if (id == 10)
-            EnemyHp.staticHp -= 1;
-        if (EnemyHp.staticHp > EnemyHp.maxHp)
-            EnemyHp.staticHp = EnemyHp.maxHp;
+            MinimaxHp.staticHp -= 1;
+        if (MinimaxHp.staticHp > MinimaxHp.maxHp)
+            MinimaxHp.staticHp = MinimaxHp.maxHp;
     }
     public void dealXDamage()
     {
@@ -384,9 +384,9 @@ public class AI2CardToHand : MonoBehaviour
 
     public void dealHero()
     {
-        PlayerHp.staticHp -= damageDealtBySpell;
-        if (id == 5 && Field.checkChargeAI())
-            PlayerHp.staticHp -= damageDealtBySpell;
+        KbHp.staticHp -= damageDealtBySpell;
+        if (id == 5 && Field1.checkChargePlayer())
+            KbHp.staticHp -= damageDealtBySpell;
     }
 
     public void dealAll()
@@ -398,7 +398,7 @@ public class AI2CardToHand : MonoBehaviour
             if (child.GetComponent<AI1CardToHand>() != null && child.GetComponent<AI1CardToHand>().isTarget)
             {
                 child.GetComponent<AI1CardToHand>().hurted += damageDealtBySpell;
-                if (id == 18 && Field.checkNTNAI())
+                if (id == 18 && Field1.checkNTN())
                     child.GetComponent<AI1CardToHand>().hurted += 1;
                 child.GetComponent<AI1CardToHand>().isTarget = false;
             }
@@ -440,13 +440,46 @@ public class AI2CardToHand : MonoBehaviour
 
     public void increaseDame()
     {
-        if ((CardsInZone.eHowMany <= 1 && !spell) || CardsInZone.eHowMany == 0)
+        if ((CardsInZone.howMany1 <= 1 && !spell) || CardsInZone.howMany1 == 0)
             return;
         foreach (Transform child in battleZone.transform)
         {
             if (child != transform && child.GetComponent<AI2CardToHand>() != null)
                 child.GetComponent<AI2CardToHand>().dameIncrease += increaseXdame;
         }
+    }
+    public ThisCard1 toThisCard1()
+    {
+        ThisCard1 newcard = new ThisCard1();
+        newcard.thisId = id;
+        newcard.thisCard = CardDataBase.cardList[id];
+        newcard.id = id;
+        newcard.cardName = cardName;
+        newcard.dame = dame;
+        
+        newcard.blood = blood;
+        newcard.mana = mana;
+        newcard.cardDescription = cardDescription;
+        newcard.thisSprite = thisCard.thisImage;
+
+        newcard.drawXcards = drawXcards;
+        newcard.addXmaxMana = addXmaxMana;
+
+        newcard.returnXcards = returnXcards;
+        newcard.healXpower = healXpower;
+        
+        newcard.increaseXdame = increaseXdame;
+        newcard.deathcrys = deathcrys;
+
+        newcard.spell = spell;
+        newcard.damageDealtBySpell = damageDealtBySpell;
+        newcard.hurted = hurted;
+
+        newcard.actualblood = newcard.blood - newcard.hurted;
+        newcard.actualDame = newcard.dame + newcard.dameIncrease;
+        newcard.summoned = isSummoned;
+        newcard.canAttack = canAttack;
+        return newcard;
     }
 }
 
