@@ -379,6 +379,7 @@ public class AI1 : MonoBehaviour //Minimax
                         if (child.GetComponent<AICardToHand>().id == mo.id)
                         {
                             PlayerHp.staticHp -= child.GetComponent<AICardToHand>().actualDame;
+                            child.GetComponent<AICardToHand>().canAttack = false;
                             // Debug.Log("Attack PlayerHp");
                             break;
                         }
@@ -442,6 +443,7 @@ public class AI1 : MonoBehaviour //Minimax
                         {
                             child1.GetComponent<ThisCard>().hurted += 2;
                         }
+                        child.GetComponent<AICardToHand>().canAttack = false;
                         break;
                     }
                 }

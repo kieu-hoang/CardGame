@@ -130,12 +130,6 @@ public class AI : MonoBehaviour //Kich ban
     {
         staticEnemyDeck = deck;
         checkClone();
-        // if (started)
-        // {
-        //     getGameState();
-        //     Log.SaveData(currentGame.toString());
-        //     started = false;
-        // }
         if (deckSize < 20)
         {
             cardInDeck1.SetActive(false);
@@ -191,11 +185,6 @@ public class AI : MonoBehaviour //Kich ban
                 StartCoroutine(Draw(1));
             else if (deckSize <= 0)
                 EnemyHp.staticHp -= 1;
-            if (currentGame != null)
-            {
-                getGameState();
-                Log.SaveData(currentGame.toString());
-            }
             draw = true;
         }
         
@@ -350,7 +339,7 @@ public class AI : MonoBehaviour //Kich ban
                 {
                     if (!cardsInZone[i].attackedTarget)
                     {
-                        Log.SaveData("0 " + cardsInZone[i].id + " 0" + " 1" + " 0" + "\n");
+                        // Log.SaveData("0 " + cardsInZone[i].id + " 0" + " 1" + " 0" + "\n");
                         PlayerHp.staticHp -= cardsInZone[i].actualDame;
                         cardsInZone[i].attackedTarget = true;
                         canAttack[i] = false;
@@ -374,7 +363,7 @@ public class AI : MonoBehaviour //Kich ban
                                 cardsInZone[i].hurted += child.GetComponent<ThisCard>().actualDame;
                                 child.GetComponent<ThisCard>().isTarget = false;
                                 canAttack[i] = false;
-                                Log.SaveData("1 " + cardsInZone[i].id + " 0" + " 1 " + child.GetComponent<ThisCard>().id + "\n");
+                                // Log.SaveData("1 " + cardsInZone[i].id + " 0" + " 1 " + child.GetComponent<ThisCard>().id + "\n");
                                 break;
                             }
                         }
@@ -404,7 +393,7 @@ public class AI : MonoBehaviour //Kich ban
                                     child.GetComponent<ThisCard>().hurted += 2;
                                 }
                                 child.GetComponent<ThisCard>().isTarget = false;
-                                Log.SaveData("1 " + cardsInZone[i].id + " 0" + " 1 " + child.GetComponent<ThisCard>().id + "\n");
+                                // Log.SaveData("1 " + cardsInZone[i].id + " 0" + " 1 " + child.GetComponent<ThisCard>().id + "\n");
                                 canAttack[i] = false;
                                 break;
                             }
@@ -498,7 +487,7 @@ public class AI : MonoBehaviour //Kich ban
                 if (child.GetComponent<AICardToHand>().id == summonID &&
                     CardDataBase.cardList[summonID].mana <= currentMana)
                 {
-                    Log.SaveData("0 " + summonID + " 1" + " 0" + " 0" +"\n");
+                    // Log.SaveData("0 " + summonID + " 1" + " 0" + " 0" +"\n");
                     child.transform.SetParent(Zone.transform);
                     TurnSystem.currentEnemyMana -= CardDataBase.cardList[summonID].mana;
                     currentMana = TurnSystem.currentEnemyMana;

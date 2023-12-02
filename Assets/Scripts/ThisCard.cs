@@ -158,7 +158,7 @@ public class ThisCard : MonoBehaviour
         actualDame = dame + dameIncrease;
 
         nameText.text = "" + cardName;
-        descriptionText.text = "• " + cardDescription;
+        descriptionText.text = "ï¿½ " + cardDescription;
 
         for (int i = 0; i < stars.Length; i++)
         {
@@ -222,10 +222,19 @@ public class ThisCard : MonoBehaviour
 
         if (summoned == false && this.transform.parent == battleZone.transform)
         {
-            //AI.currentGame;
+            if (AI.currentGame != null){
+                AI.getGameState();
+                Log.SaveData1(AI.currentGame.toString());
+            }
             Summon();
-            if (AI.currentGame != null)
-                Log.SaveData("1 " + id + " 1" + " 0" + " 0" +"\n");
+            if (AI.currentGame != null){
+                GameState newgs = new GameState();
+                newgs.copy(AI.currentGame);
+                AI.getGameState();
+                int[] op = GameState.getOutput(newgs, AI.currentGame);
+                string res = GameState.outputToString(op);
+                Log.SaveData2(res);
+            }
         } 
         if (TurnSystem.isYourTurn == false && summoned == true)
         {
@@ -373,14 +382,26 @@ public class ThisCard : MonoBehaviour
             if (Target != null)
             {
                 if (Target == Enemy && attackedTarget == false)
-                {
-                    if (AI.currentGame != null)
-                        Log.SaveData("1 " + id + " 0" + " 1" + " 0" + "\n");
+                {   
+                    if (AI.currentGame != null){
+                        AI.getGameState();
+                        Log.SaveData1(AI.currentGame.toString());
+                    }
+
                     EnemyHp.staticHp -= actualDame;
                     targeting = false;
                     attackedTarget = true;
                     cantAttack = true;
                     Arrow._Hide = true;
+
+                    if (AI.currentGame != null){
+                        GameState newgs = new GameState();
+                        newgs.copy(AI.currentGame);
+                        AI.getGameState();
+                        int[] op = GameState.getOutput(newgs, AI.currentGame);
+                        string res = GameState.outputToString(op);
+                        Log.SaveData2(res);
+                    } 
                 }
             }
             else
@@ -389,8 +410,10 @@ public class ThisCard : MonoBehaviour
                 {
                     if (child.GetComponent<AICardToHand>().isTarget)
                     {
-                        if (AI.currentGame != null)
-                            Log.SaveData("1 " + id + " 0" + " 1 " + child.GetComponent<AICardToHand>().id + "\n");
+                        if (AI.currentGame != null){
+                            AI.getGameState();
+                            Log.SaveData1(AI.currentGame.toString());
+                        }
                         if (child.GetComponent<AICardToHand>().id == 17)
                             child.GetComponent<AICardToHand>().hurted += 1;
                         else
@@ -414,6 +437,14 @@ public class ThisCard : MonoBehaviour
                         }
                         Arrow._Hide = true;
                         child.GetComponent<AICardToHand>().isTarget = false;
+                        if (AI.currentGame != null){
+                            GameState newgs = new GameState();
+                            newgs.copy(AI.currentGame);
+                            AI.getGameState();
+                            int[] op = GameState.getOutput(newgs, AI.currentGame);
+                            string res = GameState.outputToString(op);
+                            Log.SaveData2(res);
+                        }
                         break;
                     }
                 }
@@ -527,7 +558,7 @@ public class ThisCard : MonoBehaviour
             return;
         foreach (Transform child in battleZone.transform)
         {
-            // if (i == x) // heal quân ð?u tiên
+            // if (i == x) // heal quï¿½n ï¿½?u tiï¿½n
             {
                 if (child != transform && child.GetComponent<ThisCard>() != null)
                 {

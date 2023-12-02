@@ -112,12 +112,6 @@ public class AI2 : MonoBehaviour //lỗi, thay bằng AIa vva2AI1a --> chỉnh s
     {
         staticEDeck = deck;
         checkClone();
-        // if (started)
-        // {
-        //     getGameState();
-        //     Log.SaveData(currentGame.toString());
-        //     started = false;
-        // }
         if (deckSize < 20)
         {
             cardInDeck1.SetActive(false);
@@ -173,11 +167,6 @@ public class AI2 : MonoBehaviour //lỗi, thay bằng AIa vva2AI1a --> chỉnh s
                 StartCoroutine(Draw(1));
             else if (deckSize <= 0)
                 PlayerHp.staticHp -= 1;
-            if (currentGame != null)
-            {
-                getGameState();
-                Log.SaveData(currentGame.toString());
-            }
             draw = true;
         }
         
@@ -332,7 +321,6 @@ public class AI2 : MonoBehaviour //lỗi, thay bằng AIa vva2AI1a --> chỉnh s
                 {
                     if (!cardsInZone[i].attackedTarget)
                     {
-                        Log.SaveData("0 " + cardsInZone[i].id + " 0" + " 1" + " 0" + "\n");
                         PlayerHp.staticHp -= cardsInZone[i].actualDame;
                         cardsInZone[i].attackedTarget = true;
                         canAttack[i] = false;
@@ -356,7 +344,6 @@ public class AI2 : MonoBehaviour //lỗi, thay bằng AIa vva2AI1a --> chỉnh s
                                 cardsInZone[i].hurted += child.GetComponent<AICardToHand>().actualDame;
                                 child.GetComponent<AICardToHand>().isTarget = false;
                                 canAttack[i] = false;
-                                Log.SaveData("1 " + cardsInZone[i].id + " 0" + " 1 " + child.GetComponent<AICardToHand>().id + "\n");
                                 break;
                             }
                         }
@@ -386,7 +373,6 @@ public class AI2 : MonoBehaviour //lỗi, thay bằng AIa vva2AI1a --> chỉnh s
                                     child.GetComponent<AICardToHand>().hurted += 2;
                                 }
                                 child.GetComponent<AICardToHand>().isTarget = false;
-                                Log.SaveData("1 " + cardsInZone[i].id + " 0" + " 1 " + child.GetComponent<AICardToHand>().id + "\n");
                                 canAttack[i] = false;
                                 break;
                             }
@@ -480,7 +466,6 @@ public class AI2 : MonoBehaviour //lỗi, thay bằng AIa vva2AI1a --> chỉnh s
                 if (child.GetComponent<AICardToHand>().id == summonID &&
                     CardDataBase.cardList[summonID].mana <= currentMana)
                 {
-                    Log.SaveData("0 " + summonID + " 1" + " 0" + " 0" +"\n");
                     child.transform.SetParent(Zone.transform);
                     TurnSystem.currentEnemyMana -= CardDataBase.cardList[summonID].mana;
                     currentMana = TurnSystem.currentEnemyMana;

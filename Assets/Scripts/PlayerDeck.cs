@@ -91,12 +91,12 @@ public class PlayerDeck : MonoBehaviour
             cardInDeck4.SetActive(false);
         }
         
-        if (AI.currentGame != null && started && AI.started)
-        {
-            AI.getGameState();
-            Log.SaveData(AI.currentGame.toString());
-            started = false;
-        }
+        // if (AI.currentGame != null && started && AI.started)
+        // {
+        //     AI.getGameState();
+        //     Log.SaveData(AI.currentGame.toString());
+        //     started = false;
+        // }
         if (ThisCard.drawX > 0)
         {
             if (CardsInHand.howMany == 6 && deckSize > 0)
@@ -123,23 +123,23 @@ public class PlayerDeck : MonoBehaviour
                 PlayerHp.staticHp -= 1;
             }
             checkClone();
-            if (AI.currentGame != null)
-            {
-                AI.getGameState();
-                Log.SaveData(AI.currentGame.toString());
-            }
+            // if (AI.currentGame != null)
+            // {
+            //     AI.getGameState();
+            //     Log.SaveData(AI.currentGame.toString());
+            // }
             
             TurnSystem.startTurn = false;
         }
         checkClone();
         if (AI.currentGame != null && PlayerHp.staticHp <= 0 && finish == false)
         {
-            Log.SaveData("\n 0 Win");
+            Log.SaveData1("\n 0 Win");
             finish = true;
         }
         else if (AI.currentGame != null && EnemyHp.staticHp <= 0 && finish == false)
         {
-            Log.SaveData("\n 1 Win");
+            Log.SaveData1("\n 1 Win");
             finish = true;
         }
     }
