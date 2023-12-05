@@ -223,17 +223,21 @@ public class ThisCard : MonoBehaviour
         if (summoned == false && this.transform.parent == battleZone.transform)
         {
             if (AI.currentGame != null){
-                AI.getGameState();
-                Log.SaveData1(AI.currentGame.toString());
+                Log.SaveData1(AI.oldGameState.toString());
+                int[] op = GameState.getOutput();
+                for (int i=0; i < AI.oldGameState.cardsInHand.Count; i++){
+                    if (AI.oldGameState.cardsInHand[i].id == id ){
+                        op[30+i] = 1;
+                        break;
+                    }
+                }
+                string res = GameState.outputToString(op);
+                Log.SaveData2(res);
             }
             Summon();
             if (AI.currentGame != null){
-                GameState newgs = new GameState();
-                newgs.copy(AI.currentGame);
                 AI.getGameState();
-                int[] op = GameState.getOutput(newgs, AI.currentGame);
-                string res = GameState.outputToString(op);
-                Log.SaveData2(res);
+                AI.oldGameState.copy(AI.currentGame);
             }
         } 
         if (TurnSystem.isYourTurn == false && summoned == true)
@@ -386,6 +390,16 @@ public class ThisCard : MonoBehaviour
                     if (AI.currentGame != null){
                         AI.getGameState();
                         Log.SaveData1(AI.currentGame.toString());
+                        int[] op = GameState.getOutput();
+                        for (int i=0; i < AI.currentGame.cardsInZone.Count; i++){
+                            if (AI.currentGame.cardsInZone[i].id == id ){
+                                op[37+i] = 1;
+                                break;
+                            }
+                        }
+                        op[46] = 1;
+                        string res = GameState.outputToString(op);
+                        Log.SaveData2(res);
                     }
 
                     EnemyHp.staticHp -= actualDame;
@@ -395,12 +409,8 @@ public class ThisCard : MonoBehaviour
                     Arrow._Hide = true;
 
                     if (AI.currentGame != null){
-                        GameState newgs = new GameState();
-                        newgs.copy(AI.currentGame);
                         AI.getGameState();
-                        int[] op = GameState.getOutput(newgs, AI.currentGame);
-                        string res = GameState.outputToString(op);
-                        Log.SaveData2(res);
+                        AI.oldGameState.copy(AI.currentGame);
                     } 
                 }
             }
@@ -413,6 +423,21 @@ public class ThisCard : MonoBehaviour
                         if (AI.currentGame != null){
                             AI.getGameState();
                             Log.SaveData1(AI.currentGame.toString());
+                            int[] op = GameState.getOutput();
+                            for (int i=0; i < AI.currentGame.cardsInZone.Count; i++){
+                                if (AI.currentGame.cardsInZone[i].id == id ){
+                                    op[37+i] = 1;
+                                    break;
+                                }
+                            }
+                            for (int i=0; i< AI.currentGame.cardsInZoneAI.Count; i++){
+                                if (AI.currentGame.cardsInZoneAI[i].id == child.GetComponent<AICardToHand>().id){
+                                    op[49+i] = 1;
+                                    break;
+                                }
+                            }
+                            string res = GameState.outputToString(op);
+                            Log.SaveData2(res);
                         }
                         if (child.GetComponent<AICardToHand>().id == 17)
                             child.GetComponent<AICardToHand>().hurted += 1;
@@ -438,13 +463,9 @@ public class ThisCard : MonoBehaviour
                         Arrow._Hide = true;
                         child.GetComponent<AICardToHand>().isTarget = false;
                         if (AI.currentGame != null){
-                            GameState newgs = new GameState();
-                            newgs.copy(AI.currentGame);
                             AI.getGameState();
-                            int[] op = GameState.getOutput(newgs, AI.currentGame);
-                            string res = GameState.outputToString(op);
-                            Log.SaveData2(res);
-                        }
+                            AI.oldGameState.copy(AI.currentGame);
+                        } 
                         break;
                     }
                 }

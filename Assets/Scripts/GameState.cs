@@ -26,7 +26,13 @@ public class GameState
     public bool playerTurn;
 
     public void copy(GameState newGame)
-    {
+    {   
+        deck = new List<ThisCard1>();
+        cardsInHand = new List<ThisCard1>();
+        cardsInZone = new List<ThisCard1>();
+        AIdeck = new List<AICardToHand1>();
+        cardsInHandAI = new List<AICardToHand1>();
+        cardsInZoneAI = new List<AICardToHand1>();
         for (int i = 0; i < newGame.deck.Count; i++)
         {
             deck.Add(newGame.deck[i]);
@@ -1331,14 +1337,14 @@ public class GameState
             }
         }
 
-        result += playerHp + "0 0 0 0 0 0 0 0 0"+ "\n";
-        result += playerManaTurn + "0 0 0 0 0 0 0 0 0"+ "\n";
-        result += playerMana + "0 0 0 0 0 0 0 0 0"+ "\n";
+        result += playerHp + " 0 0 0 0 0 0 0 0 0"+ "\n";
+        result += playerManaTurn + " 0 0 0 0 0 0 0 0 0"+ "\n";
+        result += playerMana + " 0 0 0 0 0 0 0 0 0"+ "\n";
         string playerT = playerTurn ? "1" : "0";
-        result += playerT + "0 0 0 0 0 0 0 0 0"+ "\n";
-        result += aiHp + "0 0 0 0 0 0 0 0 0"+ "\n";
-        result += aiManaTurn + "0 0 0 0 0 0 0 0 0"+ "\n";
-        result += aiMana + "0 0 0 0 0 0 0 0 0"+ "\n";
+        result += playerT + " 0 0 0 0 0 0 0 0 0"+ "\n";
+        result += aiHp + " 0 0 0 0 0 0 0 0 0"+ "\n";
+        result += aiManaTurn + " 0 0 0 0 0 0 0 0 0"+ "\n";
+        result += aiMana + " 0 0 0 0 0 0 0 0 0"+ "\n";
         
         for (int i = 0; i < 5; i++)
         {
@@ -1381,114 +1387,119 @@ public class GameState
         //result += "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" + "\n";
         return result;
     }
-    public static int[] getOutput(GameState old, GameState nw){
+    // public static int[] getOutput(GameState old, GameState nw){
+    //     int[] output = new int[91];
+    //     for (int i=0;i<91;i++){
+    //         output[i] = 0;
+    //     }
+    //     if (old.playerTurn){
+    //         if (old.cardsInHand.Count != nw.cardsInHand.Count){
+    //             for (int i=0;i<nw.cardsInHand.Count;i++){
+    //                 if (old.cardsInHand[i].id != nw.cardsInHand[i].id){
+    //                     output[30+i] = 1;
+    //                     return output;
+    //                 }
+    //             }
+    //             output[30 + nw.cardsInHand.Count] = 1;
+    //             return output;
+    //         }
+    //         if (old.cardsInZone.Count != nw.cardsInZone.Count){
+    //             for (int i=0;i<nw.cardsInZone.Count;i++){
+    //                 if (old.cardsInZone[i].id != nw.cardsInZone[i].id){
+    //                     output[37+i] = 1;
+    //                 }
+    //             }
+    //             output[37 + nw.cardsInZone.Count] = 1;
+    //         }
+    //         else {
+    //             for (int i=0;i<old.cardsInZone.Count;i++){
+    //                 if (old.cardsInZone[i].canAttack == true){
+    //                     if (nw.cardsInZone[i].canAttack == false){
+    //                         output[37+i] = 1;
+    //                     }   
+    //                 }
+    //             }
+    //         }
+    //         if (old.aiHp != nw.aiHp){
+    //             output[46] = 1;
+    //             return output;
+    //         }
+    //         if (old.cardsInZoneAI.Count != nw.cardsInZoneAI.Count){
+    //             for (int i=0;i<nw.cardsInZoneAI.Count;i++){
+    //                 if (old.cardsInZoneAI[i].id != nw.cardsInZoneAI[i].id){
+    //                     output[49+i] = 1;
+    //                     return output;
+    //                 }
+    //             }
+    //             output[49 + nw.cardsInZoneAI.Count] = 1;
+    //             return output;
+    //         }
+    //         else{
+    //             for (int i=0;i<old.cardsInZoneAI.Count;i++){
+    //                 if (old.cardsInZoneAI[i].hurted != nw.cardsInZoneAI[i].hurted){
+    //                     output[49+i] = 1;
+    //                     return output; 
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     else {
+    //         if (old.cardsInHandAI.Count != nw.cardsInHandAI.Count){
+    //             for (int i=0;i<nw.cardsInHandAI.Count;i++){
+    //                 if (old.cardsInHandAI[i].id != nw.cardsInHandAI[i].id){
+    //                     output[54+i] = 1;
+    //                     return output;
+    //                 }
+    //             }
+    //             output[54 + nw.cardsInHand.Count] = 1;
+    //             return output;
+    //         }
+    //         if (old.cardsInZoneAI.Count != nw.cardsInZoneAI.Count){
+    //             for (int i=0;i<nw.cardsInZoneAI.Count;i++){
+    //                 if (old.cardsInZoneAI[i].id != nw.cardsInZoneAI[i].id){
+    //                     output[49+i] = 1;
+    //                 }
+    //             }
+    //             output[49 + nw.cardsInZoneAI.Count] = 1;
+    //         }
+    //         else{
+    //             for (int i=0;i<old.cardsInZoneAI.Count;i++){
+    //                 if (old.cardsInZoneAI[i].canAttack == true){
+    //                     if (nw.cardsInZoneAI[i].canAttack == false){
+    //                         output[49+i] = 1;
+    //                     }   
+    //                 }
+    //             }
+    //         }
+    //         if (old.playerHp != nw.playerHp){
+    //             output[42] = 1;
+    //             return output;
+    //         }
+    //         if (old.cardsInZone.Count != nw.cardsInZone.Count){
+    //             for (int i=0;i<nw.cardsInZone.Count;i++){
+    //                 if (old.cardsInZone[i].id != nw.cardsInZone[i].id){
+    //                     output[37+i] = 1;
+    //                     return output;
+    //                 }
+    //             }
+    //             output[37 + nw.cardsInZone.Count] = 1;
+    //             return output;
+    //         }
+    //         else{
+    //             for (int i=0;i<old.cardsInZone.Count;i++){
+    //                 if (old.cardsInZone[i].hurted != nw.cardsInZone[i].hurted){
+    //                     output[37+i] = 1;
+    //                     return output; 
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     return output;
+    // }
+    public static int[] getOutput(){
         int[] output = new int[91];
         for (int i=0;i<91;i++){
             output[i] = 0;
-        }
-        if (old.playerTurn){
-            if (old.cardsInHand.Count != nw.cardsInHand.Count){
-                for (int i=0;i<nw.cardsInHand.Count;i++){
-                    if (old.cardsInHand[i].id != nw.cardsInHand[i].id){
-                        output[30+i] = 1;
-                        return output;
-                    }
-                }
-                output[30 + nw.cardsInHand.Count] = 1;
-                return output;
-            }
-            if (old.cardsInZone.Count != nw.cardsInZone.Count){
-                for (int i=0;i<nw.cardsInZone.Count;i++){
-                    if (old.cardsInZone[i].id != nw.cardsInZone[i].id){
-                        output[37+i] = 1;
-                        return output;
-                    }
-                }
-                output[37 + nw.cardsInZone.Count] = 1;
-            }
-            else {
-                for (int i=0;i<old.cardsInZone.Count;i++){
-                    if (old.cardsInZone[i].canAttack == true){
-                        if (nw.cardsInZone[i].canAttack == false){
-                            output[37+i] = 1;
-                        }   
-                    }
-                }
-            }
-            if (old.aiHp != nw.aiHp){
-                output[46] = 1;
-                return output;
-            }
-            if (old.cardsInZoneAI.Count != nw.cardsInZoneAI.Count){
-                for (int i=0;i<nw.cardsInZoneAI.Count;i++){
-                    if (old.cardsInZoneAI[i].id != nw.cardsInZoneAI[i].id){
-                        output[49+i] = 1;
-                        return output;
-                    }
-                }
-                output[49 + nw.cardsInZoneAI.Count] = 1;
-                return output;
-            }
-            else{
-                for (int i=0;i<old.cardsInZoneAI.Count;i++){
-                    if (old.cardsInZoneAI[i].hurted != nw.cardsInZoneAI[i].hurted){
-                        output[49+i] = 1;
-                        return output; 
-                    }
-                }
-            }
-        }
-        else {
-            if (old.cardsInHandAI.Count != nw.cardsInHandAI.Count){
-                for (int i=0;i<nw.cardsInHandAI.Count;i++){
-                    if (old.cardsInHandAI[i].id != nw.cardsInHandAI[i].id){
-                        output[54+i] = 1;
-                        return output;
-                    }
-                }
-                output[54 + nw.cardsInHand.Count] = 1;
-                return output;
-            }
-            if (old.cardsInZoneAI.Count != nw.cardsInZoneAI.Count){
-                for (int i=0;i<nw.cardsInZoneAI.Count;i++){
-                    if (old.cardsInZoneAI[i].id != nw.cardsInZoneAI[i].id){
-                        output[49+i] = 1;
-                        return output;
-                    }
-                }
-                output[49 + nw.cardsInZoneAI.Count] = 1;
-            }
-            else{
-                for (int i=0;i<old.cardsInZoneAI.Count;i++){
-                    if (old.cardsInZoneAI[i].canAttack == true){
-                        if (nw.cardsInZoneAI[i].canAttack == false){
-                            output[49+i] = 1;
-                        }   
-                    }
-                }
-            }
-            if (old.playerHp != nw.playerHp){
-                output[42] = 1;
-                return output;
-            }
-            if (old.cardsInZone.Count != nw.cardsInZone.Count){
-                for (int i=0;i<nw.cardsInZone.Count;i++){
-                    if (old.cardsInZone[i].id != nw.cardsInZone[i].id){
-                        output[37+i] = 1;
-                        return output;
-                    }
-                }
-                output[37 + nw.cardsInZone.Count] = 1;
-                return output;
-            }
-            else{
-                for (int i=0;i<old.cardsInZone.Count;i++){
-                    if (old.cardsInZone[i].hurted != nw.cardsInZone[i].hurted){
-                        output[37+i] = 1;
-                        return output; 
-                    }
-                }
-            }
         }
         return output;
     }

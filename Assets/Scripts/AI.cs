@@ -65,6 +65,7 @@ public class AI : MonoBehaviour //Kich ban
 
     private int noOfCardInPlayerZone;
     public static GameState currentGame;
+    public static GameState oldGameState;
 
     public static bool started;
     // Start is called before the first frame update
@@ -84,6 +85,7 @@ public class AI : MonoBehaviour //Kich ban
         PlayerHand = GameObject.Find("Hand");
         Graveyard = GameObject.Find("EGraveyard");
         currentGame = new GameState();
+        oldGameState = new GameState();
 
         x = 0;
         draw = true;
@@ -212,6 +214,8 @@ public class AI : MonoBehaviour //Kich ban
         }
         if (endPhase)
         {
+            getGameState();
+            oldGameState.copy(currentGame);
             AiEndPhase = true;
         }
         
