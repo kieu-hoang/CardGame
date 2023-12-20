@@ -47,13 +47,6 @@ public class AI1 : MonoBehaviour //Minimax
     
     public AudioSource audioSource;
     public AudioClip drawAudio;
-    private int noOfCardCanSummon;
-    private int noOfCardInHand;
-
-    private int noOfCardInZone;
-
-    private int noOfCardInPlayerZone;
-
     public static GameState currentGame;
     
     // Start is called before the first frame update
